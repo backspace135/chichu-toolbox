@@ -15,6 +15,9 @@
 | minSdk | 31（Android 12） |
 | 构建 | AGP 9.4.1 + Kotlin 2.4.20 + Compose BOM 2026.09.00 + Gradle version catalog |
 | 唯一 View 例外 | 模块 WebUI 用 WebView（ksu-webui 协议） |
+| applicationId | `com.chichu.toolbox` |
+| 测试 | 分层：纯逻辑 JVM 单测 + 真机脚本化验收 |
+| CI | GitHub Actions 最小集：assemble + lint + JVM 单测 |
 
 ## 各项决定与依据
 
@@ -70,6 +73,23 @@ KernelSU Manager 同款方案。三个模块（权限服务 / 临时 Root / Root
 ### 9. 例外：模块 WebUI
 
 KernelSU 模块的 WebUI 走 ksu-webui 协议，必须由 WebView 承载。用 Compose `AndroidView` 包裹 WebView，这是全 App 唯一保留的 View 组件。
+
+### 10. applicationId：`com.chichu.toolbox`
+
+与三个上游均不冲突（避开 `moe.shizuku.*`、KernelSU Manager 包名）。所有派生物跟随此包名：自有权限名、`/sdcard/Android/data/<pkg>/start.sh` 路径、server dex 打包位置。与原版 Shizuku / KernelSU Manager 共存的前提就是包名互不相同。
+
+### 11. 测试策略：分层，验收标准可重复执行
+
+三个 core 模块可测性不同，按性质分层，不追求覆盖率：
+
+- **JVM 单测（纯逻辑）**：`:core:ghostlock` 的 profile 匹配、内核版本检测、镜像 / OTA 配置提取（上游 `:profile-core` 本就是独立库，最适合）；`:core:common` 的设备状态与任务流程状态机；`:core:ksu` 的 ksud 响应解析（mock libsu shell I/O）、apksig 校验。
+- **真机验收脚本化**：在 Xiaomi 15 上把 issue #1 验收标准变成可重复的 adb 命令序列 checklist（激活 → 第三方 App 连接 → 授权 / 撤销 → 重启后状态重检），每个里程碑执行并记录结果。
+- **`:core:shizuku` server 端不写 JVM 单测**：重度依赖 hidden API 与 `app_process` 环境，JVM 无法承载；以上游同样做法（真机验证）为准。
+- **不搞 instrumented 大盘**：核心场景（adb 激活、双 server、Root）模拟器无法复现；仅保留上游已有的 androidTest（KernelSU Manager 有）。
+
+### 12. CI：GitHub Actions 最小集
+
+单 job：`ubuntu-latest`，JDK 对齐 `gradle-daemon-jvm.properties` 工具链，执行 `gradle assemble lint test`；`gradle/actions/setup-gradle` 提供 Gradle 缓存（依赖树较大，必须有）。真机场景不进 CI。CI 构建用 debug keystore；发布签名密钥 M4 阶段确定——注意 apksign 校验与 KernelSU 管理器身份绑定，更换签名密钥时已发布版本的接管逻辑需向后兼容。
 
 ## 上游技术栈核查记录
 
