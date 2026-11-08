@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>彳亍工具箱 · 图标预览稿</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #fff; color: #17191f; font-family: "Microsoft YaHei", sans-serif; }
+    main { max-width: 1040px; padding: 48px 60px 40px; margin: auto; }
+    header { border-bottom: 1px solid #e4e6ec; padding-bottom: 22px; }
+    h1 { font-size: 27px; font-weight: 600; margin: 0 0 10px; letter-spacing: -.5px; }
+    p { margin: 0; font-size: 14px; color: #626978; line-height: 1.7; }
+    .study { display: flex; align-items: center; gap: 76px; padding: 46px 0; }
+    .hero { width: 320px; height: 320px; flex: none; }
+    h2 { font-size: 16px; font-weight: 600; margin: 0 0 18px; }
+    .sizes { display: flex; align-items: end; gap: 28px; margin-bottom: 30px; }
+    figure { margin: 0; text-align: center; }
+    figcaption { font-size: 12px; color: #626978; margin-top: 9px; }
+    .sizes img { display: block; }
+    .masks { display: flex; gap: 22px; align-items: center; }
+    .masked { width: 68px; height: 68px; display: block; }
+    .circle { border-radius: 50%; }
+    .square { border-radius: 15px; }
+    .mono { width: 68px; height: 68px; color: #17191f; }
+    footer { border-top: 1px solid #e4e6ec; padding-top: 20px; display: flex; gap: 32px; align-items: center; }
+    .swatches { display: flex; gap: 8px; }
+    .swatch { width: 18px; height: 18px; background: #3155bc; }
+    .swatch.white { background: white; border: 1px solid #d6dae3; }
+    @media (max-width: 720px) {
+      main { padding: 28px; }
+      .study { flex-direction: column; align-items: flex-start; gap: 32px; }
+      .hero { width: 260px; height: 260px; }
+      footer { align-items: flex-start; gap: 16px; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <h1>彳亍工具箱</h1>
+      <p>图标预览稿 · 几何工具箱</p>
+    </header>
+    <section class="study" aria-label="图标与小尺寸检视">
+      <img class="hero" src="toolbox-geometric.svg" alt="纯蓝底白色几何工具箱，提手、箱盖与负形锁扣">
+      <div>
+        <h2>桌面小尺寸</h2>
+        <div class="sizes">
+          <figure><img src="toolbox-geometric.svg" width="64" height="64" alt="64 像素图标"><figcaption>64 px</figcaption></figure>
+          <figure><img src="toolbox-geometric.svg" width="48" height="48" alt="48 像素图标"><figcaption>48 px</figcaption></figure>
+          <figure><img src="toolbox-geometric.svg" width="32" height="32" alt="32 像素图标"><figcaption>32 px</figcaption></figure>
+        </div>
+        <h2>裁切与单色</h2>
+        <div class="masks">
+          <figure><img class="masked circle" src="toolbox-geometric.svg" alt="圆形裁切"><figcaption>圆形</figcaption></figure>
+          <figure><img class="masked square" src="toolbox-geometric.svg" alt="圆角方形裁切"><figcaption>圆角方形</figcaption></figure>
+          <figure>
+            <svg class="mono" viewBox="0 0 108 108" role="img" aria-label="黑色单色标识">
+              <g fill="currentColor">
+                <path d="M41 42V32Q41 29 44 29H64Q67 29 67 32V42H61V35H47V42Z"/>
+                <path d="M27 53V45Q27 41 31 41H77Q81 41 81 45V53Z"/>
+                <path d="M27 57H50V64H58V57H81V73Q81 77 77 77H31Q27 77 27 73Z"/>
+              </g>
+            </svg>
+            <figcaption>单色</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+    <footer>
+      <div class="swatches" aria-hidden="true"><span class="swatch"></span><span class="swatch white"></span></div>
+      <p>只保留提手、箱盖、锁扣。无渐变、无阴影、无字形拼贴。<br>用户已确认并采用；裁切为静态示意，不等于 Android 启动器验收。</p>
+    </footer>
+  </main>
+</body>
+</html>
