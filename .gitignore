@@ -1,2 +1,12 @@
 # 上游源码保留独立 Git 历史，不直接纳入主仓库。
 /third_party/upstream/
+
+# 本地构建与开发环境。
+.gradle/
+.kotlin/
+.idea/
+**/build/
+**/.cxx/
+local.properties
+*.iml
+.superpowers/

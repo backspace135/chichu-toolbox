@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 108 108">
+  <title>彳亍工具箱</title>
+  <rect width="108" height="108" rx="24" fill="#3155BC"/>
+  <g fill="#FFFFFF">
+    <path d="M41 42V32Q41 29 44 29H64Q67 29 67 32V42H61V35H47V42Z"/>
+    <path d="M27 53V45Q27 41 31 41H77Q81 41 81 45V53Z"/>
+    <path d="M27 57H50V64H58V57H81V73Q81 77 77 77H31Q27 77 27 73Z"/>
+  </g>
+</svg>
