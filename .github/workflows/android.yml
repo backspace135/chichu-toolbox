@@ -22,7 +22,7 @@ jobs:
           packages: platform-tools
       - uses: gradle/actions/setup-gradle@v4
       - name: 安装 Android SDK
-        run: sdkmanager 'platforms;android-37' 'build-tools;37.0.0'
+        run: sdkmanager 'platforms;android-37.0' 'build-tools;37.0.0'
       - name: 构建、静态检查与 JVM 单测
         run: bash ./gradlew :app:assembleDebug :app:assembleRelease lint testDebugUnitTest --no-daemon
       - name: 核验压缩 APK 的启动与 JNI 入口
