@@ -29,7 +29,9 @@ jobs:
       - name: 构建、静态检查与 JVM 单测
         run: bash ./gradlew :app:assembleDebug :app:assembleRelease lint testDebugUnitTest --no-daemon
       - name: 核验压缩 APK 的启动与 JNI 入口
-        run: python3 scripts/verify-apk.py app/build/outputs/apk/release/app-release-unsigned.apk
+        run: |
+          python3 scripts/test_ksu_identity.py
+          python3 scripts/verify-apk.py app/build/outputs/apk/release/app-release.apk
       - uses: actions/upload-artifact@v4
         with:
           name: chichu-toolbox-debug

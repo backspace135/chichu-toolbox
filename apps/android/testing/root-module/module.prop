@@ -1,0 +1,6 @@
+id=chichu_m3_acceptance
+name=Chichu M3 Acceptance
+version=1.0
+versionCode=1
+author=Chichu Toolbox
+description=Local acceptance fixture: no boot scripts, mounts, properties or reboot.

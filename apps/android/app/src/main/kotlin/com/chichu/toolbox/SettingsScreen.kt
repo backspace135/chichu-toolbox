@@ -27,6 +27,7 @@ import top.yukonga.miuix.kmp.window.WindowDialog
 internal fun SettingsScreen(model: ToolboxViewModel) {
     val appearance by model.appearance.collectAsStateWithLifecycle()
     var sheet by rememberSaveable { mutableStateOf<String?>(null) }
+    val root = rememberRootModel(model)
     val themeName = when (appearance.mode) { "light" -> "浅色"; "dark" -> "深色"; else -> "跟随系统" }
     Page("设置", onAction = { sheet = "permissions" }) {
         Column(Modifier.fillMaxWidth().padding(top = 4.dp, bottom = 12.dp), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(10.dp)) {
@@ -52,11 +53,13 @@ internal fun SettingsScreen(model: ToolboxViewModel) {
         ListCard {
             PreferenceRow("Shell 与 Root", "了解两种权限的区别", MiuixIcons.Lock) { sheet = "permissions" }
             ListDivider()
+            PreferenceRow("Root 管理", "KernelSU 身份、超级用户、模块与维护", ToolboxIcons.Terminal) { sheet = "root" }
+            ListDivider()
             PreferenceRow("与原版 Shizuku 共存", "独立服务与独立授权", MiuixIcons.Link) { sheet = "coexist" }
         }
         SectionLabel("关于")
         ListCard {
-            PreferenceRow("彳亍工具箱", "${BuildConfig.VERSION_NAME} · M2 开发中", MiuixIcons.Info) { sheet = "about" }
+            PreferenceRow("彳亍工具箱", "${BuildConfig.VERSION_NAME} · M3 开发中", MiuixIcons.Info) { sheet = "about" }
             ListDivider()
             PreferenceRow("开源许可证", "Shizuku、miuix 与其他依赖", MiuixIcons.File) { sheet = "licenses" }
         }
@@ -77,9 +80,10 @@ internal fun SettingsScreen(model: ToolboxViewModel) {
         Hint("独立的设备能力，需要单独验证和管理。Shell 授权不会授予 Root；设备诊断与配置文本校验不能证明 Root 可用。")
     }
     CoexistSheet(sheet == "coexist", model.originalInstalled) { sheet = null }
+    RootManagement(sheet == "root", root) { sheet = null }
     DetailSheet(sheet == "about", "关于彳亍工具箱", { sheet = null }) {
         Text(BuildConfig.VERSION_NAME, style = MiuixTheme.textStyles.headline2)
-        Hint("M1 内置 Shell 权限服务已交付；M2 开发中，当前提供只读设备诊断与本地内核配置文本校验。")
+        Hint("M1 内置 Shell 权限服务与 M2.5 界面已交付；M2 临时 Root 和 M3 KernelSU 管理整合开发中。Root 能力以真实内核身份与命令结果为准。")
     }
     DetailSheet(sheet == "licenses", "开源许可证", { sheet = null }) {
         val context = LocalContext.current

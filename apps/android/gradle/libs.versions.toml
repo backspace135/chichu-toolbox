@@ -20,12 +20,14 @@ annotation = "1.9.1"
 bouncycastle = "1.80"
 boringssl = "20250114"
 hiddenapibypass = "6.1"
+webkit = "1.17.0"
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 android-library = { id = "com.android.library", version.ref = "agp" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 refine = { id = "dev.rikka.tools.refine", version.ref = "refine" }
+apksign = { id = "org.lsposed.lsplugin.apksign", version.ref = "apksign" }
 
 [libraries]
 androidx-annotation = { module = "androidx.annotation:annotation", version.ref = "annotation" }
@@ -54,3 +56,4 @@ refine-runtime = { module = "dev.rikka.tools.refine:runtime", version.ref = "ref
 gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
 parcelablelist = { module = "dev.rikka.rikkax.parcelablelist:parcelablelist", version.ref = "parcelablelist" }
 junit = { module = "junit:junit", version.ref = "junit" }
+androidx-webkit = { module = "androidx.webkit:webkit", version.ref = "webkit" }

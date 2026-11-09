@@ -12,4 +12,6 @@
 - [M1 验证结果](M1_VALIDATION_RESULTS.md)
 - [M2 开发记录与验证范围](M2_PROGRESS.md)
 - [M2.5 阶段：UI、通知配对与切页优化](M2_5_PROGRESS.md)
+- [M3 KernelSU 身份、签名、共存与管理通道](M3_KERNELSU_INTEGRATION.md)
+- [M3 开发与验证记录](M3_PROGRESS.md)
 - [官方 SDK 验收客户端](../../apps/android/testing/sdk-client/README.md)

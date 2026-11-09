@@ -25,12 +25,13 @@ Linux / macOS：
 bash ./gradlew :app:assembleDebug :app:assembleRelease lint testDebugUnitTest --no-daemon
 ```
 
-APK 输出：`app/build/outputs/apk/debug/app-debug.apk`，release 为 `app/build/outputs/apk/release/app-release-unsigned.apk`。
+APK 输出：`app/build/outputs/apk/debug/app-debug.apk`，release 为 `app/build/outputs/apk/release/app-release.apk`。M3 起使用 KernelSU 要求的 v2-only 签名；未配置发布 keystore 时两个变体使用本机 debug 签名，release 是压缩测试包。
 
 APK 启动与 JNI 入口检查：
 
 ```sh
-python3 scripts/verify-apk.py app/build/outputs/apk/release/app-release-unsigned.apk
+python3 scripts/test_ksu_identity.py
+python3 scripts/verify-apk.py app/build/outputs/apk/release/app-release.apk
 ```
 
 构建会从仓库根目录 `third_party/licenses/` 读取许可证；不依赖用于源码调研的 `third_party/upstream/`。
@@ -46,6 +47,12 @@ python3 scripts/verify-apk.py app/build/outputs/apk/release/app-release-unsigned
 | `:core:ksu` | KernelSU 通信与 Root 管理（M2/M3） |
 
 `core/` 属于 Android 客户端，不代表跨平台共享库。
+
+## KernelSU 管理（M3 开发中）
+
+入口为「设置 → 服务 → Root 管理」。固定 UAPI 6 / ksud 3.3.1-38-g730f6446，包含管理器身份探测、超级用户策略与私有模板、模块 ZIP 安装/更新、启停卸载、action、受来源约束的 WebUI 与日志。操作以真实内核/ksud 结果为准，Shell 授权不会授予 Root。
+
+原版签名绑定的正式内核不能直接接管；配套工具箱内核与 M2 临时 Root 联调尚未完成，镜像安装/修补入口暂不可用。完整边界、签名构建参数与真机证据见 [M3 整合记录](../../docs/android/M3_KERNELSU_INTEGRATION.md)和 [开发记录](../../docs/android/M3_PROGRESS.md)。
 
 ## 设备诊断与配置校验（M2 部分实现）
 

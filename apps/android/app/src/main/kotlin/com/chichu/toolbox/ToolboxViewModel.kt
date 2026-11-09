@@ -20,6 +20,7 @@ import kotlinx.coroutines.withContext
 import kotlinx.coroutines.withTimeout
 
 class ToolboxViewModel(private val container: AppContainer) : ViewModel() {
+    internal val rootRepository = container.root
     val service = container.service.state
     val activation = container.activation
     val discovery = AdbDiscovery(container.application)

@@ -3,6 +3,7 @@
 import struct
 import sys
 import zipfile
+from ksu_identity import identity
 
 
 def classes(data):
@@ -32,12 +33,18 @@ with zipfile.ZipFile(sys.argv[1]) as apk:
         "Lrikka/rish/RishHost;",
         "Lrikka/rish/RishTerminal;",
         "Lmoe/shizuku/manager/adb/PairingContext;",
+        "Lcom/chichu/toolbox/core/ksu/KernelBridge;",
     }
     missing = required - present
     if missing:
         raise SystemExit(f"缺少启动或 JNI 入口：{sorted(missing)}")
     for abi in ("arm64-v8a", "armeabi-v7a", "x86", "x86_64"):
-        for library in ("chichu_starter", "rish", "adb"):
+        for library in ("chichu_starter", "rish", "adb", "chichu_ksu"):
             assert f"lib/{abi}/lib{library}.so" in apk.namelist()
+    for abi in ("arm64-v8a", "x86_64"):
+        assert f"lib/{abi}/libksud.so" in apk.namelist()
+        assert f"lib/{abi}/libksud_v5.so" in apk.namelist()
     assert apk.read("assets/OPEN_SOURCE_NOTICES.txt")
+    with open(sys.argv[1], "rb") as source:
+        print(f"KernelSU v2 identity: {identity(source.read())}")
     print("APK 入口、四 ABI native 和许可证检查通过。")
