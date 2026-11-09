@@ -1,0 +1,5 @@
+cmake_minimum_required(VERSION 3.31)
+project(chichu_ksu LANGUAGES CXX)
+add_library(chichu_ksu SHARED bridge.cpp)
+target_compile_features(chichu_ksu PRIVATE cxx_std_20)
+target_compile_options(chichu_ksu PRIVATE -Wall -Wextra -Werror -fno-exceptions -fno-rtti)

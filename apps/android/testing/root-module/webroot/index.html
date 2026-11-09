@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="zh-CN">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>M3 WebUI acceptance</title>
+<style>body{font:16px sans-serif;padding:16px;color:#17191c;background:#fff}button{padding:16px;min-height:48px}pre{white-space:pre-wrap;overflow-wrap:anywhere}</style>
+<h1>M3 WebUI 验收</h1>
+<button id="run">验证 Root 与来源隔离</button>
+<pre id="result">等待执行</pre>
+<script>
+document.getElementById('run').onclick = async () => {
+  const result = document.getElementById('result');
+  window.acceptanceResult = (code, stdout, stderr) => {
+    result.textContent = `ROOT_EXIT=${code}\n${stdout}\n${stderr}`;
+  };
+  ksu.exec('id; printf WEBUI_OK', '{}', 'acceptanceResult');
+  const escape = await fetch('/%2e%2e/../module.prop');
+  result.dataset.escapeStatus = escape.status;
+  result.textContent += `\nESCAPE_STATUS=${escape.status}`;
+};
+</script>
+</html>
