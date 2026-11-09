@@ -1,10 +1,12 @@
 package com.chichu.toolbox
 
 import android.content.pm.PackageManager
+import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.chichu.toolbox.core.common.ServiceState
 import com.chichu.toolbox.core.common.ShellGrant
+import com.chichu.toolbox.core.ghostlock.ConfigValidationException
 import com.chichu.toolbox.core.shizuku.PermissionPrompt
 import com.chichu.toolbox.core.shizuku.activation.ActivationController
 import com.chichu.toolbox.core.shizuku.adb.AdbDiscovery
@@ -35,6 +37,11 @@ class ToolboxViewModel(private val container: AppContainer) : ViewModel() {
         container.preferences.getBoolean("dynamic", false),
     ))
     val appearance = mutableAppearance.asStateFlow()
+    private val mutableDiagnostics = MutableStateFlow(DiagnosticsState())
+    val diagnostics = mutableDiagnostics.asStateFlow()
+    private val mutableConfigImport = MutableStateFlow(ConfigImportState())
+    val configImport = mutableConfigImport.asStateFlow()
+    private var diagnosticsJob: Job? = null
     private var refreshJob: Job? = null
     private val prompts = PermissionPrompts()
     val originalInstalled = try {
@@ -58,6 +65,43 @@ class ToolboxViewModel(private val container: AppContainer) : ViewModel() {
 
     fun foreground() {
         viewModelScope.launch(Dispatchers.IO) { container.service.revalidate() }
+        refreshDiagnostics()
+    }
+
+    fun refreshDiagnostics() {
+        diagnosticsJob?.cancel()
+        // Do not carry an old snapshot through a fresh foreground probe.
+        mutableDiagnostics.value = DiagnosticsState(loading = true)
+        diagnosticsJob = viewModelScope.launch {
+            try {
+                val snapshot = withContext(Dispatchers.IO) { container.diagnostics.read() }
+                mutableDiagnostics.value = DiagnosticsState(snapshot = snapshot)
+            } catch (error: CancellationException) { throw error
+            } catch (_: Exception) {
+                mutableDiagnostics.value = DiagnosticsState(error = "无法读取设备信息，请重新检测")
+            }
+        }
+    }
+
+    fun importKernelConfig(uri: Uri) {
+        if (mutableConfigImport.value.loading) return
+        // A failed replacement must not leave the previous file displayed as the current result.
+        mutableConfigImport.value = ConfigImportState(loading = true)
+        viewModelScope.launch {
+            try {
+                val summary = withContext(Dispatchers.IO) {
+                    val input = container.application.contentResolver.openInputStream(uri)
+                        ?: error("无法打开配置文件")
+                    input.use(container.configInspector::inspect)
+                }
+                mutableConfigImport.value = ConfigImportState(summary = summary)
+            } catch (error: CancellationException) { throw error
+            } catch (error: ConfigValidationException) {
+                mutableConfigImport.value = ConfigImportState(error = error.message)
+            } catch (_: Exception) {
+                mutableConfigImport.value = ConfigImportState(error = "无法读取文件，请重新选择本地 .config 或 .config.gz")
+            }
+        }
     }
 
     fun refresh() {

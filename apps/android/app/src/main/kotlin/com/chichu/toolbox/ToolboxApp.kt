@@ -45,6 +45,7 @@ import top.yukonga.miuix.kmp.basic.*
 import top.yukonga.miuix.kmp.icon.MiuixIcons
 import top.yukonga.miuix.kmp.icon.extended.Home
 import top.yukonga.miuix.kmp.icon.extended.GridView
+import top.yukonga.miuix.kmp.icon.extended.Search
 import top.yukonga.miuix.kmp.icon.extended.Settings
 import top.yukonga.miuix.kmp.preference.ArrowPreference
 import top.yukonga.miuix.kmp.preference.SwitchPreference
@@ -54,7 +55,7 @@ import top.yukonga.miuix.kmp.theme.ThemeController
 import top.yukonga.miuix.kmp.window.WindowBottomSheet
 import top.yukonga.miuix.kmp.window.WindowDialog
 
-private val destinations = listOf("service" to "权限服务", "applications" to "应用授权", "settings" to "设置")
+private val destinations = listOf("service" to "权限服务", "applications" to "应用授权", "diagnostics" to "设备诊断", "settings" to "设置")
 
 @Composable
 fun ToolboxApp(model: ToolboxViewModel) {
@@ -69,7 +70,7 @@ fun ToolboxApp(model: ToolboxViewModel) {
         val nav = rememberNavController()
         val entry by nav.currentBackStackEntryAsState()
         val route = entry?.destination?.route ?: "service"
-        val icons = listOf(MiuixIcons.Home, MiuixIcons.GridView, MiuixIcons.Settings)
+        val icons = listOf(MiuixIcons.Home, MiuixIcons.GridView, MiuixIcons.Search, MiuixIcons.Settings)
         BoxWithConstraints(Modifier.fillMaxSize().background(MiuixTheme.colorScheme.surface).safeDrawingPadding().imePadding()) {
             val wide = maxWidth >= 600.dp
             Row(Modifier.fillMaxSize()) {
@@ -82,6 +83,7 @@ fun ToolboxApp(model: ToolboxViewModel) {
                     NavHost(nav, "service", Modifier.weight(1f)) {
                         composable("service") { ServiceScreen(model) { nav.select("applications") } }
                         composable("applications") { ApplicationsScreen(model) { nav.select("service") } }
+                        composable("diagnostics") { DiagnosticsScreen(model) }
                         composable("settings") { SettingsScreen(model) }
                     }
                     if (!wide) NavigationBar(defaultWindowInsetsPadding = false) {
@@ -107,7 +109,7 @@ private fun NavHostController.select(route: String) = navigate(route) {
 }
 
 @Composable
-private fun Page(title: String, content: @Composable ColumnScope.() -> Unit) {
+internal fun Page(title: String, content: @Composable ColumnScope.() -> Unit) {
     Box(Modifier.fillMaxSize(), contentAlignment = Alignment.TopCenter) {
         Column(
             Modifier.widthIn(max = 800.dp).fillMaxWidth().verticalScroll(rememberScrollState()).padding(16.dp),
@@ -345,10 +347,10 @@ private fun SettingsScreen(model: ToolboxViewModel) {
         }
         Group("服务说明") {
             Text("Shell 与 Root 相互独立", style = MiuixTheme.textStyles.headline2)
-            Hint("M1 只提供通过 ADB 激活的 Shell 服务，不提供 Root，也不会自动停止或接管原版 Shizuku。")
+            Hint("权限服务提供通过 ADB 激活的 Shell 权限；设备诊断只读取设备信息与配置文本。Shell 授权不授予 Root。")
         }
         Card(Modifier.fillMaxWidth()) {
-            ArrowPreference(title = "彳亍工具箱", summary = "${BuildConfig.VERSION_NAME} · M1 开发版")
+            ArrowPreference(title = "彳亍工具箱", summary = "${BuildConfig.VERSION_NAME} · M2 开发中")
             ArrowPreference(title = "开源许可证", summary = "Shizuku、Shizuku API、miuix 与依赖来源", onClick = { licenses = true })
         }
     }

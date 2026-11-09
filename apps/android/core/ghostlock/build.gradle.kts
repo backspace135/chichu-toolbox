@@ -10,4 +10,7 @@ android {
     }
 }
 
-dependencies { implementation(project(":core:common")) }
+dependencies {
+    implementation(project(":core:common"))
+    testImplementation(libs.junit)
+}
