@@ -1,0 +1,472 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>彳亍工具箱 · UI 重设计预览</title>
+  <style>
+    :root {
+      --canvas: #e9edf3; --paper: #f7f8fa; --ink: #20252d; --muted: #697383;
+      --line: #d5dce6; --blue: #3482ff; --blue-soft: #eaf2ff;
+      --app-bg: #f6f6f6; --card: #fff; --text: #17191c; --secondary: #777b83;
+      --label: #7e879f; --input: #eaeaec; --divider: #f0f0f2;
+      --green-bg: #e0f5e7; --green: #237742; --green-mark: #54b878;
+      --nav: #fafafa; --sheet: #f6f6f6; --shadow: 0 18px 45px -25px #52617666;
+      font-family: "MiSans", "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+      color: var(--ink); background: var(--canvas); font-synthesis: none;
+    }
+    [data-theme="dark"] {
+      --canvas: #171b23; --paper: #242a35; --ink: #eef1f6; --muted: #a2adbf;
+      --line: #373f4c; --blue: #65a1ff; --blue-soft: #21334f;
+      --app-bg: #000; --card: #232323; --text: #f0f0f0; --secondary: #a4a4aa;
+      --label: #a2a6b8; --input: #2a2a2c; --divider: #323234;
+      --green-bg: #193b28; --green: #a0dbb4; --green-mark: #4d9768;
+      --nav: #090909; --sheet: #171717; --shadow: 0 18px 45px -25px #000a;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; }
+    button, input, select { font: inherit; }
+    button { cursor: pointer; color: inherit; }
+    button, a, input, select { -webkit-tap-highlight-color: transparent; }
+    button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible { outline: 3px solid var(--blue); outline-offset: 4px; }
+    button { border: 0; background: none; }
+    a { color: inherit; text-underline-offset: 4px; }
+    .icon { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; }
+    .svg-library { position: absolute; width: 0; height: 0; overflow: hidden; }
+    .preview-header { max-width: 1300px; margin: auto; padding: 34px 44px 24px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+    .brand { display: flex; gap: 12px; align-items: center; }
+    .brand-icon { width: 42px; height: 42px; border-radius: 12px; }
+    .brand strong { font-size: 17px; font-weight: 650; }
+    .brand small { display: block; color: var(--muted); margin-top: 3px; font-size: 11px; letter-spacing: .3px; }
+    .preview-actions { display: flex; align-items: center; gap: 8px; }
+    .preview-button { min-height: 42px; padding: 0 14px; border-radius: 12px; display: inline-flex; gap: 7px; align-items: center; font-size: 12px; color: var(--muted); }
+    .preview-button:hover { background: var(--paper); }
+    .preview-button .icon { width: 17px; height: 17px; }
+    .theme-control { background: var(--paper); padding: 4px; border-radius: 14px; display: flex; }
+    .theme-control button { border-radius: 10px; padding: 8px 12px; min-height: 36px; color: var(--muted); display: flex; align-items: center; gap: 6px; font-size: 12px; }
+    .theme-control button[aria-pressed="true"] { background: var(--ink); color: var(--canvas); }
+    .theme-control .icon { width: 16px; height: 16px; }
+    .intro { max-width: 1212px; margin: 15px auto 28px; padding: 0 0 0 4px; display: flex; justify-content: space-between; align-items: end; gap: 24px; }
+    .intro h1 { font-size: 31px; font-weight: 600; letter-spacing: -.9px; margin: 0 0 10px; }
+    .intro p { font-size: 13px; color: var(--muted); line-height: 1.8; margin: 0; }
+    .preview-note { color: var(--muted); display: flex; gap: 6px; align-items: center; white-space: nowrap; font-size: 11px; padding-bottom: 4px; }
+    .preview-note .icon { width: 15px; height: 15px; }
+    .board { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); max-width: 1212px; margin: 0 auto; gap: 30px; }
+    .device-caption { display: flex; align-items: center; justify-content: space-between; padding: 0 5px 13px; }
+    .device-caption h2 { margin: 0; font-size: 12px; font-weight: 550; }
+    .device-caption span { color: var(--muted); font-size: 11px; }
+    .device { height: 782px; border: 6px solid var(--paper); border-radius: 36px; background: var(--app-bg); color: var(--text); position: relative; overflow: hidden; box-shadow: var(--shadow), 0 0 0 1px var(--line); isolation: isolate; }
+    .statusbar { height: 43px; display: flex; align-items: center; justify-content: space-between; padding: 0 24px; font-size: 12px; font-weight: 650; }
+    .status-icons { display: flex; align-items: center; gap: 5px; }
+    .status-icons .icon { width: 15px; height: 15px; stroke-width: 2; }
+    .battery { display: inline-flex; align-items: center; justify-content: center; background: var(--text); color: var(--app-bg); font-size: 8px; height: 12px; width: 22px; border-radius: 3px; position: relative; margin-left: 2px; }
+    .battery::after { content: ""; position: absolute; width: 2px; height: 5px; right: -3px; background: var(--text); border-radius: 0 1px 1px 0; }
+    .screen-scroll { height: calc(100% - 123px); overflow-y: auto; scrollbar-width: none; overscroll-behavior: contain; }
+    .screen-scroll::-webkit-scrollbar { display: none; }
+    .app-header { padding: 15px 22px 20px; }
+    .app-topline { display: flex; justify-content: space-between; align-items: center; height: 24px; margin-bottom: 14px; }
+    .app-name { font-size: 11px; color: var(--secondary); }
+    .icon-button { width: 38px; min-height: 38px; display: inline-flex; align-items: center; justify-content: center; border-radius: 50%; padding: 0; }
+    .icon-button:hover { background: var(--input); }
+    .icon-button .icon { width: 21px; height: 21px; }
+    .app-title { font-size: 30px; font-weight: 540; letter-spacing: -.9px; line-height: 1.3; margin: 0; }
+    .app-content { padding: 0 12px 24px; }
+    .group-label { color: var(--label); font-size: 12px; font-weight: 550; margin: 22px 13px 10px; display: flex; align-items: center; justify-content: space-between; }
+    .group-label:first-child { margin-top: 0; }
+    .card { background: var(--card); border-radius: 20px; overflow: hidden; }
+    .status-card { background: var(--green-bg); border-radius: 23px; padding: 22px 20px 18px; position: relative; overflow: hidden; }
+    .status-card.offline { background: var(--card); }
+    .status-heading { display: flex; align-items: center; gap: 7px; color: var(--green); font-size: 11px; font-weight: 550; }
+    .status-heading::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+    .offline .status-heading { color: var(--secondary); }
+    .status-card h3 { position: relative; font-size: 25px; font-weight: 600; letter-spacing: -.7px; margin: 12px 0 6px; z-index: 1; }
+    .status-card p { position: relative; z-index: 1; font-size: 11px; color: var(--green); margin: 0; }
+    .offline p { color: var(--secondary); }
+    .status-watermark { position: absolute; right: -9px; top: 23px; color: var(--green-mark); opacity: .27; transform: rotate(-9deg); }
+    .status-watermark .icon { width: 111px; height: 111px; stroke-width: 1.2; }
+    .status-card-bottom { margin-top: 25px; padding-top: 14px; border-top: 1px solid color-mix(in srgb, var(--green) 13%, transparent); display: flex; justify-content: space-between; align-items: center; position: relative; z-index: 1; }
+    .status-card-bottom span { font-size: 10px; color: var(--green); }
+    .mini-tag { display: inline-flex; align-items: center; padding: 4px 8px; border: 1px solid color-mix(in srgb, var(--green) 24%, transparent); border-radius: 7px; font-size: 10px; color: var(--green); }
+    .primary-button { background: var(--blue); color: #fff; min-height: 45px; border-radius: 13px; padding: 11px 17px; font-size: 12px; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; }
+    [data-theme="dark"] .primary-button { color: #071833; }
+    .primary-button .icon { height: 17px; width: 17px; }
+    .primary-button:hover { filter: brightness(.96); }
+    .status-action { margin-top: 12px; }
+    .row { display: flex; align-items: center; gap: 12px; padding: 16px 17px; width: 100%; text-align: left; min-height: 74px; }
+    button.row:hover { background: color-mix(in srgb, var(--input) 40%, transparent); }
+    .row + .row { position: relative; }
+    .row + .row::before { content: ""; position: absolute; top: 0; left: 59px; right: 17px; height: 1px; background: var(--divider); }
+    .row-icon { color: var(--text); display: flex; align-items: center; justify-content: center; width: 27px; flex-shrink: 0; }
+    .row-icon .icon { width: 23px; height: 23px; }
+    .row-copy { flex: 1; min-width: 0; }
+    .row-title { font-size: 15px; font-weight: 500; display: block; line-height: 1.6; }
+    .row-subtitle { color: var(--secondary); display: block; font-size: 11px; line-height: 1.65; margin-top: 2px; overflow-wrap: anywhere; }
+    .chevron { width: 15px; height: 15px; color: var(--secondary); margin-left: auto; }
+    .footnote { color: var(--secondary); font-size: 10px; line-height: 1.8; margin: 10px 13px 0; }
+    .device-summary { display: flex; align-items: center; padding: 17px; gap: 12px; }
+    .device-summary > .icon { color: var(--secondary); width: 28px; height: 28px; }
+    .device-summary strong { font-size: 13px; font-weight: 550; display: block; }
+    .device-summary small { font-size: 10px; color: var(--secondary); display: block; margin-top: 5px; }
+    .app-nav { height: 80px; position: absolute; bottom: 0; left: 0; right: 0; background: var(--nav); border-top: 1px solid var(--divider); display: flex; align-items: start; padding: 10px 5px 19px; }
+    .app-nav::after { content: ""; width: 105px; height: 4px; border-radius: 8px; background: var(--text); opacity: .75; position: absolute; bottom: 8px; left: 50%; transform: translateX(-50%); }
+    .nav-item { width: 25%; min-height: 48px; color: var(--secondary); display: flex; flex-direction: column; align-items: center; gap: 6px; font-size: 10px; padding: 0; }
+    .nav-item .icon { width: 22px; height: 22px; }
+    .nav-item[aria-current="page"] { color: var(--text); font-weight: 650; }
+    .nav-item[aria-current="page"] .icon { stroke-width: 2.4; }
+    .searchbox { display: flex; align-items: center; padding: 0 15px; background: var(--input); height: 40px; border-radius: 25px; gap: 8px; color: var(--secondary); }
+    .searchbox .icon { width: 17px; height: 17px; }
+    .searchbox input { border: 0; background: none; color: var(--text); outline-offset: 8px; min-width: 0; width: 100%; font-size: 11px; }
+    .searchbox input::placeholder { color: var(--secondary); }
+    .filter-tabs { display: flex; align-items: center; gap: 7px; padding: 16px 1px; }
+    .filter-tab { color: var(--secondary); border-radius: 10px; padding: 8px 11px; min-height: 36px; font-size: 10px; }
+    .filter-tab[aria-pressed="true"] { color: var(--blue); background: var(--blue-soft); font-weight: 600; }
+    .list-card .row { padding: 15px 15px; min-height: 80px; gap: 11px; }
+    .list-card .row + .row::before { left: 66px; }
+    .app-icon { width: 39px; height: 39px; border-radius: 12px; display: grid; place-items: center; flex-shrink: 0; color: white; }
+    .app-icon .icon { width: 23px; height: 23px; }
+    .app-icon.blue { background: #4385f5; }
+    .app-icon.purple { background: #8066cc; }
+    .app-icon.teal { background: #27a69b; }
+    .app-icon.orange { background: #dd8b45; }
+    .app-icon.slate { background: #586774; }
+    .app-status { font-size: 9px; color: var(--green); white-space: nowrap; padding: 4px 0 4px 6px; }
+    .app-status.ask { color: var(--secondary); }
+    .app-status.denied { color: #bd675d; }
+    .section-topline { display: flex; justify-content: space-between; align-items: center; padding: 5px 13px 12px; font-size: 10px; color: var(--label); }
+    .info-banner { display: flex; gap: 7px; font-size: 10px; line-height: 1.75; color: var(--secondary); margin: 15px 11px; }
+    .info-banner .icon { width: 14px; height: 14px; margin-top: 2px; }
+    .diagnostic-header { padding: 20px; }
+    .diagnostic-header .model-icon { width: 43px; height: 43px; color: var(--blue); background: var(--blue-soft); border-radius: 14px; display: grid; place-items: center; margin-bottom: 15px; }
+    .diagnostic-header h3 { margin: 0 0 6px; font-size: 21px; font-weight: 600; }
+    .diagnostic-header > p { font-size: 10px; margin: 0; color: var(--secondary); }
+    .spec-grid { margin-top: 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 15px 12px; }
+    .spec-grid small { display: block; font-size: 9px; color: var(--secondary); margin-bottom: 5px; }
+    .spec-grid strong { font-size: 12px; font-weight: 500; }
+    .kernel-block { padding: 17px; }
+    .kernel-block small { font-size: 10px; color: var(--secondary); }
+    .kernel-block code { display: block; font-size: 12px; margin: 9px 0; line-height: 1.7; overflow-wrap: anywhere; color: var(--text); }
+    .kernel-block p { color: var(--secondary); font-size: 10px; line-height: 1.6; margin: 0; }
+    .quiet-tag { display: inline-flex; padding: 4px 7px; border-radius: 6px; font-size: 9px; color: var(--secondary); background: var(--input); white-space: nowrap; }
+    .compact-row { min-height: 55px; padding: 13px 17px; }
+    .compact-row + .compact-row::before { left: 17px; }
+    .compact-row .row-title { font-size: 12px; }
+    .settings-brand { text-align: center; padding: 18px 0 22px; }
+    .settings-brand img { width: 63px; height: 63px; border-radius: 18px; }
+    .settings-brand h3 { font-size: 17px; font-weight: 550; margin: 10px 0 5px; }
+    .settings-brand p { font-size: 10px; color: var(--secondary); margin: 0; }
+    .switch { width: 41px; height: 24px; border-radius: 15px; background: var(--input); position: relative; flex-shrink: 0; }
+    .switch::after { content: ""; position: absolute; height: 18px; width: 18px; border-radius: 50%; background: white; top: 3px; left: 3px; transition: transform .15s; }
+    [aria-checked="true"] .switch { background: var(--blue); }
+    [aria-checked="true"] .switch::after { transform: translateX(17px); }
+    .empty-state { padding: 36px 20px; text-align: center; font-size: 12px; }
+    .empty-state p { font-size: 10px; color: var(--secondary); line-height: 1.8; }
+    .empty-state .icon { margin-bottom: 8px; width: 32px; height: 32px; color: var(--secondary); }
+    .local-overlay { position: absolute; inset: 0; z-index: 10; background: #0006; display: flex; align-items: end; }
+    .local-overlay[hidden] { display: none; }
+    .sheet { background: var(--sheet); border-radius: 25px 25px 0 0; padding: 11px 20px 27px; width: 100%; max-height: 89%; overflow-y: auto; }
+    .sheet-grip { background: var(--secondary); opacity: .35; width: 30px; height: 4px; border-radius: 4px; margin: 0 auto 14px; }
+    .sheet-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
+    .sheet-header h3 { font-size: 19px; font-weight: 600; margin: 0; }
+    .sheet-copy { color: var(--secondary); font-size: 11px; line-height: 1.9; }
+    .sheet .card { border-radius: 15px; margin: 14px 0; }
+    .sheet .row { padding: 13px; min-height: 58px; }
+    .sheet .row-title { font-size: 12px; }
+    .secondary-button { border-radius: 13px; background: var(--input); color: var(--text); width: 100%; min-height: 43px; padding: 11px; font-size: 12px; margin-top: 9px; }
+    .step { display: flex; gap: 11px; align-items: start; margin: 19px 0; }
+    .step-number { width: 24px; height: 24px; background: var(--blue-soft); color: var(--blue); border-radius: 50%; font-size: 11px; display: grid; place-items: center; flex-shrink: 0; }
+    .step strong { display: block; font-size: 12px; font-weight: 550; line-height: 2; }
+    .step p { margin: 3px 0 0; font-size: 10px; color: var(--secondary); line-height: 1.8; }
+    .field-label { display: block; font-size: 11px; margin: 14px 0 7px; }
+    .field-input { width: 100%; border: 1px solid transparent; border-radius: 12px; background: var(--card); min-height: 44px; padding: 12px; color: var(--text); font-size: 13px; }
+    .field-input:invalid:not(:placeholder-shown) { border-color: #bd675d; }
+    .pairing-fields { display: grid; grid-template-columns: 1fr 1.4fr; gap: 10px; margin-bottom: 18px; }
+    .demo-label { color: var(--blue); font-size: 10px; padding: 8px 10px; border-radius: 8px; background: var(--blue-soft); line-height: 1.7; }
+    .form-error { color: #bd675d; font-size: 11px; line-height: 1.8; margin: 10px 0; }
+    .toast { position: absolute; left: 20px; right: 20px; bottom: 91px; background: var(--text); color: var(--app-bg); padding: 12px 15px; border-radius: 13px; font-size: 11px; text-align: center; z-index: 30; box-shadow: 0 5px 24px #0002; pointer-events: none; }
+    .toast[hidden] { display: none; }
+    .preview-footer { max-width: 1212px; padding: 26px 4px 32px; margin: auto; display: flex; gap: 20px; justify-content: space-between; align-items: start; color: var(--muted); font-size: 10px; line-height: 1.9; }
+    .preview-footer p { margin: 0; }
+    .preview-footer a { text-decoration-color: var(--line); }
+    .preview-footer .refs { display: flex; gap: 15px; }
+    .mobile-picker { display: none; }
+    .reference-dialog { max-width: 560px; width: calc(100% - 36px); border: 1px solid var(--line); border-radius: 23px; background: var(--paper); color: var(--ink); padding: 26px; }
+    .reference-dialog::backdrop { background: #17233377; backdrop-filter: blur(5px); }
+    .reference-dialog h2 { margin: 0; font-size: 20px; }
+    .reference-dialog p { font-size: 12px; color: var(--muted); line-height: 1.9; }
+    .reference-dialog ul { padding-left: 18px; font-size: 12px; line-height: 2; }
+    .reference-dialog li { margin: 14px 0; }
+    .reference-dialog small { display: block; font-size: 11px; color: var(--muted); }
+    @media (max-width: 1320px) {
+      .intro, .board, .preview-footer { margin-left: 44px; margin-right: 44px; }
+      .board { gap: 24px; }
+    }
+    @media (min-width: 1500px) { .preview-header { padding-top: 45px; } .intro { margin-top: 27px; margin-bottom: 34px; } }
+    @media (min-width: 741px) and (max-width: 1080px) {
+      .preview-header { padding: 25px 24px; }
+      .intro, .board, .preview-footer { margin-left: 24px; margin-right: 24px; }
+      .board { grid-template-columns: repeat(3, 342px); overflow-x: auto; padding: 1px 1px 28px; scrollbar-width: thin; }
+      .device { height: 760px; }
+      .intro h1 { font-size: 27px; }
+      .preview-note { display: none; }
+    }
+    @media (max-width: 740px) {
+      .preview-header { padding: 19px 20px; gap: 8px; }
+      .brand-icon { width: 34px; height: 34px; border-radius: 10px; }
+      .brand { gap: 9px; }
+      .brand strong { font-size: 14px; }
+      .brand small { font-size: 9px; }
+      .preview-button { display: none; }
+      .theme-control button { padding: 8px; font-size: 0; }
+      .theme-control .icon { width: 17px; height: 17px; }
+      .intro { margin: 15px 24px 20px; }
+      .intro h1 { font-size: 25px; margin-bottom: 8px; }
+      .intro p { font-size: 11px; }
+      .preview-note { display: none; }
+      .mobile-picker { display: flex; gap: 7px; margin: 0 24px 19px; }
+      .mobile-picker button { min-height: 37px; border-radius: 10px; padding: 9px 14px; font-size: 11px; color: var(--muted); }
+      .mobile-picker button[aria-pressed="true"] { background: var(--ink); color: var(--canvas); }
+      .board { display: block; margin: 0 auto; padding: 0 20px; max-width: 430px; }
+      .device-column { display: none; }
+      .device-column.mobile-active { display: block; }
+      .device-caption { display: none; }
+      .device { height: 782px; }
+      .preview-footer { margin: 0 25px; flex-direction: column; gap: 10px; padding-top: 23px; }
+    }
+    @media (prefers-reduced-motion: reduce) { *, *::after { transition: none !important; scroll-behavior: auto !important; } }
+  </style>
+</head>
+<body>
+  <svg class="svg-library" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs>
+    <symbol id="i-home" viewBox="0 0 24 24"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3 3.5 6v6c0 5 8.5 9 8.5 9s8.5-4 8.5-9V6z"/><path d="m8.5 12 2.4 2.4 4.7-5"/></symbol>
+    <symbol id="i-apps" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/></symbol>
+    <symbol id="i-cpu" viewBox="0 0 24 24"><rect x="5" y="5" width="14" height="14" rx="3"/><rect x="9" y="9" width="6" height="6" rx="1"/><path d="M9 2v3m6-3v3M9 19v3m6-3v3M2 9h3m-3 6h3m14-6h3m-3 6h3"/></symbol>
+    <symbol id="i-settings" viewBox="0 0 24 24"><path d="m9.2 3-.6 2.1-2 .9-2-.5-2 3.5L4 10.5v3L2.6 15l2 3.5 2-.5 2 .9.6 2.1h5.6l.6-2.1 2-.9 2 .5 2-3.5-1.4-1.5v-3L21.4 9l-2-3.5-2 .5-2-.9-.6-2.1z"/><circle cx="12" cy="12" r="3"/></symbol>
+    <symbol id="i-wifi" viewBox="0 0 24 24"><path d="M2 8a16 16 0 0 1 20 0M5 12a11 11 0 0 1 14 0M8.5 16a5.5 5.5 0 0 1 7 0"/><circle cx="12" cy="20" r=".7" fill="currentColor" stroke="none"/></symbol>
+    <symbol id="i-terminal" viewBox="0 0 24 24"><rect x="2.5" y="4" width="19" height="16" rx="3"/><path d="m7 9 3 3-3 3m6 0h4"/></symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24"><rect x="6" y="2" width="12" height="20" rx="3"/><path d="M10 5h4m-3 14h2"/></symbol>
+    <symbol id="i-chevron" viewBox="0 0 24 24"><path d="m9 5 7 7-7 7"/></symbol>
+    <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v6m0-10v.1"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></symbol>
+    <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M20 10a8 8 0 1 0-1.5 7M20 4v6h-6"/></symbol>
+    <symbol id="i-file" viewBox="0 0 24 24"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M13 2v7h7M8 13h8m-8 4h5"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20.5 14A9 9 0 0 1 10 3.5 9 9 0 1 0 20.5 14Z"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="m6 6 12 12M6 18 18 6"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></symbol>
+    <symbol id="i-check-circle" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/></symbol>
+    <symbol id="i-signal" viewBox="0 0 24 24"><path d="M4 19v-3m5 3v-6m5 6V9m5 10V5" stroke-width="3"/></symbol>
+    <symbol id="i-sliders" viewBox="0 0 24 24"><path d="M3 6h9m4 0h5M3 18h3m4 0h11"/><circle cx="14" cy="6" r="2"/><circle cx="8" cy="18" r="2"/></symbol>
+    <symbol id="i-link" viewBox="0 0 24 24"><path d="m10 14 4-4m-6 5-1 1a4 4 0 0 1-6-6l5-5a4 4 0 0 1 6 0m0 4 1-1a4 4 0 0 1 6 6l-5 5a4 4 0 0 1-6 0" transform="translate(1 1)"/></symbol>
+    <symbol id="i-folder" viewBox="0 0 24 24"><path d="M3 7V5a2 2 0 0 1 2-2h5l2 3h7a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></symbol>
+    <symbol id="i-mouse" viewBox="0 0 24 24"><path d="m6 3 13 10-6 1-3 6z"/></symbol>
+    <symbol id="i-code" viewBox="0 0 24 24"><path d="m8 6-6 6 6 6m8-12 6 6-6 6m-3-15-2 18"/></symbol>
+  </defs></svg>
+
+  <header class="preview-header">
+    <div class="brand"><img class="brand-icon" src="app-icon.svg" alt=""><div><strong>彳亍工具箱</strong><small>Android UI · 设计预览 01</small></div></div>
+    <div class="preview-actions">
+      <button class="preview-button" id="show-references"><svg class="icon"><use href="#i-link"/></svg>参考与设计说明</button>
+      <div class="theme-control" aria-label="预览主题">
+        <button data-set-theme="light" aria-pressed="true"><svg class="icon"><use href="#i-sun"/></svg>浅色</button>
+        <button data-set-theme="dark" aria-pressed="false"><svg class="icon"><use href="#i-moon"/></svg>深色</button>
+      </div>
+    </div>
+  </header>
+  <main>
+    <section class="intro" aria-label="设计方向">
+      <div><h1>工具归位，状态先行。</h1><p>沿用 miuix 的原生秩序，让服务、授权和设备信息各就其位。</p></div>
+      <div class="preview-note"><svg class="icon"><use href="#i-mouse"/></svg>可切换页面、点击列表与底部导航</div>
+    </section>
+    <nav class="mobile-picker" aria-label="选择预览屏幕">
+      <button data-preview="0" aria-pressed="true">权限服务</button><button data-preview="1" aria-pressed="false">应用授权</button><button data-preview="2" aria-pressed="false">设备诊断</button>
+    </nav>
+    <section class="board" aria-label="交互式手机预览">
+      <article class="device-column mobile-active"><div class="device-caption"><h2>权限服务</h2><span>连接状态 / 激活入口</span></div><div class="device" data-device="0"></div></article>
+      <article class="device-column"><div class="device-caption"><h2>应用授权</h2><span>搜索 / 授权管理</span></div><div class="device" data-device="1"></div></article>
+      <article class="device-column"><div class="device-caption"><h2>设备诊断</h2><span>只读信息 / 配置校验</span></div><div class="device" data-device="2"></div></article>
+    </section>
+  </main>
+  <footer class="preview-footer">
+    <p>设计参考：miuix 的大标题与分组列表，KernelSU 的状态卡，GhostLock 的底部弹层。<br>本页为交互 mock，设备、应用及服务状态均为演示数据。</p>
+    <div class="refs"><a href="https://compose-miuix-ui.github.io/miuix-wasmJs/" target="_blank" rel="noreferrer">miuix 官方示例</a><a href="https://github.com/tiann/KernelSU" target="_blank" rel="noreferrer">KernelSU</a><a href="https://github.com/YuKongA/ghostlock-app" target="_blank" rel="noreferrer">GhostLock</a></div>
+  </footer>
+  <dialog class="reference-dialog" id="reference-dialog" aria-labelledby="reference-title">
+    <div class="sheet-header"><h2 id="reference-title">参考与设计说明</h2><button class="icon-button" id="close-references" aria-label="关闭设计说明"><svg class="icon"><use href="#i-close"/></svg></button></div>
+    <p>以现有 Android 客户端为基础，保留「权限服务、应用授权、设备诊断、设置」四个入口。</p>
+    <ul>
+      <li><a href="https://compose-miuix-ui.github.io/miuix-wasmJs/" target="_blank" rel="noreferrer">miuix 官方示例</a><small>浅灰背景、白色圆角分组、大标题、蓝色主操作和单色底栏。</small></li>
+      <li>KernelSU Manager · HomeMiuix.kt<small>状态卡优先。采用浅绿连接状态卡与单一主操作，明确 Shell 身份。</small></li>
+      <li>GhostLock · GhostlockUI.kt<small>折叠信息层级、分组设置与底部弹层，避免在首页堆积操作说明。</small></li>
+      <li>Shizuku · home_start_wireless_adb.xml<small>保留无线调试和电脑 ADB 两个激活入口，离线时将激活设为主操作。</small></li>
+    </ul>
+    <p>视觉规格：背景 #F6F6F6、卡片 #FFFFFF、正文 #17191C、辅助文字 #777B83、主色 #3482FF、连接状态 #E0F5E7。中文优先使用系统字体；12px 页面边距、20px 分组圆角、30px 页面标题。</p>
+  </dialog>
+
+  <script>
+    const icon = (name, cls = '') => `<svg class="icon ${cls}" aria-hidden="true"><use href="#i-${name}"/></svg>`;
+    const escapeHtml = value => String(value).replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
+    const apps = [
+      { name: 'App Ops', pkg: 'rikka.appops', icon: 'sliders', color: 'blue', grant: 'allowed', uid: '10256' },
+      { name: '冰箱', pkg: 'com.catchingnow.icebox', icon: 'apps', color: 'teal', grant: 'allowed', uid: '10341' },
+      { name: '安装狮', pkg: 'com.modosa.apkinstaller', icon: 'folder', color: 'orange', grant: 'allowed', uid: '10428' },
+      { name: 'aShell', pkg: 'in.sunilpaulmathew.ashell', icon: 'terminal', color: 'slate', grant: 'ask', uid: '10502' },
+      { name: '权限测试客户端', pkg: 'com.chichu.toolbox.sdkclient', icon: 'code', color: 'purple', grant: 'denied', uid: '10513' }
+    ];
+    const grantNames = { allowed: '已允许', ask: '待询问', denied: '已拒绝' };
+    const pages = [{ key: 'service', label: '权限服务', icon: 'home' }, { key: 'apps', label: '应用授权', icon: 'apps' }, { key: 'diagnostics', label: '设备诊断', icon: 'cpu' }, { key: 'settings', label: '设置', icon: 'settings' }];
+    const states = Array.from({ length: 3 }, (_, index) => ({ page: pages[index].key, filter: 'all', query: '', connected: true, dynamic: false, timer: null, returnFocus: null }));
+    const devices = [...document.querySelectorAll('.device')];
+    function row(title, subtitle, name, action, end = '') {
+      return `<button class="row" data-action="${action}">${name ? `<span class="row-icon">${icon(name)}</span>` : ''}<span class="row-copy"><span class="row-title">${title}</span>${subtitle ? `<span class="row-subtitle">${subtitle}</span>` : ''}</span>${end || icon('chevron', 'chevron')}</button>`;
+    }
+    function header(title, action = 'help', actionIcon = 'info') {
+      return `<header class="app-header"><div class="app-topline"><span class="app-name">彳亍工具箱</span><button class="icon-button" data-action="${action}" aria-label="${action === 'refresh' ? '刷新当前页面' : '查看页面说明'}">${icon(actionIcon)}</button></div><h2 class="app-title">${title}</h2></header>`;
+    }
+    function servicePage(state) {
+      return `${header('权限服务')}<div class="app-content">
+        <div class="status-card ${state.connected ? '' : 'offline'}"><div class="status-heading">${state.connected ? '内置权限服务' : '服务离线'}</div><h3>${state.connected ? '已连接' : '尚未激活'}</h3><p>${state.connected ? '服务运行正常，应用可请求 Shell 权限' : '激活后，即可管理应用的 Shell 权限'}</p><div class="status-watermark">${icon(state.connected ? 'check-circle' : 'shield')}</div><div class="status-card-bottom"><span>${state.connected ? 'Shizuku API 13' : '支持无线调试与电脑 ADB'}</span><span class="mini-tag">${state.connected ? 'Shell · UID 2000' : 'Shell 权限'}</span></div></div>
+        <button class="primary-button status-action" data-action="${state.connected ? 'manage' : 'wireless'}">${icon(state.connected ? 'apps' : 'wifi')}${state.connected ? '管理应用授权' : '无线调试激活'}</button>
+        <div class="group-label">激活与连接</div><div class="card">${row('无线调试', '无需电脑，在本机配对并激活', 'wifi', 'wireless')}${row('电脑 ADB', '通过 USB 连接电脑激活', 'terminal', 'adb')}${row('启动日志', '查看本次服务的连接记录', 'file', 'logs')}</div>
+        <p class="footnote">提供 Shell 权限；重启设备后需要重新激活。</p>
+        <div class="group-label">当前设备</div><div class="card"><button class="row" data-action="diagnostics"><span class="row-icon">${icon('phone')}</span><span class="row-copy"><span class="row-title">Google Pixel 9 Pro</span><span class="row-subtitle">Android 16 · API 36 · arm64</span></span>${icon('chevron', 'chevron')}</button></div>
+        <p class="footnote">已安装原版 Shizuku，运行状态未确认。<button style="color:var(--blue);font-size:inherit;padding:0" data-action="coexist">了解共存方式</button></p>
+      </div>`;
+    }
+    function applicationRows(state) {
+      const list = apps.filter(app => (state.filter === 'all' || app.grant === state.filter) && `${app.name} ${app.pkg}`.toLowerCase().includes(state.query.toLowerCase()));
+      if (!list.length) return `<div class="empty-state">${icon('search')}<div>没有匹配的应用</div><p>试试其他名称，或切换授权筛选。</p></div>`;
+      return list.map(app => `<button class="row" data-action="grant" data-pkg="${app.pkg}"><span class="app-icon ${app.color}">${icon(app.icon)}</span><span class="row-copy"><span class="row-title">${app.name}</span><span class="row-subtitle">${app.pkg}</span></span><span class="app-status ${app.grant}">${grantNames[app.grant]}</span></button>`).join('');
+    }
+    function appsPage(state) {
+      if (!state.connected) return `${header('应用授权')}<div class="app-content"><div class="card empty-state">${icon('shield')}<div>请先激活权限服务</div><p>服务离线，暂时无法读取或管理授权。<br>这不表示没有应用。</p><button class="primary-button" data-action="activate">前往激活</button></div></div>`;
+      return `${header('应用授权', 'refresh', 'refresh')}<div class="app-content"><label class="searchbox">${icon('search')}<input type="search" placeholder="搜索应用名称或包名" aria-label="搜索应用名称或包名" value="${escapeHtml(state.query)}"></label><div class="filter-tabs" aria-label="授权状态筛选">${[['all','全部'],['allowed','已允许'],['ask','待询问'],['denied','已拒绝']].map(([key,label]) => `<button class="filter-tab" data-filter="${key}" aria-pressed="${state.filter === key}">${label}</button>`).join('')}</div><div class="section-topline"><span>Shell 权限</span><span>${apps.length} 个应用 · ${apps.filter(app => app.grant === 'allowed').length} 个已允许</span></div><div class="card list-card" data-app-list>${applicationRows(state)}</div><div class="info-banner">${icon('info')}<span>点击应用管理授权。同一 UID 下的应用共享授权状态；Shell 授权与 Root 权限相互独立。</span></div></div>`;
+    }
+    function diagnosticsPage() {
+      return `${header('设备诊断', 'refresh', 'refresh')}<div class="app-content"><div class="card diagnostic-header"><div class="model-icon">${icon('phone')}</div><h3>Pixel 9 Pro</h3><p>Google · caiman</p><div class="spec-grid"><div><small>Android 版本</small><strong>Android 16</strong></div><div><small>API 级别</small><strong>36</strong></div><div><small>安全补丁</small><strong>2026-10-05</strong></div><div><small>处理器架构</small><strong>arm64-v8a</strong></div></div></div><div class="group-label">内核与系统</div><div class="card"><div class="kernel-block"><small>内核版本</small><code>6.1.157-android14-11</code><p>aarch64 · Linux</p></div>${row('完整系统信息', '构建指纹、内核原文与应用 UID', 'cpu', 'system-info')}</div><div class="group-label">本地内核配置</div><div class="card">${row('导入配置文件', '支持 .config / .config.gz', 'file', 'import-config')}</div><p class="footnote">仅校验文本格式，不修改源文件。</p><div class="group-label">运行能力 <span>未探测</span></div><div class="card"><div class="row compact-row"><span class="row-copy"><span class="row-title">设备 Root 状态</span></span><span class="quiet-tag">未探测</span></div><div class="row compact-row"><span class="row-copy"><span class="row-title">KernelSU 管理通道</span></span><span class="quiet-tag">未探测</span></div></div><p class="footnote">设备信息与配置格式不代表 Root 能力或内核兼容性。</p></div>`;
+    }
+    function settingsPage(state) {
+      return `${header('设置')}<div class="app-content"><div class="settings-brand"><img src="app-icon.svg" alt="工具箱图标"><h3>彳亍工具箱</h3><p>0.1.0 · Android</p></div><div class="group-label">外观</div><div class="card">${row('主题', document.documentElement.dataset.theme === 'dark' ? '深色' : '浅色', 'sun', 'theme')}<button class="row" role="switch" aria-checked="${state.dynamic}" data-action="dynamic"><span class="row-icon">${icon('sliders')}</span><span class="row-copy"><span class="row-title">动态配色</span><span class="row-subtitle">跟随系统壁纸配色</span></span><span class="switch"></span></button></div><div class="group-label">服务</div><div class="card">${row('Shell 与 Root', '了解两种权限的区别', 'shield', 'permissions')}${row('与原版 Shizuku 共存', '独立服务与独立授权', 'link', 'coexist')}</div><div class="group-label">关于</div><div class="card">${row('开源许可证', 'Shizuku、miuix 与其他依赖', 'code', 'licenses')}${row('预览状态', '切换已连接 / 未激活演示', 'refresh', 'toggle-service')}</div><p class="footnote">当前为 UI 设计演示，设置只影响本次预览。</p></div>`;
+    }
+    function renderDevice(index) {
+      const state = states[index];
+      const content = state.page === 'service' ? servicePage(state) : state.page === 'apps' ? appsPage(state) : state.page === 'diagnostics' ? diagnosticsPage() : settingsPage(state);
+      devices[index].innerHTML = `<div class="statusbar" aria-hidden="true"><span>09:41</span><div class="status-icons">${icon('signal')}${icon('wifi')}<span class="battery">82</span></div></div><div class="screen-scroll">${content}</div><nav class="app-nav" aria-label="第 ${index + 1} 屏应用导航">${pages.map(page => `<button class="nav-item" data-page="${page.key}" ${page.key === state.page ? 'aria-current="page"' : ''}>${icon(page.icon)}<span>${page.label}</span></button>`).join('')}</nav><div class="local-overlay" hidden><section class="sheet" role="dialog" aria-modal="true" aria-label="详情"><div class="sheet-grip"></div><div class="sheet-header"><h3 data-sheet-title></h3><button class="icon-button" data-action="close-sheet" aria-label="关闭弹层">${icon('close')}</button></div><div data-sheet-body></div></section></div><div class="toast" role="status" hidden></div>`;
+    }
+    function navigate(index, page) { states[index].page = page; renderDevice(index); }
+    function toast(index, text) {
+      const target = devices[index].querySelector('.toast');
+      clearTimeout(states[index].timer); target.textContent = text; target.hidden = false;
+      states[index].timer = setTimeout(() => { target.hidden = true; }, 3000);
+    }
+    function openSheet(index, title, body) {
+      const device = devices[index];
+      if (device.querySelector('.local-overlay').hidden) states[index].returnFocus = document.activeElement;
+      device.querySelector('[data-sheet-title]').textContent = title;
+      device.querySelector('[data-sheet-body]').innerHTML = body;
+      device.querySelector('.sheet').setAttribute('aria-label', title);
+      device.querySelector('.local-overlay').hidden = false;
+      device.querySelector('.screen-scroll').inert = true;
+      device.querySelector('.app-nav').inert = true;
+      device.querySelector('[data-action="close-sheet"]').focus({ preventScroll: true });
+    }
+    function closeSheet(index) {
+      const device = devices[index];
+      device.querySelector('.local-overlay').hidden = true;
+      device.querySelector('.screen-scroll').inert = false;
+      device.querySelector('.app-nav').inert = false;
+      const previous = states[index].returnFocus;
+      if (previous?.isConnected) previous.focus({ preventScroll: true });
+    }
+    function setTheme(theme) {
+      document.documentElement.dataset.theme = theme;
+      document.querySelectorAll('[data-set-theme]').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.setTheme === theme)));
+      states.forEach((state, index) => { if (state.page === 'settings') renderDevice(index); });
+    }
+    function handleAction(index, action, button) {
+      const state = states[index];
+      if (action === 'close-sheet') return closeSheet(index);
+      if (action === 'manage') return navigate(index, 'apps');
+      if (action === 'diagnostics') return navigate(index, 'diagnostics');
+      if (action === 'activate') return navigate(index, 'service');
+      if (action === 'refresh') return toast(index, '演示数据已刷新');
+      if (action === 'toggle-service') { state.connected = !state.connected; navigate(index, 'service'); return; }
+      if (action === 'wireless') return openSheet(index, '无线调试激活', `<div class="demo-label">交互演示 · 不连接真实设备</div><div class="step"><span class="step-number">1</span><div><strong>开启无线调试</strong><p>在开发者选项中开启无线调试，选择「使用配对码配对设备」。</p></div></div><button class="secondary-button" data-action="system-settings">打开开发者选项 ${icon('chevron', 'chevron')}</button><div class="step"><span class="step-number">2</span><div><strong>输入配对信息</strong><p>配对端口与连接端口不同，请使用配对弹窗中的信息。</p></div></div><form data-pair-form><div class="pairing-fields"><label><span class="field-label">配对端口</span><input class="field-input" name="port" inputmode="numeric" placeholder="端口" pattern="[0-9]{1,5}" required aria-label="配对端口"></label><label><span class="field-label">六位配对码</span><input class="field-input" name="code" inputmode="numeric" placeholder="六位数字" pattern="[0-9]{6}" maxlength="6" required autocomplete="off" aria-label="六位配对码"></label></div><p class="form-error" data-form-error hidden></p><button class="primary-button" type="submit">预览配对流程</button></form>`);
+      if (action === 'system-settings') return toast(index, '原生应用中将打开系统开发者选项');
+      if (action === 'demo-connect') { closeSheet(index); state.connected = true; navigate(index, 'service'); return toast(index, '演示状态：已连接'); }
+      if (action === 'adb') return openSheet(index, '电脑 ADB 激活', `<div class="demo-label">命令区域为设计占位，不包含真实设备路径。</div><div class="step"><span class="step-number">1</span><div><strong>连接电脑</strong><p>启用 USB 调试，并在手机上确认电脑的调试授权。</p></div></div><div class="step"><span class="step-number">2</span><div><strong>复制并执行激活命令</strong><p>正式应用将根据当前 APK 安装路径生成真实命令。</p></div></div><div class="card kernel-block"><code>adb shell &lt;当前安装路径&gt;/lib/arm64/libchichu_starter.so</code></div><button class="primary-button" data-action="demo-command">复制激活命令</button><p class="sheet-copy">执行后返回工具箱，以收到内置服务连接为准。</p>`);
+      if (action === 'demo-command') return toast(index, '这里是命令占位，正式应用会复制真实激活命令');
+      if (action === 'logs') return openSheet(index, '启动日志', `<div class="demo-label">以下为演示连接记录</div><div class="card kernel-block"><code>正在等待内置服务…<br>服务身份校验通过<br>Binder 连接已建立<br>运行身份：uid=2000(shell)<br>Shizuku API：13<br>服务已就绪</code></div><button class="secondary-button" data-action="copy-logs">复制演示日志</button>`);
+      if (action === 'copy-logs') {
+        if (!navigator.clipboard) return toast(index, '当前浏览器不支持剪贴板，可选择日志文本复制');
+        navigator.clipboard.writeText('演示日志：服务身份校验通过，Binder 已连接，uid=2000(shell)，API 13。').then(() => toast(index, '演示日志已复制')).catch(() => toast(index, '无法访问剪贴板，可选择日志文本复制')); return;
+      }
+      if (action === 'grant') {
+        const app = apps.find(item => item.pkg === button.dataset.pkg);
+        return openSheet(index, '管理 Shell 授权', `<div style="display:flex;gap:12px;align-items:center;margin:20px 0"><span class="app-icon ${app.color}">${icon(app.icon)}</span><div class="row-copy"><strong class="row-title">${app.name}</strong><span class="row-subtitle">${app.pkg}<br>UID ${app.uid}</span></div></div><p class="sheet-copy">当前状态：${grantNames[app.grant]}。此授权仅提供 Shell 权限，同一 UID 下的应用会一并生效。</p><button class="primary-button" data-action="set-grant" data-pkg="${app.pkg}" data-grant="allowed">允许 Shell 权限</button><button class="secondary-button" data-action="set-grant" data-pkg="${app.pkg}" data-grant="denied">拒绝</button><button class="secondary-button" data-action="set-grant" data-pkg="${app.pkg}" data-grant="ask">撤销并恢复询问</button><p class="footnote">仅更改本页面的演示数据。</p>`);
+      }
+      if (action === 'set-grant') {
+        const app = apps.find(item => item.pkg === button.dataset.pkg); app.grant = button.dataset.grant;
+        closeSheet(index);
+        states.forEach((item, current) => { if (item.page === 'apps') renderDevice(current); });
+        return toast(index, `演示授权已更新：${app.name}${grantNames[app.grant]}`);
+      }
+      if (action === 'system-info') return openSheet(index, '完整系统信息', `<div class="demo-label">设备信息为演示数据</div><div class="card kernel-block"><small>设备</small><code>Google Pixel 9 Pro / caiman</code><small>完整内核版本</small><code>6.1.157-android14-11<br>#1 SMP PREEMPT aarch64</code><small>构建指纹</small><code>google/caiman/caiman:16/BP2A.251005.001/0000000:user/release-keys</code><small>本应用进程 UID</small><code>10512</code></div><p class="sheet-copy">应用 UID 不代表设备是否具有 Root 权限。</p>`);
+      if (action === 'import-config') return openSheet(index, '本地内核配置', `<p class="sheet-copy">正式应用会打开系统文件选择器，支持 .config / .config.gz，原文件与解压文本均限 2 MiB。</p><div class="card">${row('预览校验结果', '查看导入成功后的信息布局', 'file', 'config-result')}</div><p class="sheet-copy">导入仅检查文本格式，不修改源文件。格式有效不代表当前设备或内核受支持。</p>`);
+      if (action === 'config-result') return openSheet(index, '配置校验结果', `<div class="demo-label">预设的演示结果，未读取任何文件</div><div class="card kernel-block"><div style="color:var(--green);display:flex;gap:7px;align-items:center">${icon('check-circle')}<strong style="font-size:14px">配置文本格式有效</strong></div><div class="spec-grid"><div><small>配置项</small><strong>6,248 项</strong></div><div><small>文本大小</small><strong>184 KiB</strong></div><div><small>内建 / 模块</small><strong>3,621 / 482</strong></div><div><small>禁用 / 其他值</small><strong>1,905 / 240</strong></div></div></div><p class="sheet-copy">正式界面还会显示解压后原始字节的 SHA-256。此预览不生成虚构的校验值。</p>`);
+      if (action === 'theme') return openSheet(index, '选择主题', `<div class="card">${row('浅色', '浅灰背景与白色分组', 'sun', 'theme-light')}${row('深色', '黑色背景与深灰分组', 'moon', 'theme-dark')}</div>`);
+      if (action.startsWith('theme-')) { closeSheet(index); return setTheme(action.slice(6)); }
+      if (action === 'dynamic') { state.dynamic = !state.dynamic; renderDevice(index); return toast(index, state.dynamic ? '已开启演示选项；实际配色由 Android 壁纸提供' : '动态配色演示选项已关闭'); }
+      if (action === 'coexist') return openSheet(index, '与原版 Shizuku 共存', `<p class="sheet-copy">工具箱使用独立的内置服务与授权配置，不自动停止或接管原版服务。</p><div class="card kernel-block"><strong class="row-title">已安装原版 Shizuku</strong><p style="margin-top:8px">尚未确认原版服务是否运行。安装状态不等于运行状态；第三方应用的连接归属需按实际连接情况检查。</p></div>`);
+      if (action === 'permissions') return openSheet(index, 'Shell 与 Root', `<div class="card kernel-block"><strong class="row-title">Shell 权限</strong><p style="margin-top:6px">通过 ADB 激活，运行身份为 UID 2000。用于支持 Shizuku API 的应用。</p></div><div class="card kernel-block"><strong class="row-title">Root 权限</strong><p style="margin-top:6px">独立的设备能力，需要单独检测与管理。Shell 授权不会授予 Root。</p></div>`);
+      if (action === 'licenses') return openSheet(index, '开源许可证', `<p class="sheet-copy">正式应用提供完整许可证与固定版本信息。当前展示分组布局。</p><div class="card">${row('Shizuku / Shizuku API', 'Apache License 2.0', 'code', 'license-detail')}${row('miuix', 'Apache License 2.0', 'code', 'license-detail')}</div>`);
+      if (action === 'license-detail') return toast(index, '完整许可证请查看仓库 third_party/licenses');
+      if (action === 'help') return openSheet(index, '页面说明', `<p class="sheet-copy">${state.page === 'service' ? '首页优先显示服务状态，激活说明按需放在底部弹层中。' : '使用分组设置调整外观、查看服务说明和版本信息。'}</p><div class="card">${row('切换连接状态', '预览未激活与已连接两种状态', 'refresh', 'toggle-service')}${row('Shell 与 Root', '两种权限独立管理', 'shield', 'permissions')}</div>`);
+    }
+    devices.forEach((device, index) => {
+      renderDevice(index);
+      device.addEventListener('click', event => {
+        if (event.target.classList.contains('local-overlay')) return closeSheet(index);
+        const button = event.target.closest('button'); if (!button) return;
+        if (button.dataset.page) return navigate(index, button.dataset.page);
+        if (button.dataset.filter) {
+          states[index].filter = button.dataset.filter;
+          device.querySelectorAll('[data-filter]').forEach(item => item.setAttribute('aria-pressed', String(item === button)));
+          device.querySelector('[data-app-list]').innerHTML = applicationRows(states[index]); return;
+        }
+        if (button.dataset.action) handleAction(index, button.dataset.action, button);
+      });
+      device.addEventListener('input', event => {
+        if (event.target.type === 'search') { states[index].query = event.target.value; device.querySelector('[data-app-list]').innerHTML = applicationRows(states[index]); }
+      });
+      device.addEventListener('submit', event => {
+        if (!event.target.matches('[data-pair-form]')) return;
+        event.preventDefault();
+        const form = new FormData(event.target); const port = Number(form.get('port'));
+        if (port < 1 || port > 65535) { const error = event.target.querySelector('[data-form-error]'); error.textContent = '请输入 1–65535 之间的端口号。'; error.hidden = false; return; }
+        openSheet(index, '配对成功', `<div class="empty-state">${icon('check-circle')}<div>演示设备已配对</div><p>正式应用会继续发现连接端口，并启动内置服务。<br>收到且校验 Binder 后才显示已连接。</p></div><button class="primary-button" data-action="demo-connect">预览已连接状态</button>`);
+      });
+      device.addEventListener('keydown', event => {
+        const overlay = device.querySelector('.local-overlay'); if (overlay.hidden) return;
+        if (event.key === 'Escape') { event.preventDefault(); closeSheet(index); }
+        if (event.key === 'Tab') {
+          const focusables = [...overlay.querySelectorAll('button, input, a[href]')].filter(element => !element.disabled);
+          const first = focusables[0], last = focusables[focusables.length - 1];
+          if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
+          else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
+        }
+      });
+    });
+    document.querySelectorAll('[data-set-theme]').forEach(button => button.addEventListener('click', () => setTheme(button.dataset.setTheme)));
+    document.querySelectorAll('[data-preview]').forEach(button => button.addEventListener('click', () => {
+      document.querySelectorAll('[data-preview]').forEach(item => item.setAttribute('aria-pressed', String(item === button)));
+      document.querySelectorAll('.device-column').forEach((column, index) => column.classList.toggle('mobile-active', index === Number(button.dataset.preview)));
+    }));
+    const referenceDialog = document.getElementById('reference-dialog');
+    document.getElementById('show-references').addEventListener('click', () => referenceDialog.showModal());
+    document.getElementById('close-references').addEventListener('click', () => referenceDialog.close());
+    referenceDialog.addEventListener('click', event => { if (event.target === referenceDialog) { const box = referenceDialog.getBoundingClientRect(); if (event.clientX < box.left || event.clientX > box.right || event.clientY < box.top || event.clientY > box.bottom) referenceDialog.close(); } });
+  </script>
+</body>
+</html>

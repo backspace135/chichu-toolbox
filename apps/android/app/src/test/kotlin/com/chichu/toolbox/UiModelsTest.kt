@@ -29,6 +29,6 @@ class UiModelsTest {
         assertEquals(apps, apps.matching("  "))
         assertTrue(apps.matching("不存在").isEmpty())
         assertEquals("已拒绝", ShellGrant.Denied.label)
-        assertEquals("未授权", ShellGrant.Ask.label)
+        assertEquals("待询问", ShellGrant.Ask.label)
     }
 }
