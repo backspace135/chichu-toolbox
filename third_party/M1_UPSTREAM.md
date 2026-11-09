@@ -7,7 +7,7 @@
 | 官方公开 API/provider | Maven `dev.rikka.shizuku:api:13.1.5`、`provider:13.1.5` | MIT |
 | miuix | Maven `top.yukonga.miuix.kmp:*:0.9.4` | Apache-2.0 |
 
-移植到 `core/shizuku/src/main` 的范围：Shizuku 的 server、starter、common，以及 Shizuku-API 的未发布 server-shared、rish；native 部分来自 manager JNI 和 rish CPP。无线调试移植 manager/adb 下的 AdbClient、AdbPairingClient、AdbKey、AdbMessage、AdbProtocol、AdbException 六个 Kotlin 文件，保留 JNI 关联包名。公开 api、aidl、shared、provider 不复制，沿用 Maven 传递依赖。
+移植到 `apps/android/core/shizuku/src/main` 的范围：Shizuku 的 server、starter、common，以及 Shizuku-API 的未发布 server-shared、rish；native 部分来自 manager JNI 和 rish CPP。无线调试移植 manager/adb 下的 AdbClient、AdbPairingClient、AdbKey、AdbMessage、AdbProtocol、AdbException 六个 Kotlin 文件，保留 JNI 关联包名。公开 api、aidl、shared、provider 不复制，沿用 Maven 传递依赖。
 
 许可文本保存在 `licenses/`。未修改的上游注释保持原样；本项目新增代码注释使用中文。
 
@@ -26,4 +26,4 @@
 
 ## 验证状态
 
-本地完整构建、测试和 lint 已通过，Android 12 已完成电脑激活、官方 SDK 基本授权和 UserService 验收。无线与共存矩阵仍未验证。MediaTek UserService 增加缺失绑定身份初始化，避免空进程名导致 OEM 资源优化崩溃。详细证据见 `docs/M1_VALIDATION_RESULTS.md`，本文件不代表全量验收已完成。
+本地完整构建、测试和 lint 已通过，Android 12 已完成电脑激活、官方 SDK 基本授权和 UserService 验收。无线与共存矩阵仍未验证。MediaTek UserService 增加缺失绑定身份初始化，避免空进程名导致 OEM 资源优化崩溃。详细证据见 [M1_VALIDATION_RESULTS.md](../docs/android/M1_VALIDATION_RESULTS.md)，本文件不代表全量验收已完成。

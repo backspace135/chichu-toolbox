@@ -1,6 +1,6 @@
 # M1 设计：Shizuku 整合
 
-> 2026-11-08 实施修订：纠正早期对独立 dex／start.sh 和 Provider 覆盖行为的假设。固定版本见 [M1_UPSTREAM.md](../third_party/M1_UPSTREAM.md)，实施范围见 issue #2。
+> 2026-11-08 实施修订：纠正早期对独立 dex／start.sh 和 Provider 覆盖行为的假设。固定版本见 [M1_UPSTREAM.md](../../third_party/M1_UPSTREAM.md)，实施范围见 issue #2。
 
 ## Shizuku 的身份与连接机制（源码事实）
 

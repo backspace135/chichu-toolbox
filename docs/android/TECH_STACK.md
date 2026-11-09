@@ -2,6 +2,8 @@
 
 > 2026-11-08 讨论定案，适用于 [issue #1](https://github.com/backspace135/chichu-toolbox/issues/1) 第一阶段全部里程碑（M1–M4）。
 
+Android 工程位于 `apps/android/`；本文中的模块与工程相对路径以该目录为基准。
+
 ## 结论总览
 
 | 层面 | 决定 |
@@ -93,7 +95,7 @@ KernelSU 模块的 WebUI 走 ksu-webui 协议，必须由 WebView 承载。用 C
 
 ## 上游技术栈核查记录
 
-决策依据的本地核查结果（快照见 [third_party/SOURCE_SNAPSHOT.md](../third_party/SOURCE_SNAPSHOT.md)）：
+决策依据的本地核查结果（快照见 [third_party/SOURCE_SNAPSHOT.md](../../third_party/SOURCE_SNAPSHOT.md)）：
 
 | 上游 | 模块结构 | UI 技术栈 | DI | minSdk | 构建版本 |
 | --- | --- | --- | --- | --- | --- |

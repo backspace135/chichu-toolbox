@@ -4,6 +4,8 @@
 
 ## 本地构建
 
+以下命令以 `apps/android/` 为工作目录；下方日志和设备结果是 M1 当时的验证记录。
+
 ```powershell
 .\gradlew.bat testDebugUnitTest :app:assembleDebug lint :app:assembleRelease --continue --no-daemon --console=plain
 .\gradlew.bat -p testing/sdk-client assembleDebug --no-daemon --console=plain
