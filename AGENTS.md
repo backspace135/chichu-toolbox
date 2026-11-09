@@ -19,3 +19,12 @@
 - 原生界面使用真实设备与服务数据；mock 的演示数据、手机外框和预览开关不进入客户端。
 - 改变导航结构、主色体系或页面主操作前，先更新规范并获得用户确认；普通排版和状态补全按现有规范实施。
 - Android 工程位于 `apps/android/`。UI 改动完成后执行 debug/release 构建、lint 和 `testDebugUnitTest`；构建通过不等于真机视觉验收通过。
+
+## 桌面 UI
+
+- 修改桌面界面前，先阅读 `docs/desktop/UI_DESIGN.md`，这是用户确认并固化的 UI 规范。
+- 视觉基准为 `docs/assets/desktop-mantine-mock.html` 与同目录 `desktop-mantine-light.png`、`desktop-mantine-dark.png`、`desktop-mantine-apps.png`、`desktop-mantine-unlock.png`。
+- 使用 Mantine（确认基准 9.8.0）+ Tabler Icons，沿用工作侧栏、顶部设备选择、分组/表格、分步解锁与任务抽屉；主题、令牌和控件默认值集中维护，业务布局使用 CSS Modules。
+- 正式客户端使用真实设备与任务数据，mock 的演示设备、预设终端输出、预览标识与模拟完成按钮不进入客户端。
+- 改变导航、主色体系、页面层级或主操作前，先更新规范和预览并获得用户确认；普通排版修复、无障碍修复和真实状态补全按既有规范实施。
+- Windows、macOS 共用 `apps/desktop/`，macOS 仅支持 Apple Silicon。UI 在两个平台的正式 Tauri 窗口中分别验证；浏览器 mock 和构建通过不代替桌面视觉验收。
