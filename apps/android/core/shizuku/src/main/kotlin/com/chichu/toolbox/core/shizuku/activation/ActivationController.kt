@@ -72,9 +72,9 @@ class ActivationController(context: Context, private val repository: ShizukuRepo
         update(operation, ActivationStage.Connected, "内置服务已连接（Shell UID 2000）")
     }
 
-    private fun startOperation(block: suspend (Long) -> Unit) {
-        val operation = gate.begin() ?: return
-        job = scope.launch(Dispatchers.IO) {
+    private fun startOperation(block: suspend (Long) -> Unit): Job? {
+        val operation = gate.begin() ?: return null
+        return scope.launch(Dispatchers.IO) {
             val watchdog = scope.launch(Dispatchers.Default) {
                 delay(45_000)
                 gate.interrupt(operation)
@@ -87,11 +87,13 @@ class ActivationController(context: Context, private val repository: ShizukuRepo
                 throw error
             } catch (error: Exception) {
                 update(operation, ActivationStage.Failed, error.message ?: "无线调试操作失败")
+            } catch (_: LinkageError) {
+                update(operation, ActivationStage.Failed, "无线调试组件与当前系统不兼容，请使用电脑 ADB 激活")
             } finally {
                 watchdog.cancel()
                 gate.finish(operation)
             }
-        }
+        }.also { job = it }
     }
 
     private fun update(operation: Long, stage: ActivationStage, message: String) {
