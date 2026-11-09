@@ -31,6 +31,7 @@ dependencies {
     api(libs.shizuku.api)
     implementation(libs.shizuku.provider)
     implementation(libs.hidden.compat)
+    implementation(libs.hiddenapibypass)
     compileOnly(libs.hidden.stub)
     implementation(libs.refine.runtime)
     implementation(libs.gson)
