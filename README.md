@@ -38,6 +38,8 @@ APK 输出：`apps/android/app/build/outputs/apk/debug/app-debug.apk`。详细�
 
 - [Android](apps/android/README.md) · [Windows](apps/windows/README.md) · [macOS](apps/macos/README.md)
 - [Android 文档](docs/android/README.md)
+- [Android UI 规范与交互预览](docs/android/UI_DESIGN.md)
+- [M2.5 阶段交付与验证](docs/android/M2_5_PROGRESS.md)
 - [上游源码与来源](third_party/README.md)
 
 未实施或未执行真机验收的能力不代表已经可用；实际验证结果见 [Android M1 验证记录](docs/android/M1_VALIDATION_RESULTS.md)与 [M2 开发记录](docs/android/M2_PROGRESS.md)。

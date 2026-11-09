@@ -8,7 +8,6 @@ import com.chichu.toolbox.core.common.ServiceState
 import com.chichu.toolbox.core.common.ShellGrant
 import com.chichu.toolbox.core.ghostlock.ConfigValidationException
 import com.chichu.toolbox.core.shizuku.PermissionPrompt
-import com.chichu.toolbox.core.shizuku.activation.ActivationController
 import com.chichu.toolbox.core.shizuku.adb.AdbDiscovery
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
@@ -22,7 +21,7 @@ import kotlinx.coroutines.withTimeout
 
 class ToolboxViewModel(private val container: AppContainer) : ViewModel() {
     val service = container.service.state
-    val activation = ActivationController(container.application, container.service, viewModelScope)
+    val activation = container.activation
     val discovery = AdbDiscovery(container.application)
     private val mutableApps = MutableStateFlow(ApplicationsState())
     val applications = mutableApps.asStateFlow()
@@ -184,7 +183,6 @@ class ToolboxViewModel(private val container: AppContainer) : ViewModel() {
     fun clearMessage() { mutableMessage.value = null }
 
     override fun onCleared() {
-        activation.cancel()
         mutablePrompt.value?.let { request ->
             container.applicationScope.launch { runCatching { container.authorization.confirm(request, false) } }
         }

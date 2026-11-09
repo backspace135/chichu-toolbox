@@ -4,6 +4,7 @@ import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
 import com.android.org.conscrypt.Conscrypt
+import org.lsposed.hiddenapibypass.HiddenApiBypass
 import java.io.Closeable
 import java.io.DataInputStream
 import java.io.DataOutputStream
@@ -201,6 +202,9 @@ class AdbPairingClient(private val host: String, private val port: Int, private 
     }
 
     private fun setupTlsConnection() {
+        // Upstream Shizuku exempts hidden APIs at application startup. Limit our exemption
+        // to the TLS exporter needed by wireless pairing, and initialize it on demand.
+        check(tlsExporterAvailable) { "系统不允许无线配对所需的 TLS 接口，请使用电脑 ADB 激活" }
         socket.connect(InetSocketAddress(host, port), 10_000)
         socket.soTimeout = 15_000
         socket.tcpNoDelay = true
@@ -311,6 +315,10 @@ class AdbPairingClient(private val host: String, private val port: Int, private 
     }
 
     companion object {
+
+        private val tlsExporterAvailable by lazy {
+            HiddenApiBypass.addHiddenApiExemptions("Lcom/android/org/conscrypt/Conscrypt;->exportKeyingMaterial")
+        }
 
         init {
             System.loadLibrary("adb")

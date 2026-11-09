@@ -16,8 +16,8 @@ fun List<ApplicationItem>.matching(query: String): List<ApplicationItem> = query
     filter { value.isEmpty() || it.label.contains(value, true) || it.packageName.contains(value, true) }
 }
 val ShellGrant.label: String get() = when (this) {
-    ShellGrant.Ask -> "未授权"
-    ShellGrant.Allowed -> "已批准"
+    ShellGrant.Ask -> "待询问"
+    ShellGrant.Allowed -> "已允许"
     ShellGrant.Denied -> "已拒绝"
 }
 

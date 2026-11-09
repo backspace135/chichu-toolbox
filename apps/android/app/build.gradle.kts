@@ -45,6 +45,7 @@ abstract class GenerateOpenSourceNotices : DefaultTask() {
             appendLine("Shizuku-API a27f6e4151ba7b39965ca47edb2bf0aeed7102e5；api/provider 13.1.5 — MIT")
             appendLine("miuix 0.9.4 — Apache-2.0；compose-miuix-ui contributors")
             appendLine("AndroidX、Compose、Kotlin、coroutines、Gson — Apache-2.0")
+            appendLine("AndroidHiddenApiBypass 6.1 — Apache-2.0；Copyright (C) 2021-2025 LSPosed")
             appendLine("Bouncy Castle 1.80、BoringSSL 和 libcxx 的许可及第三方声明见以下原文。")
             appendLine("本项目修改：管理器／进程／配置隔离、仅 Shell 入口、一次性授权确认、无线连接取消与日志保护。")
             licenses.get().asFile.listFiles()?.sortedBy { it.name }?.forEach { file ->
