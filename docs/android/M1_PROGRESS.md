@@ -1,6 +1,6 @@
 # M1 实施记录
 
-计划：`docs/superpowers/plans/2026-11-08-m1-implementation.md`。
+计划：[M1 实施计划](superpowers/plans/2026-11-08-m1-implementation.md)。目录迁移后工程相对路径以 `apps/android/` 为基准；下方保留 M1 当时的实施与验收记录。
 
 ## 基线
 

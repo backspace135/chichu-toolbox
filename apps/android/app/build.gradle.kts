@@ -56,7 +56,7 @@ abstract class GenerateOpenSourceNotices : DefaultTask() {
 }
 
 val generateOpenSourceNotices = tasks.register<GenerateOpenSourceNotices>("generateOpenSourceNotices") {
-    licenses.set(rootProject.layout.projectDirectory.dir("third_party/licenses"))
+    licenses.set(rootProject.layout.projectDirectory.dir("../../third_party/licenses"))
     outputDirectory.set(layout.buildDirectory.dir("generated/openSourceNotices"))
 }
 androidComponents.onVariants { variant ->

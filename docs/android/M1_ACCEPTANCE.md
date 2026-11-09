@@ -2,7 +2,7 @@
 
 ## 运行方式
 
-本地回归：`./gradlew :app:assembleDebug :app:assembleRelease lint testDebugUnitTest`。
+在 `apps/android/` 中执行本地回归：`bash ./gradlew :app:assembleDebug :app:assembleRelease lint testDebugUnitTest`。
 
 真机必须先获得用户同意，再安装开发 APK、执行界面与服务测试。不可自动停止原版 Shizuku、修改第三方应用授权、开启 Root 或更改系统调试设置。
 

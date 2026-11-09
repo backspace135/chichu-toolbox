@@ -2,6 +2,8 @@
 
 独立工程，不加入主工程五模块。使用 Maven 官方 `api/provider:13.1.5`，不修改客户端 SDK。仅供获得同意后的开发设备验收，不作为正式功能交付。
 
+以下命令在 `apps/android/` 中执行，使用 Android 工程的 Gradle wrapper：
+
 ```powershell
 .\gradlew.bat -p testing/sdk-client assembleDebug --no-daemon
 adb -s <serial> install -r testing/sdk-client/build/outputs/apk/debug/ChichuSdkAcceptance-debug.apk

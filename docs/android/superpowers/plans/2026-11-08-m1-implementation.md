@@ -1,5 +1,7 @@
 # M1 工程骨架与内置权限服务实施计划
 
+> 目录迁移说明：本计划为 M1 历史记录。工程文件和构建命令现以 `apps/android/` 为基准，Android 文档在 `docs/android/`；`.github/` 与 `third_party/` 仍位于仓库根目录。
+
 > **执行者要求：** 使用 superpowers:executing-plans 在当前会话逐项实施；每项完成后记录验证证据。未获用户要求不提交、不推送、不关闭 issue。
 
 **目标：** 交付无需安装原版 Shizuku 即可通过无线调试或电脑 ADB 激活的工具箱 APK，管理兼容官方 SDK 的第三方 Shell 授权。

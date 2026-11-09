@@ -1,38 +1,43 @@
 # 彳亍工具箱
 
-原生 Android 工具箱，整合权限服务、临时 Root 和 Root 管理。当前实施 M1：内置兼容官方 Shizuku SDK 的 Shell 权限服务。
+面向 Android、Windows 和 macOS 的工具箱。当前已交付 Android M1：内置兼容官方 Shizuku SDK 的 Shell 权限服务；后续继续临时 Root 与 Root 管理。Windows、macOS 客户端待开发。
 
-## 构建
+## 仓库结构
 
-- JDK 21；Android SDK 37，Build Tools 37.0.0。
-- Gradle wrapper 固定 9.7.1，下载时校验 SHA-256。
-- 设置 `ANDROID_HOME`，或在未纳入 Git 的 `local.properties` 中设置 `sdk.dir`。
+```text
+apps/
+  android/          Android 客户端、Gradle 工程、验收脚本和测试客户端
+  windows/          Windows 客户端入口（待开发）
+  macos/            macOS 客户端入口（待开发）
+docs/
+  android/          Android 技术栈、设计、实施计划和验收记录
+  assets/           产品图标与设计资源
+third_party/        上游来源快照与许可证
+.github/workflows/  各平台 CI
+```
 
-Windows：
+目录约定见 [仓库布局](docs/REPOSITORY_LAYOUT.md)。各客户端独立维护自己的构建工具、模块、脚本和测试。
+
+## Android 快速构建
+
+需要 JDK 21、Android SDK 37 和 Build Tools 37.0.0。设置 `ANDROID_HOME`，或在 `apps/android/local.properties` 中设置 `sdk.dir`。
+
+在仓库根目录执行：
 
 ```powershell
-.\gradlew.bat :app:assembleDebug lint testDebugUnitTest --no-daemon
+.\apps\android\gradlew.bat -p apps/android :app:assembleDebug lint testDebugUnitTest --no-daemon
 ```
-
-Linux / macOS：
 
 ```sh
-bash ./gradlew :app:assembleDebug lint testDebugUnitTest --no-daemon
+bash apps/android/gradlew -p apps/android :app:assembleDebug lint testDebugUnitTest --no-daemon
 ```
 
-APK 输出：`app/build/outputs/apk/debug/app-debug.apk`。构建不依赖 `third_party/upstream/`；该目录只供上游源码调研。
+APK 输出：`apps/android/app/build/outputs/apk/debug/app-debug.apk`。详细命令与设备验收入口见 [Android 开发说明](apps/android/README.md)。
 
-## 文档
+## 客户端与文档
 
-- [技术栈](docs/TECH_STACK.md)
-- [M1 服务设计](docs/M1_SHIZUKU_DESIGN.md)
-- [M1 界面设计](docs/M1_UI_DESIGN.md)
-- [M1 实施计划](docs/superpowers/plans/2026-11-08-m1-implementation.md)
-- [M1 实施记录](docs/M1_PROGRESS.md)
-- [M1 验收矩阵](docs/M1_ACCEPTANCE.md)
-- [M1 验证结果](docs/M1_VALIDATION_RESULTS.md)
-- [官方 SDK 验收客户端](testing/sdk-client/README.md)
+- [Android](apps/android/README.md) · [Windows](apps/windows/README.md) · [macOS](apps/macos/README.md)
+- [Android 文档](docs/android/README.md)
+- [上游源码与来源](third_party/README.md)
 
-默认只读设备检查：`./scripts/verify-m1.ps1 -Serial <serial>`。安装和激活需要明确指定 `-InstallDebug`、`-Activate`；不会自动停止原版或更改其他应用授权。
-
-未实施或未执行真机验收的能力不代表已经可用；实际验证结果见实施记录。
+未实施或未执行真机验收的能力不代表已经可用；实际验证结果见 [Android M1 验证记录](docs/android/M1_VALIDATION_RESULTS.md)。
