@@ -1,6 +1,6 @@
 # 彳亍工具箱
 
-面向 Android、Windows 和 macOS 的工具箱。当前已交付 Android M1：内置兼容官方 Shizuku SDK 的 Shell 权限服务；后续继续临时 Root 与 Root 管理。Windows、macOS 客户端待开发。
+面向 Android、Windows 和 macOS 的工具箱。Android M1 已交付内置兼容官方 Shizuku SDK 的 Shell 权限服务；M2 开发中，已加入只读设备诊断与本地内核配置文本校验。Windows、macOS 客户端待开发。
 
 ## 仓库结构
 
@@ -40,4 +40,4 @@ APK 输出：`apps/android/app/build/outputs/apk/debug/app-debug.apk`。详细�
 - [Android 文档](docs/android/README.md)
 - [上游源码与来源](third_party/README.md)
 
-未实施或未执行真机验收的能力不代表已经可用；实际验证结果见 [Android M1 验证记录](docs/android/M1_VALIDATION_RESULTS.md)。
+未实施或未执行真机验收的能力不代表已经可用；实际验证结果见 [Android M1 验证记录](docs/android/M1_VALIDATION_RESULTS.md)与 [M2 开发记录](docs/android/M2_PROGRESS.md)。

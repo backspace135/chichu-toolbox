@@ -9,4 +9,5 @@
 - [M1 实施记录](M1_PROGRESS.md)
 - [M1 验收矩阵](M1_ACCEPTANCE.md)
 - [M1 验证结果](M1_VALIDATION_RESULTS.md)
+- [M2 开发记录与验证范围](M2_PROGRESS.md)
 - [官方 SDK 验收客户端](../../apps/android/testing/sdk-client/README.md)
