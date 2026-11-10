@@ -36,3 +36,63 @@ pub async fn unsubscribe_devices(
 pub fn refresh_devices(state: tauri::State<'_, Arc<Devices>>) {
     state.refresh();
 }
+
+#[tauri::command]
+pub async fn subscribe_tasks(
+    state: tauri::State<'_, Arc<crate::tasks::Tasks>>,
+    channel: tauri::ipc::Channel<crate::tasks::Snapshot>,
+) -> Result<(), String> {
+    state.subscribe(channel).await
+}
+
+#[tauri::command]
+pub async fn unsubscribe_tasks(
+    state: tauri::State<'_, Arc<crate::tasks::Tasks>>,
+    channel_id: u32,
+) -> Result<(), ()> {
+    state.unsubscribe(channel_id).await;
+    Ok(())
+}
+
+#[tauri::command]
+pub async fn create_task(
+    state: tauri::State<'_, Arc<crate::tasks::Tasks>>,
+    device_id: String,
+    operation: crate::tasks::Operation,
+) -> Result<String, String> {
+    state.inner().create(device_id, operation).await
+}
+
+#[tauri::command]
+pub async fn cancel_task(
+    state: tauri::State<'_, Arc<crate::tasks::Tasks>>,
+    id: String,
+) -> Result<(), String> {
+    state.cancel_waiting(&id).await
+}
+
+#[tauri::command]
+pub async fn verify_task(
+    state: tauri::State<'_, Arc<crate::tasks::Tasks>>,
+    id: String,
+    confirmed_device: Option<String>,
+) -> Result<(), String> {
+    state.verify(&id, confirmed_device).await
+}
+
+#[tauri::command]
+pub async fn task_logs(
+    state: tauri::State<'_, Arc<crate::tasks::Tasks>>,
+    id: String,
+) -> Result<String, String> {
+    state.logs(&id).await
+}
+
+#[tauri::command]
+pub async fn export_task(
+    state: tauri::State<'_, Arc<crate::tasks::Tasks>>,
+    id: String,
+    include_identifiers: bool,
+) -> Result<(), String> {
+    state.export(&id, include_identifiers).await
+}

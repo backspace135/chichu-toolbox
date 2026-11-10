@@ -3,6 +3,9 @@ import { ActionIcon, Alert, AppShell, Badge, Burger, Button, Drawer, Group, Kbd,
 import { useDisclosure, useHotkeys, useLocalStorage } from '@mantine/hooks';
 import { IconChevronDown, IconHistory, IconMoon, IconSearch, IconSun } from '@tabler/icons-react';
 import { selectDevice, subscribeDevices, workspaceSnapshot } from '../bridge/workspace';
+import { subscribeTasks } from '../bridge/tasks';
+import type { TaskSnapshot } from '../bridge/tasks';
+import { TaskCenter } from '../components/TaskCenter';
 import type { DeviceSnapshot, WorkspaceSnapshot } from '../bridge/workspace';
 import { Overview } from '../features/devices/Overview';
 import { Unlock } from '../features/unlock/Unlock';
@@ -21,6 +24,8 @@ export function App() {
   const [page, setPage] = useState<PageId>('overview');
   const [connection, setConnection] = useState<Connection>({ status: 'loading' });
   const [devices, setDevices] = useState<DeviceSnapshot | null>(null);
+  const [taskSnapshot, setTaskSnapshot] = useState<TaskSnapshot | null>(null);
+  const [taskError, setTaskError] = useState<string | null>(null);
   const [deviceError, setDeviceError] = useState<string | null>(null);
   const [compact, setCompact] = useLocalStorage({ key: 'chichu-desktop-compact', defaultValue: false });
   const [navigationOpen, navigation] = useDisclosure();
@@ -39,10 +44,12 @@ export function App() {
       if (active) setConnection({ status: 'error', message: String(error) });
     });
     const subscription = subscribeDevices(snapshot => { if (active) setDevices(snapshot); });
+    const taskSubscription = subscribeTasks(snapshot => { if (active) setTaskSnapshot(snapshot); });
+    taskSubscription.catch((error: unknown) => { if (active) setTaskError(String(error)); });
     subscription.catch((error: unknown) => {
       if (active) setDeviceError(String(error));
     });
-    return () => { active = false; void subscription.then(unsubscribe => unsubscribe()).catch((error: unknown) => console.error('设备订阅清理失败', error)); };
+    return () => { active = false; void subscription.then(unsubscribe => unsubscribe()).catch((error: unknown) => console.error('设备订阅清理失败', error)); void taskSubscription.then(unsubscribe => unsubscribe()).catch((error: unknown) => console.error('任务订阅清理失败', error)); };
   }, []);
 
   const current = pages.find(item => item.id === page);
@@ -93,6 +100,6 @@ export function App() {
       <Stack gap={4} mt="md">{pages.filter(item => `${item.name}${item.description}`.toLowerCase().includes(query.toLowerCase())).map(item => <UnstyledButton key={item.id} className={styles.searchResult} onClick={() => navigate(item.id)}><item.icon size={20} aria-hidden /><div><Text fw={600} size="sm">{item.name}</Text><Text size="xs" c="dimmed">{item.description}</Text></div></UnstyledButton>)}
       {!pages.some(item => `${item.name}${item.description}`.toLowerCase().includes(query.toLowerCase())) && <Text size="sm" c="dimmed" p="md">没有匹配的工具</Text>}</Stack>
     </Modal>
-    <Drawer opened={tasksOpen} onClose={tasks.close} title="任务中心" position="right" size="md"><Text size="sm" c="dimmed">{snapshot ? snapshot.taskService.reason : '尚未取得任务服务状态，请查看工作区读取结果。'}</Text></Drawer>
+    <Drawer opened={tasksOpen} onClose={tasks.close} title="任务中心" position="right" size="lg">{taskError && <Alert color="red">{taskError}</Alert>}<TaskCenter snapshot={taskSnapshot} devices={devices} /></Drawer>
   </AppShell>;
 }
