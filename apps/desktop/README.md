@@ -72,4 +72,4 @@ M0b 的调查运行时构建/校验入口、M3/M4 条件契约和实际测试结
 - 原生 `recheck_unlock` 重新采集并拒绝设备、模式、构建、主机、工具/资源或规则变化，返回固定的 `ExecutionSnapshot`（设备、方案、证据、工具/资源、规则）。该快照是 M4 接入契约，目前没有可执行的正式路线；M4 须在自身任务占用期间完成重查及快照持久化，不得将独立预检结果当成跨时间有效的写入授权。
 - `unlock::tests` 使用明确标注的测试夹具覆盖适用、不适配、字段缺失、未知锁状态、已解锁、主机不支持、同输入稳定排序和变化失效。夹具不进入正式目录。
 
-2026-11-10（JST）本轮验证：`npm run typecheck`、`git diff --check -- apps/desktop` 通过。`cargo fmt --manifest-path src-tauri/Cargo.toml && cargo test --manifest-path src-tauri/Cargo.toml --locked unlock::tests` 因当前环境没有 `cargo` 未能执行，原生编译/测试尚未验证。Windows/macOS 正式窗口与真实设备阶段采集尚未验收；首条正式支持目录仍受 M0b 真机证据阻塞，#21 不满足关闭条件。
+2026-11-10（JST）本轮验证：本地 `npm run typecheck`、diff 空白检查通过；原生编译改由 [PR #39](https://github.com/backspace135/chichu-toolbox/pull/39) 的 [CI run 42779390534](https://github.com/backspace135/chichu-toolbox/actions/runs/42779390534) 验证。前端 lint/类型检查/生产构建、macOS arm64 与 Windows x64 的 `cargo clippy --locked --all-targets -- -D warnings`、`devices::tests` 和六项 `unlock::tests` 全部通过，macOS rustfmt 通过。Windows/macOS 正式窗口与真实设备阶段采集尚未验收，首条正式支持目录仍受 M0b 真机证据阻塞。按用户要求合并本轮交付并关闭 #21，上述缺口不因此成为已通过；M4 接入仍须满足证据与任务内重查条件。
