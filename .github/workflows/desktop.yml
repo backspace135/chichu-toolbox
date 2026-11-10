@@ -1,0 +1,152 @@
+name: Desktop
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: desktop-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  changes:
+    runs-on: ubuntu-latest
+    outputs:
+      frontend: ${{ steps.scope.outputs.frontend }}
+      native: ${{ steps.scope.outputs.native }}
+      package: ${{ steps.scope.outputs.package }}
+      build: ${{ steps.scope.outputs.build }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - id: scope
+        env:
+          EVENT: ${{ github.event_name }}
+          BASE: ${{ github.event.pull_request.base.sha || github.event.before }}
+          HEAD: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: python3 apps/desktop/scripts/ci_scope.py
+      - name: Verify routing rules
+        run: python3 -m unittest discover -s apps/desktop/scripts -p 'test_ci_scope.py'
+
+  frontend:
+    needs: changes
+    if: needs.changes.outputs.build == 'true'
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: apps/desktop
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: apps/desktop/.node-version
+          cache: npm
+          cache-dependency-path: apps/desktop/package-lock.json
+      - run: npm ci
+      - if: needs.changes.outputs.frontend == 'true'
+        run: npm run lint
+      - run: npm run build
+      - uses: actions/upload-artifact@v4
+        if: needs.changes.outputs.native == 'true'
+        with:
+          name: desktop-dist
+          path: apps/desktop/dist
+          retention-days: 1
+
+  native:
+    needs: [changes, frontend]
+    if: needs.changes.outputs.native == 'true'
+    strategy:
+      fail-fast: true
+      matrix:
+        include:
+          - os: macos-15
+            target: aarch64-apple-darwin
+            bundles: app,dmg
+          - os: windows-2025
+            target: x86_64-pc-windows-msvc
+            bundles: nsis
+    runs-on: ${{ matrix.os }}
+    defaults:
+      run:
+        working-directory: apps/desktop
+        shell: bash
+    env:
+      MACOSX_DEPLOYMENT_TARGET: '14.0'
+      CARGO_INCREMENTAL: '0'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: desktop-dist
+          path: apps/desktop/dist
+      - name: Install fixed Rust toolchain
+        run: rustup toolchain install 1.99.1 --profile minimal --component rustfmt --component clippy --target ${{ matrix.target }}
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: apps/desktop/src-tauri -> target
+          cache-on-failure: false
+      - name: Record native environment
+        run: |
+          rustc --version --verbose
+          cargo --version
+          if [[ "$RUNNER_OS" == macOS ]]; then
+            test "$(uname -m)" = arm64
+            sw_vers
+            xcodebuild -version
+            xcrun --show-sdk-version
+          fi
+      - if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          & "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe" -latest -products '*' -requires Microsoft.VisualStudio.Component.VC.Tools.x86.x64 -format json
+          Get-ChildItem 'C:\Program Files (x86)\Windows Kits\10\Include' | Select-Object Name
+      - if: runner.os == 'macOS'
+        run: cargo fmt --manifest-path src-tauri/Cargo.toml --check
+      - run: cargo clippy --manifest-path src-tauri/Cargo.toml --locked --all-targets -- -D warnings
+      # No Rust test cases exist yet. all-targets checks test compilation without
+      # linking an empty test binary. Add targeted execution with business tests.
+      - uses: actions/setup-node@v4
+        if: needs.changes.outputs.package == 'true'
+        with:
+          node-version-file: apps/desktop/.node-version
+          cache: npm
+          cache-dependency-path: apps/desktop/package-lock.json
+      - if: needs.changes.outputs.package == 'true'
+        run: npm ci
+      - name: Package using the checked frontend artifact
+        if: needs.changes.outputs.package == 'true'
+        run: npm run tauri build -- --config '{"build":{"beforeBuildCommand":""}}' --target ${{ matrix.target }} --bundles ${{ matrix.bundles }} -- --locked
+      - run: git diff --exit-code -- package-lock.json src-tauri/Cargo.lock
+      - uses: actions/upload-artifact@v4
+        if: needs.changes.outputs.package == 'true'
+        with:
+          name: chichu-desktop-internal-${{ matrix.target }}
+          path: |
+            apps/desktop/src-tauri/target/${{ matrix.target }}/release/bundle/dmg/*.dmg
+            apps/desktop/src-tauri/target/${{ matrix.target }}/release/bundle/nsis/*-setup.exe
+          if-no-files-found: error
+
+  ci-required:
+    name: desktop-ci
+    needs: [changes, frontend, native]
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Require exactly the selected checks
+        env:
+          CHANGES_RESULT: ${{ needs.changes.result }}
+          BUILD: ${{ needs.changes.outputs.build }}
+          NATIVE: ${{ needs.changes.outputs.native }}
+          FRONTEND_RESULT: ${{ needs.frontend.result }}
+          NATIVE_RESULT: ${{ needs.native.result }}
+        run: |
+          test "$CHANGES_RESULT" = success
+          if [[ "$BUILD" == true ]]; then test "$FRONTEND_RESULT" = success; else test "$FRONTEND_RESULT" = skipped; fi
+          if [[ "$NATIVE" == true ]]; then test "$NATIVE_RESULT" = success; else test "$NATIVE_RESULT" = skipped; fi

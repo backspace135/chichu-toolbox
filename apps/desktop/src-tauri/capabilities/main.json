@@ -1,0 +1,7 @@
+{
+  "$schema": "../gen/schemas/desktop-schema.json",
+  "identifier": "main-workspace",
+  "description": "仅主窗口可读取工作区状态；不授予 shell、文件系统或远程页面能力。",
+  "windows": ["main"],
+  "permissions": ["allow-workspace-snapshot"]
+}

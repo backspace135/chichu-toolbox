@@ -1,6 +1,6 @@
 # 桌面端技术栈决定
 
-**状态：用户已确认 Tauri 2 + React + TypeScript + Rust，macOS 仅适配 Apple Silicon；Mantine UI 基准于 2026-11-09（JST）确认并固化。2026-11-10（JST）补齐 #15 的 M1 初始化输入，详见 [平台与初始化基线](PLATFORM_BASELINE.md)。精确依赖已查发布源，尚未完成双平台编译、安装或运行验证。**
+**状态：用户已确认 Tauri 2 + React + TypeScript + Rust，macOS 仅适配 Apple Silicon；Mantine UI 基准于 2026-11-09（JST）确认并固化。2026-11-10（JST）按 #15 基线初始化 #18 共享工程与锁文件，本地 macOS arm64 内部 App/DMG 构建通过。双平台正式窗口和无开发环境安装尚未验收，详见 [工程入口](../../apps/desktop/README.md) 与 [平台初始化基线](PLATFORM_BASELINE.md)。**
 
 ## 1. 产品与版本边界
 
