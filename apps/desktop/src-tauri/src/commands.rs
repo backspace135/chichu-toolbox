@@ -96,3 +96,23 @@ pub async fn export_task(
 ) -> Result<(), String> {
     state.export(&id, include_identifiers).await
 }
+
+#[tauri::command]
+pub async fn inspect_unlock(
+    state: tauri::State<'_, crate::unlock::Unlock>,
+    devices: tauri::State<'_, Arc<Devices>>,
+    tasks: tauri::State<'_, Arc<crate::tasks::Tasks>>,
+    device_id: String,
+) -> Result<crate::unlock::Assessment, String> {
+    state.inspect(&devices, &tasks, &device_id).await
+}
+
+#[tauri::command]
+pub async fn recheck_unlock(
+    state: tauri::State<'_, crate::unlock::Unlock>,
+    devices: tauri::State<'_, Arc<Devices>>,
+    tasks: tauri::State<'_, Arc<crate::tasks::Tasks>>,
+    scheme_id: String,
+) -> Result<crate::unlock::ExecutionSnapshot, String> {
+    state.recheck(&devices, &tasks, &scheme_id).await
+}

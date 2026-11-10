@@ -85,7 +85,7 @@ export function App() {
         {(connection.status === 'ready' || page === 'settings') && (() => {
           switch (page) {
             case 'overview': return <Overview reason={reason} devices={devices} selected={selected} navigate={navigate} showTasks={tasks.open} />;
-            case 'unlock': return <Unlock reason={reason} />;
+            case 'unlock': return <Unlock key={selected?.id ?? 'none'} reason={reason} selected={selected} />;
             case 'apps': return <Apps reason={reason} />;
             case 'files': return <Files reason={reason} />;
             case 'terminal': return <Terminal />;

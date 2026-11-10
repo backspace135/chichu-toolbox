@@ -108,11 +108,24 @@ jobs:
           & "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe" -latest -products '*' -requires Microsoft.VisualStudio.Component.VC.Tools.x86.x64 -format json
           Get-ChildItem 'C:\Program Files (x86)\Windows Kits\10\Include' | Select-Object Name
       - if: runner.os == 'macOS'
-        run: cargo fmt --manifest-path src-tauri/Cargo.toml --check
+        id: rustfmt
+        run: |
+          if ! cargo fmt --manifest-path src-tauri/Cargo.toml --check; then
+            cargo fmt --manifest-path src-tauri/Cargo.toml
+            git diff -- src-tauri/src > "$RUNNER_TEMP/rustfmt.patch"
+            exit 1
+          fi
+      - uses: actions/upload-artifact@v4
+        if: failure() && steps.rustfmt.outcome == 'failure'
+        with:
+          name: desktop-rustfmt-fix
+          path: ${{ runner.temp }}/rustfmt.patch
+          retention-days: 1
       - name: Prepare pinned platform-tools
         run: python3 scripts/prepare_platform_tools.py --target ${{ matrix.target }}
       - run: cargo clippy --manifest-path src-tauri/Cargo.toml --locked --all-targets -- -D warnings
       - run: cargo test --manifest-path src-tauri/Cargo.toml --locked devices::tests
+      - run: cargo test --manifest-path src-tauri/Cargo.toml --locked unlock::tests
       - uses: actions/setup-node@v4
         if: needs.changes.outputs.package == 'true'
         with:
