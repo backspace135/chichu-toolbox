@@ -5,7 +5,7 @@ Windows、macOS 共用的桌面工程入口。技术栈已确定为 **Tauri 2 + 
 - macOS 仅支持 Apple Silicon 原生 arm64，不提供 Intel 构建。
 - Windows 目标暂按 x64 规划。
 - 产品目标为自动识别/推荐已验证Bootloader强解方案，并保留gjgjxweb固定基线全部功能。
-- 已初始化共享 Tauri 工作区、六入口、外观偏好、工具搜索、任务抽屉与原生状态 IPC。设备连接（#19）、任务执行（#20）及各业务能力尚未接入，客户端明确展示未实现状态。
+- 已接入随包 ADB/Fastboot、Rust 设备发现/信息采集与顶部设备选择（#19）。任务执行（#20）及各业务能力尚未接入。连接实现与双平台验收缺口见 [连接服务](../../docs/desktop/DEVICE_CONNECTION.md)。
 - `0.0.0` 和 `com.chichu.toolbox.desktop.dev` 仅用于内部包，不是正式产品版本或发行身份。
 
 参见 [桌面端技术栈决定](../../docs/desktop/TECH_STACK.md)、[UI 交互预览](../../docs/assets/desktop-mantine-mock.html)、[仓库布局](../../docs/REPOSITORY_LAYOUT.md)与 [项目总览](../../README.md)。
@@ -18,6 +18,7 @@ Windows、macOS 共用的桌面工程入口。技术栈已确定为 **Tauri 2 + 
 
 ```sh
 npm ci
+python3 scripts/prepare_platform_tools.py
 npm run typecheck
 npm run lint
 npm run tauri dev
@@ -34,16 +35,16 @@ MACOSX_DEPLOYMENT_TARGET=14.0 npm run tauri build -- --target aarch64-apple-darw
 npm run tauri build -- --target x86_64-pc-windows-msvc --bundles nsis -- --locked
 ```
 
-`npm run dev` 仅启动前端：浏览器没有原生 IPC，会展示服务读取失败，不注入模拟设备。主题与紧凑模式保存在当前 WebView 的本地存储中。没有新增逻辑测试套件，`cargo test` 当前仅执行编译/测试框架检查。
+`npm run dev` 仅启动前端：浏览器没有原生 IPC，会展示服务读取失败，不注入模拟设备。主题与紧凑模式保存在当前 WebView 的本地存储中。相关回归测试：`cargo test --manifest-path src-tauri/Cargo.toml --locked devices::tests`。
 
 - `src/app/`：工作区、六入口、主题与 CSS Modules；`src/features/`：实际业务入口；`src/bridge/`：明确命名的 IPC。
 - `src-tauri/src/`：单 crate 原生状态与命令；`capabilities/`、`permissions/` 限定主窗口的状态读取能力，不授权电脑 shell、任意文件或远程来源。
 - 图标源为 `docs/assets/app-icon.svg`；使用固定 Tauri CLI 的 `npm run tauri icon ../../docs/assets/app-icon.svg` 生成桌面图标，非桌面图标忽略。
 - `package-lock.json` 与 `src-tauri/Cargo.lock` 两平台共用；CI 用 `npm ci` 和 `--locked`。新增静态检查器固定 `oxlint=1.93.0`（支持当前 TS 语法），序列化依赖固定 `serde=1.0.228`。
 - 安装包位于 `src-tauri/target/<target>/release/bundle/`。CI 按完整 PR diff（含删除/重命名）分流：文档/Android 跳过桌面检查；UI 仅 Linux lint/类型/生产构建；共享 Rust 执行双平台 `clippy --all-targets`；IPC bridge 检查两端；Cargo、打包/权限/资源、工具链及构建配置变更执行原生检查。工程外图标变更纳入。PR 和 main push 均不生成 release 安装包，仅手动触发打包。
-- 当前没有 Rust 测试用例，不链接空测试二进制；`clippy --all-targets` 覆盖测试目标的编译检查。后续引入业务测试时须同步添加相关测试执行，不能用 clippy 代替运行测试。安装器、release 链接和无开发环境运行由手动打包/里程碑验收覆盖。
+- 原生 CI 执行设备解析回归测试；安装器、release 链接和无开发环境运行由手动打包/里程碑验收覆盖。
 - 前端生产构建只执行一次，原生 job 下载同次运行的 dist，打包覆盖 beforeBuildCommand 避免重建。仅原生检查需要时上传 dist（保留一天）；npm 下载和 Rust 编译依赖缓存复用。只监听 PR 与 main push，同 PR 新提交取消旧任务，原生矩阵失败后停止其他平台。`desktop-ci` 检查所选 job 必须成功，允许按规则跳过；main 同样按 diff 分流，不无条件全跑。不使用生产签名凭据。
-- 当前不捆绑不存在的 ADB/Fastboot 或解锁运行时；对应产物由 #19 / #17 接入。
+- 构建前准备固定 Platform-tools 36.0.2，校验 ZIP SHA-256、架构并随包包含工具、Windows DLL、NOTICE、版本文件与逐文件摘要。直接执行 Cargo 检查前也需准备资源；Tauri dev/build 自动准备，CI 显式准备。不从 PATH 查找运行时工具。解锁运行时仍由 #17 / #22 接入。
 
 2026-11-10（JST）本地验证：macOS 26.6.2 arm64、Xcode 27.2 / SDK 27.2；固定 Node/npm/Rust 完成前端检查、Rust clippy 和 arm64 App/DMG 构建。`g16win` SSH 连接被关闭，未执行 Windows 构建。正式窗口深浅色、缩放、最小尺寸、焦点/导航，以及两端无开发环境安装尚未验收；最低 WebView2 四段版本仍待 Windows 首次运行核实。#18 与 M1 不据此标记全部完成。
 

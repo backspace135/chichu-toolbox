@@ -4,9 +4,9 @@
   "version": "0.0.0",
   "identifier": "com.chichu.toolbox.desktop.dev",
   "build": {
-    "beforeDevCommand": "npm run dev",
+    "beforeDevCommand": "python3 scripts/prepare_platform_tools.py && npm run dev",
     "devUrl": "http://127.0.0.1:1420",
-    "beforeBuildCommand": "npm run build",
+    "beforeBuildCommand": "python3 scripts/prepare_platform_tools.py && npm run build",
     "frontendDist": "../dist"
   },
   "app": {
@@ -22,6 +22,7 @@
   "bundle": {
     "active": true,
     "targets": ["app", "dmg", "nsis"],
+    "resources": { "resources/platform-tools/": "platform-tools/" },
     "icon": ["icons/icon.png", "icons/icon.icns", "icons/icon.ico"],
     "macOS": { "minimumSystemVersion": "14.0" },
     "windows": { "webviewInstallMode": { "type": "offlineInstaller" } }
