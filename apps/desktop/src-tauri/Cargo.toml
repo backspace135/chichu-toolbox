@@ -1,0 +1,14 @@
+[package]
+name = "chichu-toolbox-desktop"
+version = "0.0.0"
+description = "彳亍工具箱内部开发版本"
+edition = "2024"
+publish = false
+
+[build-dependencies]
+tauri-build = { version = "=2.7.4", features = [] }
+
+[dependencies]
+tauri = { version = "=2.12.5", features = [] }
+serde = { version = "=1.0.228", features = ["derive"] }
+tokio = { version = "=1.54.1", features = ["sync"] }

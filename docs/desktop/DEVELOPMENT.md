@@ -1,6 +1,6 @@
 # 桌面端开发文档
 
-**更新日期：2026-11-10（JST）。状态：技术栈与 UI 已确认，工程尚未初始化；本文按 #10 审订正文同步 M0–M6，源码盘点不计产品实现。**
+**更新日期：2026-11-10（JST）。状态：共享 Tauri/Mantine 工程已初始化，本地 macOS arm64 内部包已构建；Windows 与双平台正式窗口/安装验收尚未完成。本文按 #10 审订正文同步 M0–M6，源码盘点不计产品实现。**
 
 本文覆盖 Windows、macOS 桌面端的产品边界、功能分期、工程组织、设备通信、任务与解锁流程、构建发布和验收方式。确认的技术选择见 [TECH_STACK.md](TECH_STACK.md)，视觉与交互以用户确认的 [UI_DESIGN.md](UI_DESIGN.md) 为准。
 
@@ -84,7 +84,7 @@ BAT子集兼容属于本次范围，以固定解释器逐项语义为准；未�
 
 ## 4. 工程布局与依赖管理
 
-共享工程位于 `apps/desktop/`。下列是初始化后的目标布局，当前只有入口 README，尚不代表目录或脚本已经存在。
+共享工程位于 `apps/desktop/`。`src/app`、六个 `src/features`、`components`、`bridge` 以及 `src-tauri` 命令/状态/能力配置已落地，真实命令见 [工程 README](../../apps/desktop/README.md)。下列完整业务目录仍是后续目标；ADB/Fastboot、任务、解锁、终端服务与工具资源随对应 issue 建立，不提前放空模块。
 
 ```text
 apps/desktop/
@@ -322,19 +322,19 @@ M0b分别取得Windows和macOS从锁定到解锁证据：安排两台等价设�
 
 ### 12.1 M1 建立的命令契约
 
-下列为**计划在工程初始化时实现的命令**，当前尚不能在占位工程执行。工作目录均为 `apps/desktop/`，Rust 命令在 `src-tauri/`。
+以下命令已在初始化工程提供。工作目录均为 `apps/desktop/`，Rust 命令在 `src-tauri/`。打包须显式指定本机平台和 `--locked`，完整命令见工程 README。
 
-| 用途 | 计划命令 |
+| 用途 | 命令 |
 | --- | --- |
 | 安装前端依赖 | `npm ci` |
 | TS 检查 | `npm run typecheck` |
 | 前端 lint | `npm run lint` |
-| 纯逻辑/组件必要测试 | `npm test` |
+| 纯逻辑/组件必要测试 | 尚无逻辑测试套件；在对应业务实现时增加，不提供空跑的 npm test |
 | 正式 Tauri 开发窗口 | `npm run tauri dev` |
-| 打包 | `npm run tauri build` |
+| 打包 | `npm run tauri build -- --target <target> --bundles <bundles> -- --locked` |
 | Rust 格式 | `cargo fmt --check` |
-| Rust 静态检查 | `cargo clippy --all-targets` |
-| Rust 测试 | `cargo test` |
+| Rust 静态检查 | `cargo clippy --locked --all-targets -- -D warnings` |
+| Rust 测试 | `cargo test --locked`（当前无业务用例） |
 
 ### 12.2 测试分层
 
