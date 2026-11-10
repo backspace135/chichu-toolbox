@@ -1,4 +1,4 @@
-use serde::Serialize;
+use serde::{Deserialize, Serialize};
 use std::{
     collections::BTreeMap,
     path::PathBuf,
@@ -22,10 +22,10 @@ fn now() -> u64 {
         .as_millis() as u64
 }
 
-#[derive(Clone, Serialize)]
+#[derive(Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct Field {
-    pub status: &'static str,
+    pub status: String,
     pub value: String,
     pub source: String,
     pub collected_at: u64,
@@ -33,14 +33,14 @@ pub struct Field {
 
 fn field(status: &'static str, value: impl Into<String>, source: impl Into<String>) -> Field {
     Field {
-        status,
+        status: status.into(),
         value: value.into(),
         source: source.into(),
         collected_at: now(),
     }
 }
 
-#[derive(Clone, Serialize)]
+#[derive(Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct Device {
     pub id: String,
@@ -83,6 +83,13 @@ pub struct Devices {
 }
 
 impl Devices {
+    pub async fn snapshot(&self) -> Snapshot {
+        self.state.lock().await.snapshot.clone()
+    }
+
+    pub fn tools(&self) -> &std::path::Path {
+        &self.tools
+    }
     pub fn new(app: &tauri::AppHandle) -> Result<Arc<Self>, tauri::Error> {
         let tools = if cfg!(debug_assertions) {
             PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("resources/platform-tools")

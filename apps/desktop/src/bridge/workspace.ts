@@ -1,7 +1,7 @@
 import { Channel, invoke } from '@tauri-apps/api/core';
 
 export interface UnavailableService {
-  status: 'notImplemented';
+  status: 'ready';
   reason: string;
 }
 
