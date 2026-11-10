@@ -10,9 +10,3 @@
 local.properties
 *.iml
 .superpowers/
-
-# 本地 agent 状态与未要求提交的调研产物。
-.omc/
-__pycache__/
-/reports/
-/research_notes/
