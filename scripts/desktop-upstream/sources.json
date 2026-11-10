@@ -1,0 +1,9 @@
+{
+  "sources": [
+    {"id": "gjgjxweb", "repo": "CzJam/gjgjxweb", "branch": "master", "mode": "investigation", "owner": "#14 / #23–#30"},
+    {"id": "mtkclient", "repo": "bkerler/mtkclient", "branch": "main", "mode": "investigation", "owner": "#17"},
+    {"id": "hyperos-unlock", "repo": "Jz8Root/xiaomi-hyperos-bootloader-unlock", "branch": "main", "mode": "investigation", "owner": "#17 (LK/build evidence)"},
+    {"id": "xiaomi-ubl", "repo": "18xjul08/xiaomi_ubl", "branch": "main", "mode": "investigation", "owner": "#17 (resource investigation)"},
+    {"id": "miunlocktool", "repo": "MiForge/MiUnlockTool", "branch": "main", "mode": "investigation", "owner": "#17 (official-account route, not forced unlock)"}
+  ]
+}

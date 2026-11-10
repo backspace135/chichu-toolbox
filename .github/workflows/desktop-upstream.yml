@@ -1,0 +1,90 @@
+name: Desktop upstream tracking
+
+on:
+  schedule:
+    - cron: '0 0 * * *' # 09:00 JST; GitHub scheduling may be delayed
+  workflow_dispatch:
+    inputs:
+      freeze:
+        description: 'Source ID to freeze for release acceptance (empty = observe only)'
+        required: false
+        type: string
+
+permissions: {}
+
+concurrency:
+  group: desktop-upstream-tracking
+  cancel-in-progress: false
+
+jobs:
+  observe:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Observe upstream and retain per-source failures
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPOSITORY: ${{ github.repository }}
+          FREEZE: ${{ inputs.freeze }}
+        run: python3 scripts/desktop-upstream/tracker.py observe --repo "$REPOSITORY" --freeze "$FREEZE" --output observation.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: desktop-upstream-observation
+          path: observation.json
+          if-no-files-found: error
+
+  publish:
+    needs: observe
+    if: always() && !cancelled()
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    outputs:
+      checks: ${{ steps.publish.outputs.checks }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/download-artifact@v4
+        with:
+          name: desktop-upstream-observation
+      - id: publish
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPOSITORY: ${{ github.repository }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: python3 scripts/desktop-upstream/tracker.py publish --repo "$REPOSITORY" --output observation.json
+
+  candidate-checks:
+    needs: publish
+    if: always() && needs.publish.result == 'success' && needs.publish.outputs.checks != '[]'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      checks: write
+    strategy:
+      fail-fast: false
+      matrix:
+        candidate: ${{ fromJSON(needs.publish.outputs.checks) }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Explicitly check exact candidate without executing upstream code
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPOSITORY: ${{ github.repository }}
+          CANDIDATE: ${{ toJSON(matrix.candidate) }}
+        run: python3 scripts/desktop-upstream/tracker.py check --repo "$REPOSITORY" --output candidate-check.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: desktop-upstream-check-${{ matrix.candidate.id }}
+          path: candidate-check.json
+          if-no-files-found: warn

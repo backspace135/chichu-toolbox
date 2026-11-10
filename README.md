@@ -2,7 +2,7 @@
 
 面向 Android、Windows 和 macOS 的工具箱。**v0.1.0 仅交付 Android 端获取临时 Root 功能**，权限获取、适配检测、日志和结果验证围绕该流程提供支撑。
 
-Android M1 已交付内置兼容官方 Shizuku SDK 的 Shell 权限服务；M2 开发中，已加入只读设备诊断与本地内核配置文本校验。桌面端属于后续阶段，方向为开源强制解锁 Bootloader 方案整合与日常玩机工具；技术栈已定为 Tauri 2 + React + TypeScript + Rust，macOS 仅适配 Apple Silicon，工程待初始化。
+Android M1 已交付内置兼容官方 Shizuku SDK 的 Shell 权限服务；M2 开发中，已加入只读设备诊断与本地内核配置文本校验。桌面端属于后续阶段，范围为开源强制解锁 Bootloader 方案整合与固定上游全功能迁移，按 M0–M6 推进；技术栈已定为 Tauri 2 + React + TypeScript + Rust，macOS 仅适配 Apple Silicon，工程待初始化。固定功能清单、M1 平台/工具链输入和每日上游跟踪实现已准备，候选与采用状态分别记录，不代表功能已交付。
 
 ## 仓库结构
 
@@ -45,6 +45,9 @@ APK 输出：`apps/android/app/build/outputs/apk/debug/app-debug.apk`。详细�
 - [桌面端技术栈决定](docs/desktop/TECH_STACK.md)
 - [桌面端 UI 规范与确认预览](docs/desktop/UI_DESIGN.md)
 - [桌面端详细开发文档与实施里程碑](docs/desktop/DEVELOPMENT.md)
+- [桌面端固定功能基线与任务映射](docs/desktop/FEATURE_INVENTORY.md)
+- [桌面端平台与初始化基线](docs/desktop/PLATFORM_BASELINE.md)
+- [桌面端每日上游跟踪与验收缺口](docs/desktop/UPSTREAM_TRACKING.md)
 - [桌面端总任务 #10](https://github.com/backspace135/chichu-toolbox/issues/10)
 - [Android UI 规范与交互预览](docs/android/UI_DESIGN.md)
 - [M2.5 阶段交付与验证](docs/android/M2_5_PROGRESS.md)
