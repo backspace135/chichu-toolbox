@@ -4,6 +4,7 @@ mod commands;
 mod devices;
 mod task_process;
 mod tasks;
+mod unlock;
 mod workspace;
 
 struct DeviceWorker(tauri::async_runtime::JoinHandle<()>);
@@ -14,6 +15,7 @@ fn main() {
     }
     tauri::Builder::default()
         .manage(workspace::Workspace::new())
+        .manage(unlock::Unlock::new())
         .on_window_event(|window, event| {
             if let tauri::WindowEvent::CloseRequested { api, .. } = event {
                 use tauri::Manager;
@@ -49,7 +51,9 @@ fn main() {
             commands::cancel_task,
             commands::verify_task,
             commands::task_logs,
-            commands::export_task
+            commands::export_task,
+            commands::inspect_unlock,
+            commands::recheck_unlock
         ])
         .build(tauri::generate_context!())
         .expect("无法启动彳亍工具箱桌面工作区")

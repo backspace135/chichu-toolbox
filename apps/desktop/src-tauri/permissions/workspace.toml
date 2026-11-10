@@ -1,4 +1,4 @@
 [[permission]]
 identifier = "allow-workspace-snapshot"
 description = "读取原生工作区状态"
-commands.allow = ["workspace_snapshot", "subscribe_devices", "unsubscribe_devices", "select_device", "refresh_devices", "subscribe_tasks", "unsubscribe_tasks", "create_task", "cancel_task", "verify_task", "task_logs", "export_task"]
+commands.allow = ["workspace_snapshot", "subscribe_devices", "unsubscribe_devices", "select_device", "refresh_devices", "subscribe_tasks", "unsubscribe_tasks", "create_task", "cancel_task", "verify_task", "task_logs", "export_task", "inspect_unlock", "recheck_unlock"]
