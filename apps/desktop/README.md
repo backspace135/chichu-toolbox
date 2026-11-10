@@ -63,3 +63,13 @@ npm run tauri build -- --target x86_64-pc-windows-msvc --bundles nsis -- --locke
 整体进度见 [桌面端总 issue #10](https://github.com/backspace135/chichu-toolbox/issues/10)。
 
 M0b 的调查运行时构建/校验入口、M3/M4 条件契约和实际测试结果见 [MTK_RUNTIME.md](../../docs/desktop/MTK_RUNTIME.md)。macOS arm64 隔离启动已验证；Windows 与双平台锁定→解锁真机验收仍阻塞，尚无正式采用方案。
+
+## M3 采集与推荐（#21）
+
+- `unlock.rs` 持有结构化调查目录、必要条件、逐项解释、当前主机/工具/精确组合证据及稳定排序。正式支持证据集合仍为空，MTK 调查候选仅显示「待补充检查」或「不适用」，不提供解锁执行按钮。
+- 解锁页「检查适配」通过原生 `inspect_unlock` 固定当前设备并取得 M2 同设备占用，只读采集当前 ADB / Recovery / Fastboot 模式可读字段。ADB 补充 SoC、补丁、slot 与锁属性，Fastboot 补充 slot；字段保留来源、状态和时点。未接入低层模式，不上传 DA、不重启或写入以补齐 hwcode/LK/资源条件。读取/解析失败覆盖旧字段，不复用上次成功值。
+- 权威 Bootloader Fastboot `unlocked=yes` 排除重复解锁；Android 解锁属性同样排除重复推荐但不冒充最终权威验证。锁定属性、Fastbootd 或未知状态不足以确认锁定。
+- 原生 `recheck_unlock` 重新采集并拒绝设备、模式、构建、主机、工具/资源或规则变化，返回固定的 `ExecutionSnapshot`（设备、方案、证据、工具/资源、规则）。该快照是 M4 接入契约，目前没有可执行的正式路线；M4 须在自身任务占用期间完成重查及快照持久化，不得将独立预检结果当成跨时间有效的写入授权。
+- `unlock::tests` 使用明确标注的测试夹具覆盖适用、不适配、字段缺失、未知锁状态、已解锁、主机不支持、同输入稳定排序和变化失效。夹具不进入正式目录。
+
+2026-11-10（JST）本轮验证：`npm run typecheck`、`git diff --check -- apps/desktop` 通过。`cargo fmt --manifest-path src-tauri/Cargo.toml && cargo test --manifest-path src-tauri/Cargo.toml --locked unlock::tests` 因当前环境没有 `cargo` 未能执行，原生编译/测试尚未验证。Windows/macOS 正式窗口与真实设备阶段采集尚未验收；首条正式支持目录仍受 M0b 真机证据阻塞，#21 不满足关闭条件。

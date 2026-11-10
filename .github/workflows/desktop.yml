@@ -113,6 +113,7 @@ jobs:
         run: python3 scripts/prepare_platform_tools.py --target ${{ matrix.target }}
       - run: cargo clippy --manifest-path src-tauri/Cargo.toml --locked --all-targets -- -D warnings
       - run: cargo test --manifest-path src-tauri/Cargo.toml --locked devices::tests
+      - run: cargo test --manifest-path src-tauri/Cargo.toml --locked unlock::tests
       - uses: actions/setup-node@v4
         if: needs.changes.outputs.package == 'true'
         with:
