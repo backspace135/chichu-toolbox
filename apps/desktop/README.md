@@ -18,3 +18,5 @@ Windows、macOS 共用的桌面工程入口。技术栈已确定为 **Tauri 2 + 
 每日跟踪（#16）区分观测/候选/采用，计划09:00 JST，不在客户端在线替换工具；每版冻结验收SHA。两端正式Tauri窗口、真实设备与无开发环境安装分别验收，截图和编译不能代替强解证据。
 
 整体进度见 [桌面端总 issue #10](https://github.com/backspace135/chichu-toolbox/issues/10)。
+
+M0b 的调查运行时构建/校验入口、M3/M4 条件契约和实际测试结果见 [MTK_RUNTIME.md](../../docs/desktop/MTK_RUNTIME.md)。macOS arm64 隔离启动已验证；Windows 与双平台锁定→解锁真机验收仍阻塞，尚无正式采用方案。
