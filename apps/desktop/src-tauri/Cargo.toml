@@ -11,4 +11,12 @@ tauri-build = { version = "=2.7.4", features = [] }
 [dependencies]
 tauri = { version = "=2.12.5", features = [] }
 serde = { version = "=1.0.228", features = ["derive"] }
-tokio = { version = "=1.54.1", features = ["sync", "process", "net", "io-util", "time"] }
+tokio = { version = "=1.54.1", features = ["sync", "process", "net", "io-util", "time", "macros"] }
+serde_json = "=1.0.154"
+rfd = "=0.17.2"
+
+[target.'cfg(unix)'.dependencies]
+libc = "=0.2.191"
+
+[target.'cfg(windows)'.dependencies]
+windows-sys = { version = "=0.61.2", features = ["Win32_Foundation", "Win32_System_JobObjects", "Win32_System_Threading", "Win32_Security"] }

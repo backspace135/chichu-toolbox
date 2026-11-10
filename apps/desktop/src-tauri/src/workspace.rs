@@ -13,7 +13,7 @@ pub struct Snapshot {
 #[derive(Clone, Serialize)]
 #[serde(tag = "status", rename_all = "camelCase")]
 pub enum ServiceStatus {
-    NotImplemented { reason: &'static str },
+    Ready { reason: &'static str },
 }
 
 pub struct Workspace(pub Mutex<Snapshot>);
@@ -24,8 +24,8 @@ impl Workspace {
             version: env!("CARGO_PKG_VERSION"),
             platform: std::env::consts::OS,
             arch: std::env::consts::ARCH,
-            task_service: ServiceStatus::NotImplemented {
-                reason: "任务执行与记录服务尚未接入（#20），当前不能创建任务。",
+            task_service: ServiceStatus::Ready {
+                reason: "原生任务服务已就绪；任务固定设备，切页后继续执行。",
             },
         }))
     }
