@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react';
 import { ActionIcon, Alert, AppShell, Badge, Burger, Button, Drawer, Group, Kbd, Loader, Menu, Modal, Stack, Text, TextInput, Title, Tooltip, UnstyledButton, useComputedColorScheme, useMantineColorScheme } from '@mantine/core';
 import { useDisclosure, useHotkeys, useLocalStorage } from '@mantine/hooks';
 import { IconChevronDown, IconHistory, IconMoon, IconSearch, IconSun } from '@tabler/icons-react';
-import { workspaceSnapshot } from '../bridge/workspace';
-import type { WorkspaceSnapshot } from '../bridge/workspace';
+import { selectDevice, subscribeDevices, workspaceSnapshot } from '../bridge/workspace';
+import type { DeviceSnapshot, WorkspaceSnapshot } from '../bridge/workspace';
 import { Overview } from '../features/devices/Overview';
 import { Unlock } from '../features/unlock/Unlock';
 import { Apps } from '../features/apps/Apps';
@@ -20,6 +20,8 @@ type Connection = { status: 'loading' } | { status: 'ready'; snapshot: Workspace
 export function App() {
   const [page, setPage] = useState<PageId>('overview');
   const [connection, setConnection] = useState<Connection>({ status: 'loading' });
+  const [devices, setDevices] = useState<DeviceSnapshot | null>(null);
+  const [deviceError, setDeviceError] = useState<string | null>(null);
   const [compact, setCompact] = useLocalStorage({ key: 'chichu-desktop-compact', defaultValue: false });
   const [navigationOpen, navigation] = useDisclosure();
   const [searchOpen, search] = useDisclosure();
@@ -36,14 +38,20 @@ export function App() {
     }, (error: unknown) => {
       if (active) setConnection({ status: 'error', message: String(error) });
     });
-    return () => { active = false; };
+    const subscription = subscribeDevices(snapshot => { if (active) setDevices(snapshot); });
+    subscription.catch((error: unknown) => {
+      if (active) setDeviceError(String(error));
+    });
+    return () => { active = false; void subscription.then(unsubscribe => unsubscribe()).catch((error: unknown) => console.error('设备订阅清理失败', error)); };
   }, []);
 
   const current = pages.find(item => item.id === page);
   if (!current) throw new Error(`未注册的工作区页面：${page}`);
   const navigate = (id: PageId) => { setPage(id); navigation.close(); search.close(); };
   const snapshot = connection.status === 'ready' ? connection.snapshot : null;
-  const reason = snapshot ? snapshot.deviceService.reason : '正在读取原生服务状态。';
+  const selected = devices?.devices.find(device => device.id === devices.selectedId);
+  const reason = selected ? `当前设备 ${selected.serial} · ${selected.connection}。本页业务能力尚未接入。` : '使用 USB 连接设备，开启 USB 调试并在手机上授权，然后从顶部选择设备。';
+  const chooseDevice = (id: string | null) => { selectDevice(id).then(() => setDeviceError(null), (error: unknown) => setDeviceError(String(error))); };
   const navItem = (item: typeof pages[number]) => <UnstyledButton key={item.id} className={styles.navItem} data-active={page === item.id || undefined} aria-current={page === item.id ? 'page' : undefined} onClick={() => navigate(item.id)}><item.icon size={19} stroke={1.65} aria-hidden /><span>{item.name}</span></UnstyledButton>;
 
   return <AppShell layout="alt" navbar={{ width: 228, breakpoint: '48em', collapsed: { mobile: !navigationOpen } }} header={{ height: 68 }} padding={0} className={styles.shell} data-compact={compact || undefined}>
@@ -56,19 +64,20 @@ export function App() {
     <AppShell.Header className={styles.header}>
       <Group gap="sm"><Burger opened={navigationOpen} onClick={navigation.toggle} hiddenFrom="sm" size="sm" aria-label="切换导航" /><Text size="xs" c="dimmed">工作区 / <span className={styles.breadcrumb}>{current.name}</span></Text></Group>
       <Group gap="sm">
-        <Menu position="bottom-end"><Menu.Target><Button color="gray" variant="subtle" rightSection={<IconChevronDown size={15} />}>未选择设备</Button></Menu.Target><Menu.Dropdown><Menu.Label>设备连接</Menu.Label><Text size="sm" p="sm" maw={300}>{connection.status === 'error' ? '原生服务读取失败，请查看页面错误。' : reason}</Text></Menu.Dropdown></Menu>
+        <Menu position="bottom-end"><Menu.Target><Button color="gray" variant="subtle" rightSection={<IconChevronDown size={15} />}>{selected ? selected.serial : '未选择设备'}</Button></Menu.Target><Menu.Dropdown><Menu.Label>设备连接</Menu.Label>{devices?.devices.map(device => <Menu.Item key={device.id} onClick={() => chooseDevice(device.id)}>{device.serial} · {device.connection}</Menu.Item>)}<Menu.Item onClick={() => chooseDevice(null)}>取消选择</Menu.Item>{devices?.devices.length === 0 && <Text size="sm" p="sm" maw={300}>{reason}</Text>}</Menu.Dropdown></Menu>
         <Tooltip label={colorScheme === 'dark' ? '切换浅色' : '切换深色'}><ActionIcon aria-label={colorScheme === 'dark' ? '切换浅色' : '切换深色'} onClick={() => setColorScheme(colorScheme === 'dark' ? 'light' : 'dark')}>{colorScheme === 'dark' ? <IconSun size={19} /> : <IconMoon size={19} />}</ActionIcon></Tooltip>
         <Tooltip label="任务中心"><ActionIcon aria-label="任务中心" onClick={tasks.open}><IconHistory size={19} /></ActionIcon></Tooltip>
       </Group>
     </AppShell.Header>
     <AppShell.Main className={styles.main}>
       <div className={styles.workspace} id="main-content">
-        <div className={styles.pageHeading}><div><Title order={1}>{current.name}</Title><Text size="sm" c="dimmed" mt={6}>{current.description}</Text></div><Badge color="gray">{connection.status === 'loading' ? '读取服务中' : connection.status === 'error' ? '服务读取失败' : '设备服务未接入'}</Badge></div>
+        <div className={styles.pageHeading}><div><Title order={1}>{current.name}</Title><Text size="sm" c="dimmed" mt={6}>{current.description}</Text></div><Badge color={selected?.connection === 'device' ? 'green' : 'gray'}>{connection.status === 'loading' ? '读取服务中' : connection.status === 'error' ? '服务读取失败' : selected ? selected.connection : '未选择设备'}</Badge></div>
+        {deviceError && <Alert color="red" title="设备服务错误" role="alert">{deviceError}</Alert>}
         {connection.status === 'loading' && <Group role="status"><Loader size="sm" /><Text>读取原生工作区状态…</Text></Group>}
         {connection.status === 'error' && <Alert color="red" title="无法读取原生工作区状态" role="alert"><Text size="sm" style={{ overflowWrap: 'anywhere' }}>{connection.message}</Text><Text size="sm" mt="sm">请在正式桌面窗口中运行应用；若仍失败，请保留此错误并重新启动。</Text></Alert>}
         {(connection.status === 'ready' || page === 'settings') && (() => {
           switch (page) {
-            case 'overview': return <Overview reason={reason} navigate={navigate} showTasks={tasks.open} />;
+            case 'overview': return <Overview reason={reason} devices={devices} selected={selected} navigate={navigate} showTasks={tasks.open} />;
             case 'unlock': return <Unlock reason={reason} />;
             case 'apps': return <Apps reason={reason} />;
             case 'files': return <Files reason={reason} />;

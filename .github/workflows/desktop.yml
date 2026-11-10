@@ -109,9 +109,10 @@ jobs:
           Get-ChildItem 'C:\Program Files (x86)\Windows Kits\10\Include' | Select-Object Name
       - if: runner.os == 'macOS'
         run: cargo fmt --manifest-path src-tauri/Cargo.toml --check
+      - name: Prepare pinned platform-tools
+        run: python3 scripts/prepare_platform_tools.py --target ${{ matrix.target }}
       - run: cargo clippy --manifest-path src-tauri/Cargo.toml --locked --all-targets -- -D warnings
-      # No Rust test cases exist yet. all-targets checks test compilation without
-      # linking an empty test binary. Add targeted execution with business tests.
+      - run: cargo test --manifest-path src-tauri/Cargo.toml --locked devices::tests
       - uses: actions/setup-node@v4
         if: needs.changes.outputs.package == 'true'
         with:
