@@ -11,4 +11,4 @@ tauri-build = { version = "=2.7.4", features = [] }
 [dependencies]
 tauri = { version = "=2.12.5", features = [] }
 serde = { version = "=1.0.228", features = ["derive"] }
-tokio = { version = "=1.54.1", features = ["sync"] }
+tokio = { version = "=1.54.1", features = ["sync", "process", "net", "io-util", "time"] }
