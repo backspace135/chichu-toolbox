@@ -4,8 +4,8 @@ mod commands;
 mod devices;
 mod task_process;
 mod tasks;
-mod workspace;
 mod unlock;
+mod workspace;
 
 struct DeviceWorker(tauri::async_runtime::JoinHandle<()>);
 
