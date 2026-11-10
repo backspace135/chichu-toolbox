@@ -418,13 +418,20 @@ impl Devices {
 
     // Re-read only the fixed transport; never reboot or upload a low-level payload here.
     pub async fn inspect(&self, id: &str) -> Result<Device, String> {
-        let mut device = self.snapshot().await.devices.into_iter()
-            .find(|device| device.id == id).ok_or("设备已断开，请重新选择")?;
+        let mut device = self
+            .snapshot()
+            .await
+            .devices
+            .into_iter()
+            .find(|device| device.id == id)
+            .ok_or("设备已断开，请重新选择")?;
         match device.connection.as_str() {
             "device" | "recovery" => self.collect_adb(&mut device).await,
             "fastboot" => {
                 let found = self.scan_fastboot().await?;
-                device = found.into_iter().find(|value| value.id == id)
+                device = found
+                    .into_iter()
+                    .find(|value| value.id == id)
                     .ok_or("Fastboot 目标已断开")?;
             }
             state => return Err(format!("当前连接状态 {state} 不可采集，请检查授权和连接")),
