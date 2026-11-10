@@ -1,13 +1,13 @@
 # 桌面端技术栈决定
 
-**状态：用户已确认 Tauri 2 + React + TypeScript + Rust，macOS 仅适配 Apple Silicon；Mantine UI 基准于 2026-11-09（JST）确认并固化。**
+**状态：用户已确认 Tauri 2 + React + TypeScript + Rust，macOS 仅适配 Apple Silicon；Mantine UI 基准于 2026-11-09（JST）确认并固化。2026-11-10（JST）补齐 #15 的 M1 初始化输入，详见 [平台与初始化基线](PLATFORM_BASELINE.md)。精确依赖已查发布源，尚未完成双平台编译、安装或运行验证。**
 
 ## 1. 产品与版本边界
 
 - **v0.1.0 只有 Android 端，唯一产品功能是获取临时 Root。** 权限获取、适配检测、日志和结果验证为该流程提供支撑。
 - 桌面端属于后续阶段，版本号与首版功能清单另行确定。
-- 桌面端原有核心目标是整合开源方案，提供支持设备的一键强制解锁 Bootloader 流程；现在加入日常 Android 玩机工具箱方向。
-- [gjgjxweb](https://github.com/CzJam/gjgjxweb) 是应用管理、安装与文件传输、显示调节、截图、电池记录、终端等功能的参考上游；具体采用内容在实施时确定。
+- 桌面端按 [#10 审订总计划](https://github.com/backspace135/chichu-toolbox/issues/10) 的 M0–M6 推进：真实条件识别与方案推荐、双平台分别完成首条强解闭环，以及固定 gjgjxweb 基线的全部功能迁移。
+- [gjgjxweb](https://github.com/CzJam/gjgjxweb) 初始盘点基线为 `f84f9d50cf5ba63928192e64776081fd1cd9ea60`；逐项功能、复用许可和版本归属由 #14 维护。部分功能版本不等于全功能目标完成。
 
 ## 2. 技术选择
 
@@ -25,7 +25,7 @@
 | 终端显示 | xterm.js；会话输入输出由原生层提供 |
 | 本地数据 | 设置使用本地文件，任务日志独立保存；当前不引入数据库 |
 
-Tauri 选用 2.x，Mantine 以已确认 mock 的 9.8.0 为基准；其余依赖的精确版本在工程初始化时固定。
+M1 固定输入：Node `24.22.2` / npm `11.19.1`、Rust `1.99.1`、Tauri Rust `2.12.5` / tauri-build `2.7.4` / JS API 与 CLI `2.12.4`、Vite `8.3.7` / React 插件 `6.3.0`、React 与 React DOM `19.3.1`、TypeScript `7.0.2`、Mantine core/hooks `9.8.0`、Tabler React `3.51.0`。完整辅助依赖、发布源、兼容依据及锁文件规则见 [初始化基线 §2](PLATFORM_BASELINE.md#2-精确工具链与锁策略)。这些是本次工程选型，不代表用户已确认新的产品支持范围。
 
 工程组织、功能分期、设备与任务流程、构建及验收见 [详细开发文档](DEVELOPMENT.md)。
 
@@ -40,10 +40,10 @@ Tauri 选用 2.x，Mantine 以已确认 mock 的 9.8.0 为基准；其余依赖�
 
 | 平台 | 目标 | 状态 |
 | --- | --- | --- |
-| Windows | x64，Rust target 为 `x86_64-pc-windows-msvc` | 沿用选型建议，初始化前确认最低系统版本 |
+| Windows | x64，Rust target 为 `x86_64-pc-windows-msvc` | 本次任务指定的 M1 工程目标；正式产品支持声明仍待确认与验收 |
 | macOS | Apple Silicon 原生 arm64，Rust target 为 `aarch64-apple-darwin` | 用户明确确认 |
 
-macOS 不提供 Intel 构建或 universal 包；随包工具与原生库也按 Apple Silicon 准备，不以 Rosetta 为运行前提。最低 macOS 版本在结合 Tauri 与实际采用工具的要求后确定。
+macOS 不提供 Intel 构建或 universal 包；随包工具与原生库也按 Apple Silicon 准备，不以 Rosetta 为运行前提。最低系统候选仍为 Windows 10 22H2 / macOS 14，或 Windows 11 / macOS 15；不将候选写成已确认支持。M1 可先采用覆盖较低候选的构建参数，最终最低系统由产品决策与 M6 真正安装验收共同确定，见 [平台基线 §1](PLATFORM_BASELINE.md#1-平台状态与最低系统依据)。
 
 Windows、macOS 分别使用对应平台构建与验证。界面和任务代码的跨平台支持，不等于所有候选解锁方案已在两端验证；实际功能按方案、设备、固件和主机平台记录支持范围。
 
@@ -81,12 +81,12 @@ Rust + Tokio
 - 现有 `apps/windows/`、`apps/macos/` 暂保留为平台说明入口，源码由共享桌面工程维护。
 - Android 继续由 `apps/android/` 独立构建。跨端代码共享在出现实际需求后确定，不因桌面选型调整 Android 工程。
 
-## 6. 工程初始化时确定的事项
+## 6. 初始化与后续交付
 
-1. Windows、macOS 最低系统版本及依赖精确版本。
-2. 首个纳入集成的解锁方案与两端可用的依赖组合。
-3. 按已确认的 Mantine [UI 规范](UI_DESIGN.md) 初始化主题、共享组件与正式工程依赖。
-4. 原生工具和 Python 环境的打包、签名与发布配置。
+1. #18 按 [PLATFORM_BASELINE.md](PLATFORM_BASELINE.md) 初始化共享工程与锁文件，采用其中的窗口、目标架构和打包参数；普通工程不等待 #17 真机解锁。
+2. #19 固定 ADB/Fastboot 双平台产物、DLL/动态库与校验值，确定 ADB server 归属和兼容行为。
+3. #17 交付首条路线与可分发运行时的真实交集；不将调查中的 mtkclient 或其开发环境安装说明标为已采用。
+4. #31 在最低候选系统分别完成无开发环境安装、正式窗口、签名/公证及运行验收后回填支持表。未决产品确认与当前验证边界见平台基线 §6–7。
 
 ## 参考
 
