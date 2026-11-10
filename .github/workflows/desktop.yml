@@ -110,7 +110,8 @@ jobs:
       - if: runner.os == 'macOS'
         run: cargo fmt --manifest-path src-tauri/Cargo.toml --check
       - run: cargo clippy --manifest-path src-tauri/Cargo.toml --locked --all-targets -- -D warnings
-      - run: cargo test --manifest-path src-tauri/Cargo.toml --locked
+      # No Rust test cases exist yet. all-targets checks test compilation without
+      # linking an empty test binary. Add targeted execution with business tests.
       - uses: actions/setup-node@v4
         if: needs.changes.outputs.package == 'true'
         with:

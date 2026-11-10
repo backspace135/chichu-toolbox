@@ -20,12 +20,13 @@ class ScopeTest(unittest.TestCase):
         self.assertTrue(result['frontend'] and result['native'])
         self.assertFalse(result['package'])
 
-    def test_packaging_inputs_cannot_skip_packages(self):
+    def test_packaging_inputs_check_native_without_release_build(self):
         for path in ['apps/desktop/src-tauri/Cargo.lock', 'apps/desktop/src-tauri/capabilities/main.json',
                      'apps/desktop/package-lock.json', 'docs/assets/app-icon.svg',
                      '.github/workflows/desktop.yml', 'apps/desktop/vite.config.ts']:
             with self.subTest(path=path):
-                self.assertTrue(scope([path])['package'])
+                self.assertTrue(scope([path])['native'])
+                self.assertFalse(scope([path])['package'])
 
     def test_mixed_changes_union_and_manual_full(self):
         self.assertTrue(all(scope([], full=True).values()))

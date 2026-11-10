@@ -40,7 +40,8 @@ npm run tauri build -- --target x86_64-pc-windows-msvc --bundles nsis -- --locke
 - `src-tauri/src/`：单 crate 原生状态与命令；`capabilities/`、`permissions/` 限定主窗口的状态读取能力，不授权电脑 shell、任意文件或远程来源。
 - 图标源为 `docs/assets/app-icon.svg`；使用固定 Tauri CLI 的 `npm run tauri icon ../../docs/assets/app-icon.svg` 生成桌面图标，非桌面图标忽略。
 - `package-lock.json` 与 `src-tauri/Cargo.lock` 两平台共用；CI 用 `npm ci` 和 `--locked`。新增静态检查器固定 `oxlint=1.93.0`（支持当前 TS 语法），序列化依赖固定 `serde=1.0.228`。
-- 安装包位于 `src-tauri/target/<target>/release/bundle/`。CI 按完整 PR diff（含删除/重命名）分流：文档/Android 跳过桌面检查；UI 仅 Linux lint/类型/生产构建；共享 Rust 执行双平台 clippy/test；IPC bridge 检查两端；Cargo、打包/权限/资源、工具链及构建配置变更才打包。npm 锁含 Tauri CLI 与原生构建工具，依赖变更也验证双平台包。工程外图标变更纳入。手动触发全量。
+- 安装包位于 `src-tauri/target/<target>/release/bundle/`。CI 按完整 PR diff（含删除/重命名）分流：文档/Android 跳过桌面检查；UI 仅 Linux lint/类型/生产构建；共享 Rust 执行双平台 `clippy --all-targets`；IPC bridge 检查两端；Cargo、打包/权限/资源、工具链及构建配置变更执行原生检查。工程外图标变更纳入。PR 和 main push 均不生成 release 安装包，仅手动触发打包。
+- 当前没有 Rust 测试用例，不链接空测试二进制；`clippy --all-targets` 覆盖测试目标的编译检查。后续引入业务测试时须同步添加相关测试执行，不能用 clippy 代替运行测试。安装器、release 链接和无开发环境运行由手动打包/里程碑验收覆盖。
 - 前端生产构建只执行一次，原生 job 下载同次运行的 dist，打包覆盖 beforeBuildCommand 避免重建。仅原生检查需要时上传 dist（保留一天）；npm 下载和 Rust 编译依赖缓存复用。只监听 PR 与 main push，同 PR 新提交取消旧任务，原生矩阵失败后停止其他平台。`desktop-ci` 检查所选 job 必须成功，允许按规则跳过；main 同样按 diff 分流，不无条件全跑。不使用生产签名凭据。
 - 当前不捆绑不存在的 ADB/Fastboot 或解锁运行时；对应产物由 #19 / #17 接入。
 

@@ -5,12 +5,12 @@ import subprocess
 
 
 def scope(paths, full=False):
-    frontend = native = package = full
+    frontend = native = full
     for path in paths:
         if path == '.github/workflows/desktop.yml' or path.startswith('apps/desktop/scripts/'):
-            frontend = native = package = True
+            frontend = native = True
         elif path == 'docs/assets/app-icon.svg':
-            frontend = native = package = True
+            frontend = native = True
         elif not path.startswith('apps/desktop/') or path.endswith('.md'):
             continue
         elif path in ('apps/desktop/.gitignore',):
@@ -18,19 +18,20 @@ def scope(paths, full=False):
         elif path.startswith('apps/desktop/src-tauri/src/'):
             native = True
         elif path.startswith('apps/desktop/src-tauri/'):
-            native = package = True
+            native = True
         elif path == 'apps/desktop/rust-toolchain.toml':
-            native = package = True
+            native = True
         elif path.startswith(('apps/desktop/src/', 'apps/desktop/public/')):
             frontend = True
             if path.startswith('apps/desktop/src/bridge/'):
                 native = True
         elif path in ('apps/desktop/package.json', 'apps/desktop/package-lock.json'):
-            frontend = native = package = True
+            frontend = native = True
         else:
             # Root build inputs (Vite, Node, HTML, TS config) affect the shipped app.
-            frontend = native = package = True
-    return dict(frontend=frontend, native=native, package=package, build=frontend or native)
+            frontend = native = True
+    # PR/push checks never link release packages; manual runs build installers.
+    return dict(frontend=frontend, native=native, package=full, build=frontend or native)
 
 
 def main():
