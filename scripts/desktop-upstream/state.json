@@ -2,45 +2,316 @@
   "sources": {
     "gjgjxweb": {
       "attempt": {
-        "at": "2026-11-11T03:43:39.774036+00:00",
+        "at": "2026-11-12T04:52:14.590660+00:00",
         "status": "changed"
       },
       "candidate": null,
       "last_success": {
-        "at": "2026-11-11T03:43:39.774036+00:00",
+        "at": "2026-11-12T04:52:14.590660+00:00",
         "incremental": {
-          "kind": "first-observation",
-          "releases": [],
-          "tags": [],
-          "to": "f84f9d50cf5ba63928192e64776081fd1cd9ea60"
+          "changes": {
+            "releases": [],
+            "tags": []
+          },
+          "comparison": {
+            "ahead_by": 1,
+            "base_commit": {
+              "author": {
+                "avatar_url": "https://avatars.githubusercontent.com/u/68005843?v=4",
+                "events_url": "https://api.github.com/users/CzJam/events{/privacy}",
+                "followers_url": "https://api.github.com/users/CzJam/followers",
+                "following_url": "https://api.github.com/users/CzJam/following{/other_user}",
+                "gists_url": "https://api.github.com/users/CzJam/gists{/gist_id}",
+                "gravatar_id": "",
+                "html_url": "https://github.com/CzJam",
+                "id": 68005843,
+                "login": "CzJam",
+                "node_id": "MDQ6VXNlcjY4MDA1ODQz",
+                "organizations_url": "https://api.github.com/users/CzJam/orgs",
+                "received_events_url": "https://api.github.com/users/CzJam/received_events",
+                "repos_url": "https://api.github.com/users/CzJam/repos",
+                "site_admin": false,
+                "starred_url": "https://api.github.com/users/CzJam/starred{/owner}{/repo}",
+                "subscriptions_url": "https://api.github.com/users/CzJam/subscriptions",
+                "type": "User",
+                "url": "https://api.github.com/users/CzJam",
+                "user_view_type": "public"
+              },
+              "comments_url": "https://api.github.com/repos/CzJam/gjgjxweb/commits/f84f9d50cf5ba63928192e64776081fd1cd9ea60/comments",
+              "commit": {
+                "author": {
+                  "date": "2026-11-07T12:19:22Z",
+                  "email": "68005843+CzJam@users.noreply.github.com",
+                  "name": "晨钟酱"
+                },
+                "comment_count": 0,
+                "committer": {
+                  "date": "2026-11-07T12:19:22Z",
+                  "email": "noreply@github.com",
+                  "name": "GitHub"
+                },
+                "message": "Update README.md",
+                "tree": {
+                  "sha": "b407f9482aa2e56595c168955a4873fb30811c27",
+                  "url": "https://api.github.com/repos/CzJam/gjgjxweb/git/trees/b407f9482aa2e56595c168955a4873fb30811c27"
+                },
+                "url": "https://api.github.com/repos/CzJam/gjgjxweb/git/commits/f84f9d50cf5ba63928192e64776081fd1cd9ea60",
+                "verification": {
+                  "payload": "tree b407f9482aa2e56595c168955a4873fb30811c27\nparent d185b013a38c9208d5f83f6c3a52011f7515e721\nauthor 晨钟酱 <68005843+CzJam@users.noreply.github.com> 1794053962 +0800\ncommitter GitHub <noreply@github.com> 1794053962 +0800\n\nUpdate README.md",
+                  "reason": "valid",
+                  "signature": "-----BEGIN PGP SIGNATURE-----\n\nwsFcBAABCAAQBQJq7xdKCRC1aQ7uu5UhlAAATcAQAGNBACjjP+aKK126YHc7ScNz\nv54tLFTU3iVMoHb55hg+c8xdwBzkM6y8H5TEEXAX5QQPbITVR++yLLKfSo9rPBMM\nWkBypRn2HhrgLaLzdfdhA6Mm1TXnIySPgICL2WUdbxbOZ2s47h37o1+uLw16EQb+\nlwEh6jHdYdS6E2kAdBCyOAMSkSjbCzS0tWdx8xJC8EpBPNzxsogKKSuHH9Pcsy4S\ng1tLXvd9asUoiSjb173PKmE+U1fDQUr+O4LeUhaPrqZPL51idHr6GULou9I642MX\n4lJ2s/sZmUTRUPwFezG8WSSKxE0Xuv4tFPxH8cY9Mx7feVOJgwBVyvSjKSSxjXAe\neFYjUbNL3FmBIrdrF+TyC0z/9IX0ogylYLLQMpAF8s6HnUbSr6fLfZXlhV23cakQ\ngGtN7foOs4Nz5ZdFR1ePbsDY8uWAV6y3Q1svF3Xs8sDYEtOP6rjZkYYTXv2+5Mkb\nkP6bYAPYjsNnel6OqL459X/R2Xj7yD0EnNd2Kufz4a1nzK7SAsdTNFfj46t4N7JQ\noYWRXN6X7SX2blHAdh85z5aeKc5+mZNt9X6zw1CBrQU4X1FhpjupVKxtLBLR6NGD\nVMK+e2XoTIGNPnsG3X25spQN0U+Qv9WkarcwNVhoRmHm3BvP+Ie4xOGO1hVIDu1k\nFRi+zBtYNoQ9zW7eI9RF\n=OLTx\n-----END PGP SIGNATURE-----\n",
+                  "verified": true,
+                  "verified_at": "2026-11-07T12:19:22Z"
+                }
+              },
+              "committer": {
+                "avatar_url": "https://avatars.githubusercontent.com/u/19864447?v=4",
+                "events_url": "https://api.github.com/users/web-flow/events{/privacy}",
+                "followers_url": "https://api.github.com/users/web-flow/followers",
+                "following_url": "https://api.github.com/users/web-flow/following{/other_user}",
+                "gists_url": "https://api.github.com/users/web-flow/gists{/gist_id}",
+                "gravatar_id": "",
+                "html_url": "https://github.com/web-flow",
+                "id": 19864447,
+                "login": "web-flow",
+                "node_id": "MDQ6VXNlcjE5ODY0NDQ3",
+                "organizations_url": "https://api.github.com/users/web-flow/orgs",
+                "received_events_url": "https://api.github.com/users/web-flow/received_events",
+                "repos_url": "https://api.github.com/users/web-flow/repos",
+                "site_admin": false,
+                "starred_url": "https://api.github.com/users/web-flow/starred{/owner}{/repo}",
+                "subscriptions_url": "https://api.github.com/users/web-flow/subscriptions",
+                "type": "User",
+                "url": "https://api.github.com/users/web-flow",
+                "user_view_type": "public"
+              },
+              "html_url": "https://github.com/CzJam/gjgjxweb/commit/f84f9d50cf5ba63928192e64776081fd1cd9ea60",
+              "node_id": "C_kwDOVg0aJNoAKGY4NGY5ZDUwY2Y1YmE2MzkyODE5MmU2NDc3NjA4MWZkMWNkOWVhNjA",
+              "parents": [
+                {
+                  "html_url": "https://github.com/CzJam/gjgjxweb/commit/d185b013a38c9208d5f83f6c3a52011f7515e721",
+                  "sha": "d185b013a38c9208d5f83f6c3a52011f7515e721",
+                  "url": "https://api.github.com/repos/CzJam/gjgjxweb/commits/d185b013a38c9208d5f83f6c3a52011f7515e721"
+                }
+              ],
+              "sha": "f84f9d50cf5ba63928192e64776081fd1cd9ea60",
+              "url": "https://api.github.com/repos/CzJam/gjgjxweb/commits/f84f9d50cf5ba63928192e64776081fd1cd9ea60"
+            },
+            "behind_by": 0,
+            "commits": [
+              {
+                "author": {
+                  "avatar_url": "https://avatars.githubusercontent.com/u/68005843?v=4",
+                  "events_url": "https://api.github.com/users/CzJam/events{/privacy}",
+                  "followers_url": "https://api.github.com/users/CzJam/followers",
+                  "following_url": "https://api.github.com/users/CzJam/following{/other_user}",
+                  "gists_url": "https://api.github.com/users/CzJam/gists{/gist_id}",
+                  "gravatar_id": "",
+                  "html_url": "https://github.com/CzJam",
+                  "id": 68005843,
+                  "login": "CzJam",
+                  "node_id": "MDQ6VXNlcjY4MDA1ODQz",
+                  "organizations_url": "https://api.github.com/users/CzJam/orgs",
+                  "received_events_url": "https://api.github.com/users/CzJam/received_events",
+                  "repos_url": "https://api.github.com/users/CzJam/repos",
+                  "site_admin": false,
+                  "starred_url": "https://api.github.com/users/CzJam/starred{/owner}{/repo}",
+                  "subscriptions_url": "https://api.github.com/users/CzJam/subscriptions",
+                  "type": "User",
+                  "url": "https://api.github.com/users/CzJam",
+                  "user_view_type": "public"
+                },
+                "comments_url": "https://api.github.com/repos/CzJam/gjgjxweb/commits/45bb9337d92d41503f2ad11b288c50ab28d4a94c/comments",
+                "commit": {
+                  "author": {
+                    "date": "2026-11-11T10:45:01Z",
+                    "email": "68005843+CzJam@users.noreply.github.com",
+                    "name": "晨钟酱"
+                  },
+                  "comment_count": 0,
+                  "committer": {
+                    "date": "2026-11-11T10:45:01Z",
+                    "email": "noreply@github.com",
+                    "name": "GitHub"
+                  },
+                  "message": "Update README.md",
+                  "tree": {
+                    "sha": "0d093f97dcfd719f31231571b98c6cd2dd5fa48c",
+                    "url": "https://api.github.com/repos/CzJam/gjgjxweb/git/trees/0d093f97dcfd719f31231571b98c6cd2dd5fa48c"
+                  },
+                  "url": "https://api.github.com/repos/CzJam/gjgjxweb/git/commits/45bb9337d92d41503f2ad11b288c50ab28d4a94c",
+                  "verification": {
+                    "payload": "tree 0d093f97dcfd719f31231571b98c6cd2dd5fa48c\nparent f84f9d50cf5ba63928192e64776081fd1cd9ea60\nauthor 晨钟酱 <68005843+CzJam@users.noreply.github.com> 1794393901 +0000\ncommitter GitHub <noreply@github.com> 1794393901 +0000\n\nUpdate README.md",
+                    "reason": "valid",
+                    "signature": "-----BEGIN PGP SIGNATURE-----\n\nwsFcBAABCAAQBQJq9EcuCRC1aQ7uu5UhlAAAyp0QAFW3AQ/rTCFws8Cu2UZZ516h\n6tl4mZJcsPJd4avbJykUcCTi+BVhIh7J94IH/HhCfFHll1K/9E0Mw96D5LluzfYk\nImbY1Z4oiTcEEuNizsk0H23I1cjfx98mN6tsSTbmFJQkTKa/EvNjjoTA21jc4qWU\n7L7BcH6CdVyT/MSjjCfp74n19wbOPLW64v9nKxvL9nKDXQA00IA6IBajX9vbNL2r\nlFWo9+rb/ZfRjMSh9AY0NtwcLimd0uz5o4pJip/bsGVERuGTuAsAMIOm8ngYG29O\nq2vvEinykwgrQRliAP63ROZhiw+py1vaX1WofRzgicEtfI03Mb/whITBfTRaiQD3\n+Hmr5dDbo1K0F37I0N4+1E1hBjCt1B70MM/9HMLnelPvW2qmRiashM0h4qNWHZUG\nqns1zc4vOQm86D2xgW3ONONk/pacsqFfcYi7iA2kdIflIltsKsB1qJykOKyOZ/WD\nLtlRvVJmqZckfBUhbAWiAe12Ni4Iq6TQeChmWVphaEr9avU4L0qZ3xVXY383/2to\nemLCZexit7Oz6qc5afJT+9J9gmcXQRv57zbsL7rpfdZdYK+tm8UY2bLx/qfF4Y7t\nCMyYNUQkd8gVe+BNZzlXk2XqkFVBb57I3M7Nf3K8Pif8DM7aojthUSqmRDCWl+5E\nEcvPBG53kjCS/9awd+Aa\n=x01n\n-----END PGP SIGNATURE-----\n",
+                    "verified": true,
+                    "verified_at": "2026-11-11T10:45:02Z"
+                  }
+                },
+                "committer": {
+                  "avatar_url": "https://avatars.githubusercontent.com/u/19864447?v=4",
+                  "events_url": "https://api.github.com/users/web-flow/events{/privacy}",
+                  "followers_url": "https://api.github.com/users/web-flow/followers",
+                  "following_url": "https://api.github.com/users/web-flow/following{/other_user}",
+                  "gists_url": "https://api.github.com/users/web-flow/gists{/gist_id}",
+                  "gravatar_id": "",
+                  "html_url": "https://github.com/web-flow",
+                  "id": 19864447,
+                  "login": "web-flow",
+                  "node_id": "MDQ6VXNlcjE5ODY0NDQ3",
+                  "organizations_url": "https://api.github.com/users/web-flow/orgs",
+                  "received_events_url": "https://api.github.com/users/web-flow/received_events",
+                  "repos_url": "https://api.github.com/users/web-flow/repos",
+                  "site_admin": false,
+                  "starred_url": "https://api.github.com/users/web-flow/starred{/owner}{/repo}",
+                  "subscriptions_url": "https://api.github.com/users/web-flow/subscriptions",
+                  "type": "User",
+                  "url": "https://api.github.com/users/web-flow",
+                  "user_view_type": "public"
+                },
+                "html_url": "https://github.com/CzJam/gjgjxweb/commit/45bb9337d92d41503f2ad11b288c50ab28d4a94c",
+                "node_id": "C_kwDOVg0aJNoAKDQ1YmI5MzM3ZDkyZDQxNTAzZjJhZDExYjI4OGM1MGFiMjhkNGE5NGM",
+                "parents": [
+                  {
+                    "html_url": "https://github.com/CzJam/gjgjxweb/commit/f84f9d50cf5ba63928192e64776081fd1cd9ea60",
+                    "sha": "f84f9d50cf5ba63928192e64776081fd1cd9ea60",
+                    "url": "https://api.github.com/repos/CzJam/gjgjxweb/commits/f84f9d50cf5ba63928192e64776081fd1cd9ea60"
+                  }
+                ],
+                "sha": "45bb9337d92d41503f2ad11b288c50ab28d4a94c",
+                "url": "https://api.github.com/repos/CzJam/gjgjxweb/commits/45bb9337d92d41503f2ad11b288c50ab28d4a94c"
+              }
+            ],
+            "diff_url": "https://github.com/CzJam/gjgjxweb/compare/f84f9d50cf5ba63928192e64776081fd1cd9ea60...45bb9337d92d41503f2ad11b288c50ab28d4a94c.diff",
+            "files": [
+              {
+                "additions": 2,
+                "blob_url": "https://github.com/CzJam/gjgjxweb/blob/45bb9337d92d41503f2ad11b288c50ab28d4a94c/README.md",
+                "changes": 7,
+                "contents_url": "https://api.github.com/repos/CzJam/gjgjxweb/contents/README.md?ref=45bb9337d92d41503f2ad11b288c50ab28d4a94c",
+                "deletions": 5,
+                "filename": "README.md",
+                "patch": "@@ -1,14 +1,11 @@\n # 搞机工具箱 Web - 网页版 Android 玩机工具\n+<br><p align=\"center\" ><a href=\"https://trendshift.io/repositories/343132?utm_source=trendshift-badge&amp;utm_medium=badge&amp;utm_campaign=badge-trendshift-343132\" target=\"_blank\" rel=\"noopener noreferrer\"><img src=\"https://trendshift.io/api/badge/trendshift/repositories/343132/daily?language=HTML\" alt=\"CzJam%2Fgjgjxweb | Trendshift\" width=\"250\" height=\"55\"/></a></p><br>\n \n-## <p align=\"center\"><a href=\"https://www.bilibili.com/video/BV1TB456ZEoo\">使用教程</a>&emsp;&emsp;<a href=\"https://czjam.github.io/gjgjxweb/\">在线体验</a>   </p>\n 《搞机工具箱》是一款ADB图形化工具。\n \n 本项目移植于个人开发的 [《搞机工具箱》PC版](https://www.bilibili.com/video/BV1QvHhzLELb) 。借助 [Tango](https://github.com/yume-chan/ya-webadb) 实现了 WebADB，并通过 [xterm.js](https://github.com/xtermjs/xterm.js) 打通 Android 原生 Shell 交互式终端，可运行在基于Chromium内核的浏览器中，实现免下载、免安装的跨平台使用体验。\n-\n- [作者 @晨钟酱Official](https://space.bilibili.com/251013709)\n- \n- [官网: jamcz.com](https://jamcz.com)\n  \n+### <p align=\"center\" ><a href=\"https://www.bilibili.com/video/BV1TB456ZEoo\">使用教程</a>&emsp;&emsp;<a href=\"https://czjam.github.io/gjgjxweb/\">在线体验</a></p>\n \n ## 功能\n ",
+                "raw_url": "https://github.com/CzJam/gjgjxweb/raw/45bb9337d92d41503f2ad11b288c50ab28d4a94c/README.md",
+                "sha": "94de16e99b5c42a68febbbcb48885140d9a00dd9",
+                "status": "modified"
+              }
+            ],
+            "html_url": "https://github.com/CzJam/gjgjxweb/compare/f84f9d50cf5ba63928192e64776081fd1cd9ea60...45bb9337d92d41503f2ad11b288c50ab28d4a94c",
+            "merge_base_commit": {
+              "author": {
+                "avatar_url": "https://avatars.githubusercontent.com/u/68005843?v=4",
+                "events_url": "https://api.github.com/users/CzJam/events{/privacy}",
+                "followers_url": "https://api.github.com/users/CzJam/followers",
+                "following_url": "https://api.github.com/users/CzJam/following{/other_user}",
+                "gists_url": "https://api.github.com/users/CzJam/gists{/gist_id}",
+                "gravatar_id": "",
+                "html_url": "https://github.com/CzJam",
+                "id": 68005843,
+                "login": "CzJam",
+                "node_id": "MDQ6VXNlcjY4MDA1ODQz",
+                "organizations_url": "https://api.github.com/users/CzJam/orgs",
+                "received_events_url": "https://api.github.com/users/CzJam/received_events",
+                "repos_url": "https://api.github.com/users/CzJam/repos",
+                "site_admin": false,
+                "starred_url": "https://api.github.com/users/CzJam/starred{/owner}{/repo}",
+                "subscriptions_url": "https://api.github.com/users/CzJam/subscriptions",
+                "type": "User",
+                "url": "https://api.github.com/users/CzJam",
+                "user_view_type": "public"
+              },
+              "comments_url": "https://api.github.com/repos/CzJam/gjgjxweb/commits/f84f9d50cf5ba63928192e64776081fd1cd9ea60/comments",
+              "commit": {
+                "author": {
+                  "date": "2026-11-07T12:19:22Z",
+                  "email": "68005843+CzJam@users.noreply.github.com",
+                  "name": "晨钟酱"
+                },
+                "comment_count": 0,
+                "committer": {
+                  "date": "2026-11-07T12:19:22Z",
+                  "email": "noreply@github.com",
+                  "name": "GitHub"
+                },
+                "message": "Update README.md",
+                "tree": {
+                  "sha": "b407f9482aa2e56595c168955a4873fb30811c27",
+                  "url": "https://api.github.com/repos/CzJam/gjgjxweb/git/trees/b407f9482aa2e56595c168955a4873fb30811c27"
+                },
+                "url": "https://api.github.com/repos/CzJam/gjgjxweb/git/commits/f84f9d50cf5ba63928192e64776081fd1cd9ea60",
+                "verification": {
+                  "payload": "tree b407f9482aa2e56595c168955a4873fb30811c27\nparent d185b013a38c9208d5f83f6c3a52011f7515e721\nauthor 晨钟酱 <68005843+CzJam@users.noreply.github.com> 1794053962 +0800\ncommitter GitHub <noreply@github.com> 1794053962 +0800\n\nUpdate README.md",
+                  "reason": "valid",
+                  "signature": "-----BEGIN PGP SIGNATURE-----\n\nwsFcBAABCAAQBQJq7xdKCRC1aQ7uu5UhlAAATcAQAGNBACjjP+aKK126YHc7ScNz\nv54tLFTU3iVMoHb55hg+c8xdwBzkM6y8H5TEEXAX5QQPbITVR++yLLKfSo9rPBMM\nWkBypRn2HhrgLaLzdfdhA6Mm1TXnIySPgICL2WUdbxbOZ2s47h37o1+uLw16EQb+\nlwEh6jHdYdS6E2kAdBCyOAMSkSjbCzS0tWdx8xJC8EpBPNzxsogKKSuHH9Pcsy4S\ng1tLXvd9asUoiSjb173PKmE+U1fDQUr+O4LeUhaPrqZPL51idHr6GULou9I642MX\n4lJ2s/sZmUTRUPwFezG8WSSKxE0Xuv4tFPxH8cY9Mx7feVOJgwBVyvSjKSSxjXAe\neFYjUbNL3FmBIrdrF+TyC0z/9IX0ogylYLLQMpAF8s6HnUbSr6fLfZXlhV23cakQ\ngGtN7foOs4Nz5ZdFR1ePbsDY8uWAV6y3Q1svF3Xs8sDYEtOP6rjZkYYTXv2+5Mkb\nkP6bYAPYjsNnel6OqL459X/R2Xj7yD0EnNd2Kufz4a1nzK7SAsdTNFfj46t4N7JQ\noYWRXN6X7SX2blHAdh85z5aeKc5+mZNt9X6zw1CBrQU4X1FhpjupVKxtLBLR6NGD\nVMK+e2XoTIGNPnsG3X25spQN0U+Qv9WkarcwNVhoRmHm3BvP+Ie4xOGO1hVIDu1k\nFRi+zBtYNoQ9zW7eI9RF\n=OLTx\n-----END PGP SIGNATURE-----\n",
+                  "verified": true,
+                  "verified_at": "2026-11-07T12:19:22Z"
+                }
+              },
+              "committer": {
+                "avatar_url": "https://avatars.githubusercontent.com/u/19864447?v=4",
+                "events_url": "https://api.github.com/users/web-flow/events{/privacy}",
+                "followers_url": "https://api.github.com/users/web-flow/followers",
+                "following_url": "https://api.github.com/users/web-flow/following{/other_user}",
+                "gists_url": "https://api.github.com/users/web-flow/gists{/gist_id}",
+                "gravatar_id": "",
+                "html_url": "https://github.com/web-flow",
+                "id": 19864447,
+                "login": "web-flow",
+                "node_id": "MDQ6VXNlcjE5ODY0NDQ3",
+                "organizations_url": "https://api.github.com/users/web-flow/orgs",
+                "received_events_url": "https://api.github.com/users/web-flow/received_events",
+                "repos_url": "https://api.github.com/users/web-flow/repos",
+                "site_admin": false,
+                "starred_url": "https://api.github.com/users/web-flow/starred{/owner}{/repo}",
+                "subscriptions_url": "https://api.github.com/users/web-flow/subscriptions",
+                "type": "User",
+                "url": "https://api.github.com/users/web-flow",
+                "user_view_type": "public"
+              },
+              "html_url": "https://github.com/CzJam/gjgjxweb/commit/f84f9d50cf5ba63928192e64776081fd1cd9ea60",
+              "node_id": "C_kwDOVg0aJNoAKGY4NGY5ZDUwY2Y1YmE2MzkyODE5MmU2NDc3NjA4MWZkMWNkOWVhNjA",
+              "parents": [
+                {
+                  "html_url": "https://github.com/CzJam/gjgjxweb/commit/d185b013a38c9208d5f83f6c3a52011f7515e721",
+                  "sha": "d185b013a38c9208d5f83f6c3a52011f7515e721",
+                  "url": "https://api.github.com/repos/CzJam/gjgjxweb/commits/d185b013a38c9208d5f83f6c3a52011f7515e721"
+                }
+              ],
+              "sha": "f84f9d50cf5ba63928192e64776081fd1cd9ea60",
+              "url": "https://api.github.com/repos/CzJam/gjgjxweb/commits/f84f9d50cf5ba63928192e64776081fd1cd9ea60"
+            },
+            "patch_url": "https://github.com/CzJam/gjgjxweb/compare/f84f9d50cf5ba63928192e64776081fd1cd9ea60...45bb9337d92d41503f2ad11b288c50ab28d4a94c.patch",
+            "permalink_url": "https://github.com/CzJam/gjgjxweb/compare/CzJam:f84f9d5...CzJam:45bb933",
+            "status": "ahead",
+            "total_commits": 1,
+            "url": "https://api.github.com/repos/CzJam/gjgjxweb/compare/f84f9d50cf5ba63928192e64776081fd1cd9ea60...45bb9337d92d41503f2ad11b288c50ab28d4a94c"
+          },
+          "file_list_may_be_truncated": false,
+          "from": "f84f9d50cf5ba63928192e64776081fd1cd9ea60",
+          "history_rewritten": false,
+          "to": "45bb9337d92d41503f2ad11b288c50ab28d4a94c"
         },
         "snapshot": {
           "releases": {},
-          "sha": "f84f9d50cf5ba63928192e64776081fd1cd9ea60",
+          "sha": "45bb9337d92d41503f2ad11b288c50ab28d4a94c",
           "tags": {}
         }
       }
     },
     "hyperos-unlock": {
       "attempt": {
-        "at": "2026-11-11T03:43:39.774036+00:00",
-        "status": "changed"
+        "at": "2026-11-12T04:52:14.590660+00:00",
+        "status": "unchanged"
       },
       "candidate": null,
       "last_success": {
-        "at": "2026-11-11T03:43:39.774036+00:00",
+        "at": "2026-11-12T04:52:14.590660+00:00",
         "incremental": {
-          "kind": "first-observation",
-          "releases": [
-            "323761207",
-            "342854090",
-            "426753831"
-          ],
-          "tags": [
-            "refs/tags/v1.0.0",
-            "refs/tags/v2.0.0",
-            "refs/tags/v2.1.0"
-          ],
+          "changes": {
+            "releases": [],
+            "tags": []
+          },
+          "from": "679709d1cd6ab9f5b41465dcedd9d42ee605586f",
           "to": "679709d1cd6ab9f5b41465dcedd9d42ee605586f"
         },
         "snapshot": {
@@ -216,60 +487,18 @@
     },
     "miunlocktool": {
       "attempt": {
-        "at": "2026-11-11T03:43:39.774036+00:00",
-        "status": "changed"
+        "at": "2026-11-12T04:52:14.590660+00:00",
+        "status": "unchanged"
       },
       "candidate": null,
       "last_success": {
-        "at": "2026-11-11T03:43:39.774036+00:00",
+        "at": "2026-11-12T04:52:14.590660+00:00",
         "incremental": {
-          "kind": "first-observation",
-          "releases": [
-            "181121643",
-            "181871090",
-            "189295451",
-            "217880625",
-            "270161440",
-            "270251260",
-            "273796190",
-            "275847914",
-            "284038451",
-            "284130302",
-            "296345871",
-            "308582202",
-            "309050473",
-            "310721603",
-            "311971112",
-            "316787254",
-            "319456339",
-            "338102886",
-            "386261159",
-            "438893119"
-          ],
-          "tags": [
-            "refs/tags/1.5.6",
-            "refs/tags/1.5.7",
-            "refs/tags/1.5.8",
-            "refs/tags/1.5.9",
-            "refs/tags/dev-1.5.9",
-            "refs/tags/dev-1.6.0",
-            "refs/tags/v1.6.0",
-            "refs/tags/v1.6.1",
-            "refs/tags/v1.6.2",
-            "refs/tags/v1.6.3",
-            "refs/tags/v1.6.4",
-            "refs/tags/v1.6.5",
-            "refs/tags/v1.6.6",
-            "refs/tags/v1.6.7",
-            "refs/tags/v1.6.8",
-            "refs/tags/v1.6.9",
-            "refs/tags/v1.7.0",
-            "refs/tags/v1.7.1",
-            "refs/tags/v1.7.2",
-            "refs/tags/v1.7.3",
-            "refs/tags/v1.7.4",
-            "refs/tags/v1.7.5"
-          ],
+          "changes": {
+            "releases": [],
+            "tags": []
+          },
+          "from": "9eb0423d400982e8de0518be67a72351d0dfc49c",
           "to": "9eb0423d400982e8de0518be67a72351d0dfc49c"
         },
         "snapshot": {
@@ -1771,25 +2000,18 @@
     },
     "mtkclient": {
       "attempt": {
-        "at": "2026-11-11T03:43:39.774036+00:00",
-        "status": "changed"
+        "at": "2026-11-12T04:52:14.590660+00:00",
+        "status": "unchanged"
       },
       "candidate": null,
       "last_success": {
-        "at": "2026-11-11T03:43:39.774036+00:00",
+        "at": "2026-11-12T04:52:14.590660+00:00",
         "incremental": {
-          "kind": "first-observation",
-          "releases": [
-            "281548938",
-            "289144182",
-            "298644157"
-          ],
-          "tags": [
-            "refs/tags/v2.1.2",
-            "refs/tags/v2.1.3",
-            "refs/tags/v2.1.4",
-            "refs/tags/v2.1.4.1"
-          ],
+          "changes": {
+            "releases": [],
+            "tags": []
+          },
+          "from": "118a000a83ea31c4f427fe5225abfe964546e05e",
           "to": "118a000a83ea31c4f427fe5225abfe964546e05e"
         },
         "snapshot": {
@@ -2014,22 +2236,18 @@
     },
     "xiaomi-ubl": {
       "attempt": {
-        "at": "2026-11-11T03:43:39.774036+00:00",
-        "status": "changed"
+        "at": "2026-11-12T04:52:14.590660+00:00",
+        "status": "unchanged"
       },
       "candidate": null,
       "last_success": {
-        "at": "2026-11-11T03:43:39.774036+00:00",
+        "at": "2026-11-12T04:52:14.590660+00:00",
         "incremental": {
-          "kind": "first-observation",
-          "releases": [
-            "323258816",
-            "323672402"
-          ],
-          "tags": [
-            "refs/tags/ublxiaomi",
-            "refs/tags/ublxiaomiv2"
-          ],
+          "changes": {
+            "releases": [],
+            "tags": []
+          },
+          "from": "7bde56dcb0a0aefd7807c76d28c0044e78aa6b60",
           "to": "7bde56dcb0a0aefd7807c76d28c0044e78aa6b60"
         },
         "snapshot": {
