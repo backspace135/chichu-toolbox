@@ -2,12 +2,12 @@
   "sources": {
     "gjgjxweb": {
       "attempt": {
-        "at": "2026-11-13T04:03:44.165577+00:00",
+        "at": "2026-11-14T04:00:22.061752+00:00",
         "status": "unchanged"
       },
       "candidate": null,
       "last_success": {
-        "at": "2026-11-13T04:03:44.165577+00:00",
+        "at": "2026-11-14T04:00:22.061752+00:00",
         "incremental": {
           "changes": {
             "releases": [],
@@ -25,12 +25,12 @@
     },
     "hyperos-unlock": {
       "attempt": {
-        "at": "2026-11-13T04:03:44.165577+00:00",
+        "at": "2026-11-14T04:00:22.061752+00:00",
         "status": "unchanged"
       },
       "candidate": null,
       "last_success": {
-        "at": "2026-11-13T04:03:44.165577+00:00",
+        "at": "2026-11-14T04:00:22.061752+00:00",
         "incremental": {
           "changes": {
             "releases": [],
@@ -212,295 +212,20 @@
     },
     "miunlocktool": {
       "attempt": {
-        "at": "2026-11-13T04:03:44.165577+00:00",
+        "at": "2026-11-14T04:00:22.061752+00:00",
         "status": "changed"
       },
       "candidate": null,
       "last_success": {
-        "at": "2026-11-13T04:03:44.165577+00:00",
+        "at": "2026-11-14T04:00:22.061752+00:00",
         "incremental": {
           "changes": {
             "releases": [
-              "438893119"
+              "296345871"
             ],
             "tags": []
           },
-          "comparison": {
-            "ahead_by": 1,
-            "base_commit": {
-              "author": {
-                "avatar_url": "https://avatars.githubusercontent.com/u/127665988?v=4",
-                "events_url": "https://api.github.com/users/offici5l/events{/privacy}",
-                "followers_url": "https://api.github.com/users/offici5l/followers",
-                "following_url": "https://api.github.com/users/offici5l/following{/other_user}",
-                "gists_url": "https://api.github.com/users/offici5l/gists{/gist_id}",
-                "gravatar_id": "",
-                "html_url": "https://github.com/offici5l",
-                "id": 127665988,
-                "login": "offici5l",
-                "node_id": "U_kgDOB5wHRA",
-                "organizations_url": "https://api.github.com/users/offici5l/orgs",
-                "received_events_url": "https://api.github.com/users/offici5l/received_events",
-                "repos_url": "https://api.github.com/users/offici5l/repos",
-                "site_admin": false,
-                "starred_url": "https://api.github.com/users/offici5l/starred{/owner}{/repo}",
-                "subscriptions_url": "https://api.github.com/users/offici5l/subscriptions",
-                "type": "User",
-                "url": "https://api.github.com/users/offici5l",
-                "user_view_type": "public"
-              },
-              "comments_url": "https://api.github.com/repos/MiForge/MiUnlockTool/commits/9eb0423d400982e8de0518be67a72351d0dfc49c/comments",
-              "commit": {
-                "author": {
-                  "date": "2026-11-09T08:36:32Z",
-                  "email": "127665988+offici5l@users.noreply.github.com",
-                  "name": "offici5l"
-                },
-                "comment_count": 0,
-                "committer": {
-                  "date": "2026-11-09T08:36:32Z",
-                  "email": "noreply@github.com",
-                  "name": "GitHub"
-                },
-                "message": "Update pyproject.toml",
-                "tree": {
-                  "sha": "ecc966d9aa7de353c6ebeba5627ce85a24462b49",
-                  "url": "https://api.github.com/repos/MiForge/MiUnlockTool/git/trees/ecc966d9aa7de353c6ebeba5627ce85a24462b49"
-                },
-                "url": "https://api.github.com/repos/MiForge/MiUnlockTool/git/commits/9eb0423d400982e8de0518be67a72351d0dfc49c",
-                "verification": {
-                  "payload": "tree ecc966d9aa7de353c6ebeba5627ce85a24462b49\nparent 4d1d69dde875c32d83d3f6b34cf87ed57926bcd9\nauthor offici5l <127665988+offici5l@users.noreply.github.com> 1794213392 +0100\ncommitter GitHub <noreply@github.com> 1794213392 +0100\n\nUpdate pyproject.toml",
-                  "reason": "valid",
-                  "signature": "-----BEGIN PGP SIGNATURE-----\n\nwsFcBAABCAAQBQJq8YYRCRC1aQ7uu5UhlAAAvfAQAFYWiwKJiSuF/fBhl9AGeK2p\nzo5mXj3GYj5eE8eJXN3kSJ9x2sW2nzXBkvtvFTDEVs1enQhHIL1EyPayTs1g6KVc\n2OvN8E7EPBlTA+sJeWlhW/Aq36TmAloXExX7Vi9WMbuyDK2LXoDmMvyx3fiLR4FG\nYzt3ZJlZrylvcZyUVzU07oV2SCNQiajjoYZ/+8txYY4X2Ukx4485brGBOnKWXDo1\nZxVtMPesbR2Xzycsgpfrr1xF7qfztGKfhyfQwFWAJpvAkoPUNUN4dD30CAVi/vAQ\nRzuEhgBmftWO1/VOP9gbJpt4TuNFdt7b6w64OoVcfsdfis5oiS+EiuXwQaYVYN0K\nx5EMkChVaGf33qtPDb0fGxxUhGjSB3aPhUgNLkDiG3R/jPF9JA4jVIqruA0btIC+\n/kVQ3Z42q8/4NysGawtZ4Dtf+zKXBtnNe4bg9LvvG7zBEG6JLUX+bGcJGz75gCHn\nzT9QpEyiuL61yEOoQRkHzsook5Vt7gtD70HgRui32PYnxlaxlApLpmViTqXhfnoK\naWgkTEWbVvuQp4IkJHfRYNYIHm28AIRAAvnGorYL4nl1CYlezZGOWP3HAS19+F8o\nSsFqmDEsPAZr2Tbg9RQQM7qXCP2HKmxVJwZcMmzRKoIWmx9+p8jBCXjY4D89nqXt\nRaZsJh3ly5NFzUqqzD5h\n=6K86\n-----END PGP SIGNATURE-----\n",
-                  "verified": true,
-                  "verified_at": "2026-11-09T08:36:33Z"
-                }
-              },
-              "committer": {
-                "avatar_url": "https://avatars.githubusercontent.com/u/19864447?v=4",
-                "events_url": "https://api.github.com/users/web-flow/events{/privacy}",
-                "followers_url": "https://api.github.com/users/web-flow/followers",
-                "following_url": "https://api.github.com/users/web-flow/following{/other_user}",
-                "gists_url": "https://api.github.com/users/web-flow/gists{/gist_id}",
-                "gravatar_id": "",
-                "html_url": "https://github.com/web-flow",
-                "id": 19864447,
-                "login": "web-flow",
-                "node_id": "MDQ6VXNlcjE5ODY0NDQ3",
-                "organizations_url": "https://api.github.com/users/web-flow/orgs",
-                "received_events_url": "https://api.github.com/users/web-flow/received_events",
-                "repos_url": "https://api.github.com/users/web-flow/repos",
-                "site_admin": false,
-                "starred_url": "https://api.github.com/users/web-flow/starred{/owner}{/repo}",
-                "subscriptions_url": "https://api.github.com/users/web-flow/subscriptions",
-                "type": "User",
-                "url": "https://api.github.com/users/web-flow",
-                "user_view_type": "public"
-              },
-              "html_url": "https://github.com/MiForge/MiUnlockTool/commit/9eb0423d400982e8de0518be67a72351d0dfc49c",
-              "node_id": "C_kwDOLEu-aNoAKDllYjA0MjNkNDAwOTgyZThkZTA1MThiZTY3YTcyMzUxZDBkZmM0OWM",
-              "parents": [
-                {
-                  "html_url": "https://github.com/MiForge/MiUnlockTool/commit/4d1d69dde875c32d83d3f6b34cf87ed57926bcd9",
-                  "sha": "4d1d69dde875c32d83d3f6b34cf87ed57926bcd9",
-                  "url": "https://api.github.com/repos/MiForge/MiUnlockTool/commits/4d1d69dde875c32d83d3f6b34cf87ed57926bcd9"
-                }
-              ],
-              "sha": "9eb0423d400982e8de0518be67a72351d0dfc49c",
-              "url": "https://api.github.com/repos/MiForge/MiUnlockTool/commits/9eb0423d400982e8de0518be67a72351d0dfc49c"
-            },
-            "behind_by": 0,
-            "commits": [
-              {
-                "author": {
-                  "avatar_url": "https://avatars.githubusercontent.com/u/127665988?v=4",
-                  "events_url": "https://api.github.com/users/offici5l/events{/privacy}",
-                  "followers_url": "https://api.github.com/users/offici5l/followers",
-                  "following_url": "https://api.github.com/users/offici5l/following{/other_user}",
-                  "gists_url": "https://api.github.com/users/offici5l/gists{/gist_id}",
-                  "gravatar_id": "",
-                  "html_url": "https://github.com/offici5l",
-                  "id": 127665988,
-                  "login": "offici5l",
-                  "node_id": "U_kgDOB5wHRA",
-                  "organizations_url": "https://api.github.com/users/offici5l/orgs",
-                  "received_events_url": "https://api.github.com/users/offici5l/received_events",
-                  "repos_url": "https://api.github.com/users/offici5l/repos",
-                  "site_admin": false,
-                  "starred_url": "https://api.github.com/users/offici5l/starred{/owner}{/repo}",
-                  "subscriptions_url": "https://api.github.com/users/offici5l/subscriptions",
-                  "type": "User",
-                  "url": "https://api.github.com/users/offici5l",
-                  "user_view_type": "public"
-                },
-                "comments_url": "https://api.github.com/repos/MiForge/MiUnlockTool/commits/43a80a8799030d785c848f397deea00c19ccd062/comments",
-                "commit": {
-                  "author": {
-                    "date": "2026-11-12T07:35:10Z",
-                    "email": "127665988+offici5l@users.noreply.github.com",
-                    "name": "offici5l"
-                  },
-                  "comment_count": 0,
-                  "committer": {
-                    "date": "2026-11-12T07:35:10Z",
-                    "email": "noreply@github.com",
-                    "name": "GitHub"
-                  },
-                  "message": "Update CHANGELOG.md",
-                  "tree": {
-                    "sha": "574d72258c5a7de73d356aa93373841305cacfa9",
-                    "url": "https://api.github.com/repos/MiForge/MiUnlockTool/git/trees/574d72258c5a7de73d356aa93373841305cacfa9"
-                  },
-                  "url": "https://api.github.com/repos/MiForge/MiUnlockTool/git/commits/43a80a8799030d785c848f397deea00c19ccd062",
-                  "verification": {
-                    "payload": "tree 574d72258c5a7de73d356aa93373841305cacfa9\nparent 9eb0423d400982e8de0518be67a72351d0dfc49c\nauthor offici5l <127665988+offici5l@users.noreply.github.com> 1794468910 +0100\ncommitter GitHub <noreply@github.com> 1794468910 +0100\n\nUpdate CHANGELOG.md",
-                    "reason": "valid",
-                    "signature": "-----BEGIN PGP SIGNATURE-----\n\nwsFcBAABCAAQBQJq9WwuCRC1aQ7uu5UhlAAAsvEQAKfUGH75qzV2GjQqbzOhBpip\nDrKa/KQQrZTuDvIPs9ITk3wHNhNQpBTpcify2opn7wkQM0aMp7srq36kIMeiv74o\n75VZOzCSbIHzZ+/PwnLpcMdhHo+H5pLmIIIUL/BRnQ0JNsqLxLITV3hIQEg3w4an\nFmBb40PxYD35+jdty7WGdiXJQAZmBTjHEJpxBQlsJwpIdXc5idBHMxSflfP2l51a\n0WH05mha1kNloIP1GBj6uBt54T4wR2DBjUHasY9/y+N71oMfjNUmvMvOaxsFW1vP\nqdZ4H5mEaKwT6sO0AMX4UOwJH9+XRKh8DTBsaqyQCDhCYTPcdPmb/ChsJmckG3UR\nYZmJArTillFvHeEvBWkOlkdSXEZ0tsuox/JnQD26LdzSes89iUFKPKLXoPb3REDf\nZ/0v8nseNY0UtHYNpF1eI20Xg80YOvk7hCG5jvIpPmFvClzp+SjyZljwnvIwtv2h\nGT3h27kshHTmOwt5bNGoOS3pDMyso3jmLWitod9nyIyaKjbnoLlqaaYW5jOQfPre\nwJjNEOJNChHRnUb+T/i5lSabo6DT//gHBP2B+DpRzLkDMegZrfPeWpQCZM2+Deaa\nRlygr5jB5gciA9Rh/Q9ywQJI7ydeF+bry+X/TdtDzm9X9IuBltKe90b3Me3a7zek\n4QF9PI67WennLzqV7M4P\n=KDm4\n-----END PGP SIGNATURE-----\n",
-                    "verified": true,
-                    "verified_at": "2026-11-12T07:35:10Z"
-                  }
-                },
-                "committer": {
-                  "avatar_url": "https://avatars.githubusercontent.com/u/19864447?v=4",
-                  "events_url": "https://api.github.com/users/web-flow/events{/privacy}",
-                  "followers_url": "https://api.github.com/users/web-flow/followers",
-                  "following_url": "https://api.github.com/users/web-flow/following{/other_user}",
-                  "gists_url": "https://api.github.com/users/web-flow/gists{/gist_id}",
-                  "gravatar_id": "",
-                  "html_url": "https://github.com/web-flow",
-                  "id": 19864447,
-                  "login": "web-flow",
-                  "node_id": "MDQ6VXNlcjE5ODY0NDQ3",
-                  "organizations_url": "https://api.github.com/users/web-flow/orgs",
-                  "received_events_url": "https://api.github.com/users/web-flow/received_events",
-                  "repos_url": "https://api.github.com/users/web-flow/repos",
-                  "site_admin": false,
-                  "starred_url": "https://api.github.com/users/web-flow/starred{/owner}{/repo}",
-                  "subscriptions_url": "https://api.github.com/users/web-flow/subscriptions",
-                  "type": "User",
-                  "url": "https://api.github.com/users/web-flow",
-                  "user_view_type": "public"
-                },
-                "html_url": "https://github.com/MiForge/MiUnlockTool/commit/43a80a8799030d785c848f397deea00c19ccd062",
-                "node_id": "C_kwDOLEu-aNoAKDQzYTgwYTg3OTkwMzBkNzg1Yzg0OGYzOTdkZWVhMDBjMTljY2QwNjI",
-                "parents": [
-                  {
-                    "html_url": "https://github.com/MiForge/MiUnlockTool/commit/9eb0423d400982e8de0518be67a72351d0dfc49c",
-                    "sha": "9eb0423d400982e8de0518be67a72351d0dfc49c",
-                    "url": "https://api.github.com/repos/MiForge/MiUnlockTool/commits/9eb0423d400982e8de0518be67a72351d0dfc49c"
-                  }
-                ],
-                "sha": "43a80a8799030d785c848f397deea00c19ccd062",
-                "url": "https://api.github.com/repos/MiForge/MiUnlockTool/commits/43a80a8799030d785c848f397deea00c19ccd062"
-              }
-            ],
-            "diff_url": "https://github.com/MiForge/MiUnlockTool/compare/9eb0423d400982e8de0518be67a72351d0dfc49c...43a80a8799030d785c848f397deea00c19ccd062.diff",
-            "files": [
-              {
-                "additions": 1,
-                "blob_url": "https://github.com/MiForge/MiUnlockTool/blob/43a80a8799030d785c848f397deea00c19ccd062/CHANGELOG.md",
-                "changes": 2,
-                "contents_url": "https://api.github.com/repos/MiForge/MiUnlockTool/contents/CHANGELOG.md?ref=43a80a8799030d785c848f397deea00c19ccd062",
-                "deletions": 1,
-                "filename": "CHANGELOG.md",
-                "patch": "@@ -242,4 +242,4 @@ fixes, improvements, and additions:\n \n ### Version 1.7.5:\n \n-- Fix: error 10005 `Invalid nonce param`\n\\ No newline at end of file\n+- Fix #221: error 10005 `Invalid nonce param`\n\\ No newline at end of file",
-                "raw_url": "https://github.com/MiForge/MiUnlockTool/raw/43a80a8799030d785c848f397deea00c19ccd062/CHANGELOG.md",
-                "sha": "c365194a25448bdb96d39416f3e48b5ec9250eea",
-                "status": "modified"
-              }
-            ],
-            "html_url": "https://github.com/MiForge/MiUnlockTool/compare/9eb0423d400982e8de0518be67a72351d0dfc49c...43a80a8799030d785c848f397deea00c19ccd062",
-            "merge_base_commit": {
-              "author": {
-                "avatar_url": "https://avatars.githubusercontent.com/u/127665988?v=4",
-                "events_url": "https://api.github.com/users/offici5l/events{/privacy}",
-                "followers_url": "https://api.github.com/users/offici5l/followers",
-                "following_url": "https://api.github.com/users/offici5l/following{/other_user}",
-                "gists_url": "https://api.github.com/users/offici5l/gists{/gist_id}",
-                "gravatar_id": "",
-                "html_url": "https://github.com/offici5l",
-                "id": 127665988,
-                "login": "offici5l",
-                "node_id": "U_kgDOB5wHRA",
-                "organizations_url": "https://api.github.com/users/offici5l/orgs",
-                "received_events_url": "https://api.github.com/users/offici5l/received_events",
-                "repos_url": "https://api.github.com/users/offici5l/repos",
-                "site_admin": false,
-                "starred_url": "https://api.github.com/users/offici5l/starred{/owner}{/repo}",
-                "subscriptions_url": "https://api.github.com/users/offici5l/subscriptions",
-                "type": "User",
-                "url": "https://api.github.com/users/offici5l",
-                "user_view_type": "public"
-              },
-              "comments_url": "https://api.github.com/repos/MiForge/MiUnlockTool/commits/9eb0423d400982e8de0518be67a72351d0dfc49c/comments",
-              "commit": {
-                "author": {
-                  "date": "2026-11-09T08:36:32Z",
-                  "email": "127665988+offici5l@users.noreply.github.com",
-                  "name": "offici5l"
-                },
-                "comment_count": 0,
-                "committer": {
-                  "date": "2026-11-09T08:36:32Z",
-                  "email": "noreply@github.com",
-                  "name": "GitHub"
-                },
-                "message": "Update pyproject.toml",
-                "tree": {
-                  "sha": "ecc966d9aa7de353c6ebeba5627ce85a24462b49",
-                  "url": "https://api.github.com/repos/MiForge/MiUnlockTool/git/trees/ecc966d9aa7de353c6ebeba5627ce85a24462b49"
-                },
-                "url": "https://api.github.com/repos/MiForge/MiUnlockTool/git/commits/9eb0423d400982e8de0518be67a72351d0dfc49c",
-                "verification": {
-                  "payload": "tree ecc966d9aa7de353c6ebeba5627ce85a24462b49\nparent 4d1d69dde875c32d83d3f6b34cf87ed57926bcd9\nauthor offici5l <127665988+offici5l@users.noreply.github.com> 1794213392 +0100\ncommitter GitHub <noreply@github.com> 1794213392 +0100\n\nUpdate pyproject.toml",
-                  "reason": "valid",
-                  "signature": "-----BEGIN PGP SIGNATURE-----\n\nwsFcBAABCAAQBQJq8YYRCRC1aQ7uu5UhlAAAvfAQAFYWiwKJiSuF/fBhl9AGeK2p\nzo5mXj3GYj5eE8eJXN3kSJ9x2sW2nzXBkvtvFTDEVs1enQhHIL1EyPayTs1g6KVc\n2OvN8E7EPBlTA+sJeWlhW/Aq36TmAloXExX7Vi9WMbuyDK2LXoDmMvyx3fiLR4FG\nYzt3ZJlZrylvcZyUVzU07oV2SCNQiajjoYZ/+8txYY4X2Ukx4485brGBOnKWXDo1\nZxVtMPesbR2Xzycsgpfrr1xF7qfztGKfhyfQwFWAJpvAkoPUNUN4dD30CAVi/vAQ\nRzuEhgBmftWO1/VOP9gbJpt4TuNFdt7b6w64OoVcfsdfis5oiS+EiuXwQaYVYN0K\nx5EMkChVaGf33qtPDb0fGxxUhGjSB3aPhUgNLkDiG3R/jPF9JA4jVIqruA0btIC+\n/kVQ3Z42q8/4NysGawtZ4Dtf+zKXBtnNe4bg9LvvG7zBEG6JLUX+bGcJGz75gCHn\nzT9QpEyiuL61yEOoQRkHzsook5Vt7gtD70HgRui32PYnxlaxlApLpmViTqXhfnoK\naWgkTEWbVvuQp4IkJHfRYNYIHm28AIRAAvnGorYL4nl1CYlezZGOWP3HAS19+F8o\nSsFqmDEsPAZr2Tbg9RQQM7qXCP2HKmxVJwZcMmzRKoIWmx9+p8jBCXjY4D89nqXt\nRaZsJh3ly5NFzUqqzD5h\n=6K86\n-----END PGP SIGNATURE-----\n",
-                  "verified": true,
-                  "verified_at": "2026-11-09T08:36:33Z"
-                }
-              },
-              "committer": {
-                "avatar_url": "https://avatars.githubusercontent.com/u/19864447?v=4",
-                "events_url": "https://api.github.com/users/web-flow/events{/privacy}",
-                "followers_url": "https://api.github.com/users/web-flow/followers",
-                "following_url": "https://api.github.com/users/web-flow/following{/other_user}",
-                "gists_url": "https://api.github.com/users/web-flow/gists{/gist_id}",
-                "gravatar_id": "",
-                "html_url": "https://github.com/web-flow",
-                "id": 19864447,
-                "login": "web-flow",
-                "node_id": "MDQ6VXNlcjE5ODY0NDQ3",
-                "organizations_url": "https://api.github.com/users/web-flow/orgs",
-                "received_events_url": "https://api.github.com/users/web-flow/received_events",
-                "repos_url": "https://api.github.com/users/web-flow/repos",
-                "site_admin": false,
-                "starred_url": "https://api.github.com/users/web-flow/starred{/owner}{/repo}",
-                "subscriptions_url": "https://api.github.com/users/web-flow/subscriptions",
-                "type": "User",
-                "url": "https://api.github.com/users/web-flow",
-                "user_view_type": "public"
-              },
-              "html_url": "https://github.com/MiForge/MiUnlockTool/commit/9eb0423d400982e8de0518be67a72351d0dfc49c",
-              "node_id": "C_kwDOLEu-aNoAKDllYjA0MjNkNDAwOTgyZThkZTA1MThiZTY3YTcyMzUxZDBkZmM0OWM",
-              "parents": [
-                {
-                  "html_url": "https://github.com/MiForge/MiUnlockTool/commit/4d1d69dde875c32d83d3f6b34cf87ed57926bcd9",
-                  "sha": "4d1d69dde875c32d83d3f6b34cf87ed57926bcd9",
-                  "url": "https://api.github.com/repos/MiForge/MiUnlockTool/commits/4d1d69dde875c32d83d3f6b34cf87ed57926bcd9"
-                }
-              ],
-              "sha": "9eb0423d400982e8de0518be67a72351d0dfc49c",
-              "url": "https://api.github.com/repos/MiForge/MiUnlockTool/commits/9eb0423d400982e8de0518be67a72351d0dfc49c"
-            },
-            "patch_url": "https://github.com/MiForge/MiUnlockTool/compare/9eb0423d400982e8de0518be67a72351d0dfc49c...43a80a8799030d785c848f397deea00c19ccd062.patch",
-            "permalink_url": "https://github.com/MiForge/MiUnlockTool/compare/MiForge:9eb0423...MiForge:43a80a8",
-            "status": "ahead",
-            "total_commits": 1,
-            "url": "https://api.github.com/repos/MiForge/MiUnlockTool/compare/9eb0423d400982e8de0518be67a72351d0dfc49c...43a80a8799030d785c848f397deea00c19ccd062"
-          },
-          "file_list_may_be_truncated": false,
-          "from": "9eb0423d400982e8de0518be67a72351d0dfc49c",
-          "history_rewritten": false,
+          "from": "43a80a8799030d785c848f397deea00c19ccd062",
           "to": "43a80a8799030d785c848f397deea00c19ccd062"
         },
         "snapshot": {
@@ -1224,7 +949,7 @@
               "prerelease": false,
               "published_at": "2026-03-12T18:44:27Z",
               "reactions": {
-                "+1": 6,
+                "+1": 7,
                 "-1": 0,
                 "confused": 0,
                 "eyes": 0,
@@ -1232,7 +957,7 @@
                 "hooray": 0,
                 "laugh": 0,
                 "rocket": 2,
-                "total_count": 8,
+                "total_count": 9,
                 "url": "https://api.github.com/repos/MiForge/MiUnlockTool/releases/296345871/reactions"
               },
               "tag_name": "v1.6.6",
@@ -2002,12 +1727,12 @@
     },
     "mtkclient": {
       "attempt": {
-        "at": "2026-11-13T04:03:44.165577+00:00",
+        "at": "2026-11-14T04:00:22.061752+00:00",
         "status": "unchanged"
       },
       "candidate": null,
       "last_success": {
-        "at": "2026-11-13T04:03:44.165577+00:00",
+        "at": "2026-11-14T04:00:22.061752+00:00",
         "incremental": {
           "changes": {
             "releases": [],
@@ -2238,12 +1963,12 @@
     },
     "xiaomi-ubl": {
       "attempt": {
-        "at": "2026-11-13T04:03:44.165577+00:00",
+        "at": "2026-11-14T04:00:22.061752+00:00",
         "status": "unchanged"
       },
       "candidate": null,
       "last_success": {
-        "at": "2026-11-13T04:03:44.165577+00:00",
+        "at": "2026-11-14T04:00:22.061752+00:00",
         "incremental": {
           "changes": {
             "releases": [],
