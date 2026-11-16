@@ -21,6 +21,7 @@ internal data class RootState(
     val error: String? = null,
     val modulesLoaded: Boolean = false,
     val templates: Map<String, PolicyTemplate> = emptyMap(),
+    val sepolicies: Map<String, String> = emptyMap(),
 ) {
     val policySummary: String get() {
         val current = snapshot ?: return "授权列表不可读取：尚未取得内核状态。"
@@ -81,8 +82,12 @@ internal class RootViewModel(val repository: KsuRepository) : ViewModel() {
         mutableState.value = mutableState.value.copy(modules = modules, modulesLoaded = true)
     }
 
-    fun setPolicy(app: RootApplication, policy: AppPolicy) = operate {
+    fun setPolicy(app: RootApplication, policy: AppPolicy, rules: String? = null) = operate {
         repository.setPolicy(app, policy)
+        if (rules != null) {
+            repository.applySepolicy(app.packageName, rules)
+            mutableState.value = mutableState.value.copy(sepolicies = mutableState.value.sepolicies + (app.packageName to rules.trim()))
+        }
         mutableState.value = mutableState.value.copy(applications = repository.applications(), result = "策略已写入并通过内核读回验证。已运行的 Root 进程不会被降权，请重启目标应用后验证。")
     }
 
@@ -114,6 +119,30 @@ internal class RootViewModel(val repository: KsuRepository) : ViewModel() {
     fun deleteTemplate(name: String) = operate {
         repository.deleteTemplate(name)
         mutableState.value = mutableState.value.copy(templates = repository.templates(), result = "模板已删除。")
+    }
+
+    /** Per-app SELinux rules live in the ksud store; load them into the editor. */
+    fun loadSepolicy(app: RootApplication) = operate {
+        val rules = repository.sepolicyOf(app.packageName)
+        mutableState.value = mutableState.value.copy(sepolicies = mutableState.value.sepolicies + (app.packageName to rules))
+    }
+
+    /** Import the original ksud template library; existing names and invalid entries are skipped. */
+    fun importKsudTemplates() = operate {
+        val ids = repository.ksudTemplates()
+        val current = repository.templates()
+        val imported = ArrayList<String>()
+        val skipped = ArrayList<String>()
+        for (id in ids) {
+            if (current.containsKey(id)) { skipped.add(id); continue }
+            try {
+                repository.saveTemplate(id, PolicyTemplate.fromUpstream(repository.ksudTemplate(id)))
+                imported.add(id)
+            } catch (_: IOException) { skipped.add(id) }
+        }
+        mutableState.value = mutableState.value.copy(templates = repository.templates(),
+            result = "ksud 模板库共 ${ids.size} 项：导入 ${imported.size} 项" +
+                (if (skipped.isEmpty()) "。" else "；跳过 ${skipped.size} 项（重名或格式不受支持）。"))
     }
     private fun operate(block: suspend () -> Unit) {
         if (mutableState.value.busy) return

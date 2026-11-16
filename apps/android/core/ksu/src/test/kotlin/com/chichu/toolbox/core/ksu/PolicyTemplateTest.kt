@@ -37,4 +37,28 @@ class PolicyTemplateTest {
         assertEquals("u:r:ksu:s0", policy.context)
         assertTrue(policy.useDefault)
     }
+
+    @Test fun upstreamKsudTemplateImportMapsNamesAndRules() {
+        val source = """
+            {"id":"root","name":"root","description":"root","author":"t","local":true,
+             "namespace":"ISOLATED","uid":0,"gid":0,"groups":["ROOT","SYSTEM","SHELL","UNKNOWN_GROUP"],
+             "capabilities":["CAP_CHOWN","CAP_DAC_OVERRIDE","CAP_UNKNOWN"],"context":"u:r:ksu:s0",
+             "rules":["allow domain ksu_file file open","allow domain ksu_file file read"],
+             "flags":["NO_NEW_PRIVS"]}
+        """.trimIndent()
+        val imported = PolicyTemplate.fromUpstream(source)
+        assertEquals(PolicyTemplate(0, 0, 2, listOf(0, 1000, 2000), 3L, "u:r:ksu:s0", 1,
+            "allow domain ksu_file file open\nallow domain ksu_file file read"), imported)
+        assertEquals(imported, PolicyTemplate.parse(imported.serialize()))
+    }
+
+    @Test fun upstreamDefaultsAndMissingFieldsMapLikeTheOriginalManager() {
+        assertEquals(PolicyTemplate(0, 0, 0, emptyList(), 0L, "u:r:ksu:s0", 1, ""),
+            PolicyTemplate.fromUpstream("""{"id":"x"}"""))
+    }
+
+    @Test fun brokenUpstreamTemplatesAreRejected() {
+        assertThrows(IOException::class.java) { PolicyTemplate.fromUpstream("broken") }
+        assertThrows(IOException::class.java) { PolicyTemplate.fromUpstream("[]") }
+    }
 }

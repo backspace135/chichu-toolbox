@@ -98,7 +98,7 @@ internal fun RootManagement(show: Boolean, model: RootViewModel, onDismiss: () -
             onBackCompleted = close,
         )
         if (module != null) {
-            if (webApproved) key(module.id) { ModuleWebUi(module, model.repository) }
+            if (webApproved) key(module.id) { ModuleWebUi(module, model.repository) { webModule = null; webApproved = false } }
             else {
                 Text(module.name, style = MiuixTheme.textStyles.headline2)
                 Hint("模块 ID：${module.id}")
@@ -113,7 +113,11 @@ internal fun RootManagement(show: Boolean, model: RootViewModel, onDismiss: () -
             return@DetailSheet
         }
         selected?.let { app ->
-            PolicyContent(app, state.busy, state.templates, model::saveTemplate, model::deleteTemplate) { policy -> model.setPolicy(app, policy); selected = null }
+            LaunchedEffect(app) { model.loadSepolicy(app) }
+            PolicyContent(app, state.busy, state.templates, state.sepolicies[app.packageName],
+                model::saveTemplate, model::deleteTemplate, model::importKsudTemplates) { policy, rules ->
+                model.setPolicy(app, policy, rules); selected = null
+            }
             return@DetailSheet
         }
         if (state.loading) Hint("正在读取内核与管理器身份…")
@@ -171,7 +175,7 @@ internal fun RootManagement(show: Boolean, model: RootViewModel, onDismiss: () -
                             }
                         }
                     }
-                    Hint("模板在应用策略弹层中保存与应用；保存在工具箱私有存储，应用模板后必须经过内核读回。")
+                    Hint("模板在应用策略弹层中保存与应用；保存在工具箱私有存储，应用模板后必须经过内核读回。支持从 ksud 原版模板库导入；SELinux 规则经 ksud 存储并读回。")
                 }
                 "modules" -> {
                     Hint("选择 ZIP 可安装新模块或更新已有模块；结果以 ksud 退出码和输出为准。")
@@ -225,22 +229,23 @@ internal fun RootManagement(show: Boolean, model: RootViewModel, onDismiss: () -
 }
 
 @Composable
-private fun PolicyContent(app: RootApplication, busy: Boolean, templates: Map<String, PolicyTemplate>,
-    saveTemplate: (String, String) -> Unit, deleteTemplate: (String) -> Unit, save: (AppPolicy) -> Unit) {
+private fun PolicyContent(app: RootApplication, busy: Boolean, templates: Map<String, PolicyTemplate>, sepolicy: String?,
+    saveTemplate: (String, String) -> Unit, deleteTemplate: (String) -> Unit, importKsud: () -> Unit,
+    save: (AppPolicy, String?) -> Unit) {
     var uid by remember(app.uid) { mutableStateOf(if (app.profile.allowed && !app.profile.useDefault) app.profile.uid.toString() else "0") }
     var gid by remember(app.uid) { mutableStateOf(if (app.profile.allowed && !app.profile.useDefault) app.profile.gid.toString() else "0") }
     var namespace by remember(app.uid) { mutableIntStateOf(if (app.profile.allowed && !app.profile.useDefault) app.profile.namespace else 0) }
     val initial = remember(app) {
         if (app.profile.allowed && !app.profile.useDefault) app.profile else app.profile.custom(0, 0, 0)
     }
-    var templateText by remember(app) { mutableStateOf(initial.template().serialize()) }
+    var templateText by remember(app, sepolicy) { mutableStateOf(initial.template().copy(rules = sepolicy ?: "").serialize()) }
     var templateName by remember(app) { mutableStateOf("") }
     var policyError by remember { mutableStateOf<String?>(null) }
     Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
         Hint("${app.packageName}\nUID ${app.uid} · 同 UID 应用共享授权。Shell 策略不受影响。")
-        Action("允许 Root（内核默认策略）", primary = true, enabled = !busy) { save(app.profile.grant(true)) }
-        Action("拒绝 Root，卸载模块挂载", enabled = !busy) { save(app.profile.deny(true)) }
-        Action("撤销 Root，恢复默认非 Root 策略", enabled = !busy) { save(app.profile.grant(false)) }
+        Action("允许 Root（内核默认策略）", primary = true, enabled = !busy) { save(app.profile.grant(true), null) }
+        Action("拒绝 Root，卸载模块挂载", enabled = !busy) { save(app.profile.deny(true), null) }
+        Action("撤销 Root，恢复默认非 Root 策略", enabled = !busy) { save(app.profile.grant(false), null) }
         Text("自定义应用策略", style = MiuixTheme.textStyles.headline2)
         TextField(uid, { uid = it }, label = "目标 UID", modifier = Modifier.fillMaxWidth())
         TextField(gid, { gid = it }, label = "目标 GID", modifier = Modifier.fillMaxWidth())
@@ -248,14 +253,17 @@ private fun PolicyContent(app: RootApplication, busy: Boolean, templates: Map<St
         Action("切换命名空间") { namespace = (namespace + 1) % 3 }
         val valid = uid.toIntOrNull()?.let { it >= 0 } == true && gid.toIntOrNull()?.let { it >= 0 } == true
         if (!valid) Text("UID / GID 必须为非负整数", color = MiuixTheme.colorScheme.error)
-        Action("应用自定义策略", enabled = !busy && valid) { save(app.profile.custom(uid.toInt(), gid.toInt(), namespace)) }
+        Action("应用自定义策略", enabled = !busy && valid) { save(app.profile.custom(uid.toInt(), gid.toInt(), namespace), null) }
         Hint("新建自定义策略采用标准 ksu SELinux 域与完整 capability；修改已有自定义策略时保留其组、capability、SELinux 域与 flags。")
         Text("完整策略与配置模板", style = MiuixTheme.textStyles.headline2)
-        Hint("JSON 字段：uid、gid、namespace（0 继承 / 1 全局 / 2 独立）、groups（最多 32 个）、capabilities（Linux 位掩码）、context、flags（NO_NEW_PRIVS）。")
+        Hint("JSON 字段：uid、gid、namespace（0 继承 / 1 全局 / 2 独立）、groups（最多 32 个）、capabilities（Linux 位掩码）、context、flags（NO_NEW_PRIVS）、rules（SELinux 规则，经 ksud 存储并读回）。")
         TextField(templateText, { templateText = it }, label = "完整策略 JSON", modifier = Modifier.fillMaxWidth())
         policyError?.let { Text(it, color = MiuixTheme.colorScheme.error) }
         Action("应用完整策略", enabled = !busy) {
-            try { save(app.profile.apply(PolicyTemplate.parse(templateText))) }
+            try {
+                val template = PolicyTemplate.parse(templateText)
+                save(app.profile.apply(template), template.rules)
+            }
             catch (error: java.io.IOException) { policyError = error.message }
         }
         TextField(templateName, { templateName = it }, label = "模板名称", modifier = Modifier.fillMaxWidth())
@@ -264,5 +272,6 @@ private fun PolicyContent(app: RootApplication, busy: Boolean, templates: Map<St
             Action("载入模板：$name", enabled = !busy) { templateText = template.serialize(); templateName = name; policyError = null }
             Action("删除模板：$name", enabled = !busy) { deleteTemplate(name) }
         }
+        Action("从 ksud 模板库导入", enabled = !busy) { importKsud() }
     }
 }
