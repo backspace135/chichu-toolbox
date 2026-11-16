@@ -8,7 +8,8 @@
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_CONNECTED_DEVICE" />
-    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <!-- A root manager must enumerate every installable app for superuser policies. -->
+    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES" />
     <queries>
         <package android:name="moe.shizuku.privileged.api" />
         <package android:name="me.weishu.kernelsu" />

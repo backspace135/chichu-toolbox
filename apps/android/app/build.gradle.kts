@@ -39,6 +39,11 @@ android {
         includeInApk = false
         includeInBundle = false
     }
+    lint {
+        // A root manager must enumerate every installable app for superuser
+        // policies; a <queries> declaration cannot express "all packages".
+        disable += "QueryAllPackagesPermission"
+    }
     // KernelSU 730f6446 rejects v3/v3.1 APK signing blocks, even with a matching certificate.
     signingConfigs.configureEach {
         enableV1Signing = false
