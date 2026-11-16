@@ -30,7 +30,7 @@ class M3Instrumentation : Instrumentation() {
                     "list" -> result.putString("modules", repository.modules().joinToString { "${it.id}:${it.version}:enabled=${it.enabled}:remove=${it.remove}:web=${it.web}:action=${it.action}" })
                     "install" -> {
                         val version = arguments.getString("version") ?: error("version required")
-                        check(version == "1" || version == "2") { "Only acceptance fixture versions are allowed" }
+                        check(version == "1" || version == "2" || version == "3") { "Only acceptance fixture versions are allowed" }
                         val file = File(targetContext.cacheDir, "chichu-m3-v$version.zip")
                         val input = context.assets.open("root-fixture/chichu-m3-v$version.zip")
                         input.use { source -> file.outputStream().use { source.copyTo(it) } }
