@@ -198,10 +198,20 @@ class KsuRepository(private val context: Context) {
         }
     }
 
-    suspend fun webExec(moduleId: String, command: String): CommandResult = operationLock.withLock {
+    suspend fun webExec(moduleId: String, command: String, optionsJson: String? = null): CommandResult = operationLock.withLock {
         selectedDaemon()
-        root("cd ${KsuProtocol.quote("/data/adb/modules/${KsuProtocol.moduleId(moduleId)}")} && $command")
+        val options = if (optionsJson != null) org.json.JSONObject(optionsJson) else null
+        val cwd = options?.optString("cwd")?.takeIf { it.isNotEmpty() }
+        val directory = cwd ?: "/data/adb/modules/${KsuProtocol.moduleId(moduleId)}"
+        val prefix = StringBuilder("cd ${KsuProtocol.quote(directory)} && ")
+        options?.optJSONObject("env")?.let { env ->
+            env.keys().forEach { key -> prefix.append("export $key=${KsuProtocol.quote(env.getString(key))}; ") }
+        }
+        root("$prefix$command")
     }
+
+    /** Long-lived interactive root shell used by the WebUI synchronous bridge. */
+    fun rootShellCommand(): List<String> = rootArguments()
 
     suspend fun templates(): Map<String, PolicyTemplate> = withContext(Dispatchers.IO) {
         preferences.all.mapValues { (_, value) -> PolicyTemplate.parse(value as String) }
@@ -214,6 +224,39 @@ class KsuRepository(private val context: Context) {
 
     suspend fun deleteTemplate(name: String) = withContext(Dispatchers.IO) {
         if (!preferences.edit().remove(name).commit()) throw IOException("模板删除失败")
+    }
+
+    /** The original ksud template library (`profile list-templates`); ids only. */
+    suspend fun ksudTemplates(): List<String> {
+        val result = command(listOf("profile", "list-templates"))
+        result.requireSuccess()
+        return result.output.lineSequence().filter { it.isNotBlank() }.toList()
+    }
+
+    suspend fun ksudTemplate(id: String): String {
+        val result = command(listOf("profile", "get-template", id))
+        if (result.code != 0) throw IOException("读取 ksud 模板失败（${result.code}）：${result.stderr}")
+        return result.output
+    }
+
+    /**
+     * Per-app SELinux rules live in the ksud store (`profile get/set-sepolicy`),
+     * not in the kernel app_profile struct; mirrors the upstream manager.
+     */
+    suspend fun sepolicyOf(packageName: String): String {
+        val result = command(listOf("profile", "get-sepolicy", packageName))
+        if (result.code != 0) throw IOException("读取 SELinux 规则失败（${result.code}）：${result.stderr}")
+        return result.output
+    }
+
+    /** `ksud sepolicy check` validates syntax; write then read back like the kernel profile. */
+    suspend fun applySepolicy(packageName: String, rules: String) {
+        val trimmed = rules.trim()
+        if (trimmed.isNotEmpty() && command(listOf("sepolicy", "check", trimmed)).code != 0) {
+            throw IOException("SELinux 规则未通过 ksud 校验，请检查语法")
+        }
+        command(listOf("profile", "set-sepolicy", packageName, trimmed)).requireSuccess()
+        if (sepolicyOf(packageName).trim() != trimmed) throw IOException("SELinux 规则读回不一致，请刷新检查")
     }
 
     suspend fun recordFailure(message: String) = withContext(Dispatchers.IO) {
