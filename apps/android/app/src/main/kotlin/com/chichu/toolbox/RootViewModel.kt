@@ -14,14 +14,21 @@ import java.io.IOException
 internal data class RootState(
     val loading: Boolean = false,
     val snapshot: RootSnapshot? = null,
-    val applications: List<RootApplication> = emptyList(),
+    val applications: List<RootApplication>? = null,
     val modules: List<RootModule> = emptyList(),
     val busy: Boolean = false,
     val result: String? = null,
     val error: String? = null,
-    val loaded: Boolean = false,
+    val modulesLoaded: Boolean = false,
     val templates: Map<String, PolicyTemplate> = emptyMap(),
-)
+) {
+    val policySummary: String get() {
+        val current = snapshot ?: return "授权列表不可读取：尚未取得内核状态。"
+        if (!current.canManage) return "授权列表不可读取：${current.issue}"
+        val apps = applications ?: return "授权列表尚未成功读取，请验证管理通道；读取失败时查看上方诊断。"
+        return "${apps.filter { it.profile.allowed }.map { it.uid }.distinct().size} 个 UID / ${apps.count { it.profile.allowed }} 个应用已允许"
+    }
+}
 
 internal class RootViewModel(val repository: KsuRepository) : ViewModel() {
     private val mutableState = MutableStateFlow(RootState())
@@ -42,10 +49,11 @@ internal class RootViewModel(val repository: KsuRepository) : ViewModel() {
     }
 
     fun verify(existing: Boolean = false) = operate {
+        mutableState.value = mutableState.value.copy(applications = null, modules = emptyList(), modulesLoaded = false)
         if (existing) {
             val result = repository.verifyExistingRoot()
             mutableState.value = mutableState.value.copy(snapshot = repository.snapshot(), result = "已有 Root 通道已验证；原版管理器身份保持不变。\n${result.output}")
-            mutableState.value = mutableState.value.copy(modules = repository.modules(), loaded = true)
+            mutableState.value = mutableState.value.copy(modules = repository.modules(), modulesLoaded = true)
         } else {
             repository.verifyRoot()
             mutableState.value = mutableState.value.copy(snapshot = repository.snapshot(), result = "ksud Root 通道已验证：UID 0")
@@ -67,9 +75,10 @@ internal class RootViewModel(val repository: KsuRepository) : ViewModel() {
     }
 
     private suspend fun loadContents() {
-        val apps = if (checkNotNull(mutableState.value.snapshot).canManage) repository.applications() else emptyList()
+        val apps = if (checkNotNull(mutableState.value.snapshot).canManage) repository.applications() else null
+        mutableState.value = mutableState.value.copy(applications = apps)
         val modules = repository.modules()
-        mutableState.value = mutableState.value.copy(applications = apps, modules = modules, loaded = true)
+        mutableState.value = mutableState.value.copy(modules = modules, modulesLoaded = true)
     }
 
     fun setPolicy(app: RootApplication, policy: AppPolicy) = operate {

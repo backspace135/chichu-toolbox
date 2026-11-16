@@ -16,12 +16,14 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.compose.LifecycleEventEffect
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigationevent.NavigationEventInfo
+import androidx.navigationevent.compose.NavigationBackHandler
+import androidx.navigationevent.compose.rememberNavigationEventState
 import com.chichu.toolbox.core.ksu.*
 import top.yukonga.miuix.kmp.basic.*
 import top.yukonga.miuix.kmp.icon.MiuixIcons
 import top.yukonga.miuix.kmp.icon.extended.*
 import top.yukonga.miuix.kmp.theme.MiuixTheme
-import top.yukonga.miuix.kmp.window.WindowDialog
 
 @Composable
 internal fun rememberRootModel(model: ToolboxViewModel): RootViewModel = viewModel {
@@ -34,7 +36,7 @@ internal fun RootManagement(show: Boolean, model: RootViewModel, onDismiss: () -
     var section by rememberSaveable { mutableStateOf("status") }
     var selected by remember { mutableStateOf<RootApplication?>(null) }
     var webModule by remember { mutableStateOf<RootModule?>(null) }
-    var approvedWeb by remember { mutableStateOf<RootModule?>(null) }
+    var webApproved by remember { mutableStateOf(false) }
     var confirmation by remember { mutableStateOf<Pair<String, List<String>>?>(null) }
     var migration by remember { mutableStateOf(false) }
     var resultExpanded by remember { mutableStateOf(false) }
@@ -43,20 +45,77 @@ internal fun RootManagement(show: Boolean, model: RootViewModel, onDismiss: () -
     LifecycleEventEffect(Lifecycle.Event.ON_RESUME) { if (show) model.revalidate() }
     val close = {
         when {
-            approvedWeb != null -> approvedWeb = null
+            webModule != null -> { webModule = null; webApproved = false }
+            confirmation != null -> confirmation = null
+            migration -> migration = false
             selected != null -> selected = null
             section != "status" -> section = "status"
             else -> onDismiss()
         }
     }
     BackHandler(show, close)
-    DetailSheet(show, when (section) {
-        "apps" -> "超级用户与应用策略"
-        "modules" -> "KernelSU 模块"
-        "maintenance" -> "安装与维护"
-        "identity" -> "管理器身份与迁移"
-        else -> "Root 管理"
-    }, close) {
+    val pending = confirmation
+    val module = webModule
+    val footer: (@Composable ColumnScope.() -> Unit)? = when {
+        module != null && !webApproved -> ({
+            Action("信任并打开", primary = true, enabled = !state.busy) { webApproved = true }
+            Action("取消", onClick = close)
+        })
+        pending != null -> ({
+            Action("确认执行", primary = true, enabled = !state.busy) { model.execute(pending.second, reload = section == "modules"); confirmation = null }
+            Action("取消", onClick = close)
+        })
+        migration -> ({
+            Action("确认迁移", primary = true, enabled = !state.busy) { migration = false; model.migrate() }
+            Action("取消", onClick = close)
+        })
+        else -> null
+    }
+    DetailSheet(show, when {
+        module != null -> if (webApproved) "模块 WebUI" else "信任模块 WebUI？"
+        pending != null -> "确认 Root 操作"
+        migration -> "确认管理器迁移"
+        selected != null -> checkNotNull(selected).name
+        else -> when (section) {
+            "apps" -> "超级用户与应用策略"
+            "modules" -> "KernelSU 模块"
+            "maintenance" -> "安装与维护"
+            "identity" -> "管理器身份与迁移"
+            else -> "Root 管理"
+        }
+    }, {
+        webModule = null
+        webApproved = false
+        selected = null
+        confirmation = null
+        migration = false
+        onDismiss()
+    }, footer) {
+        // Handle inner navigation before miuix animates the entire sheet off-screen.
+        NavigationBackHandler(
+            state = rememberNavigationEventState(currentInfo = NavigationEventInfo.None),
+            isBackEnabled = module != null || pending != null || migration || selected != null || section != "status",
+            onBackCompleted = close,
+        )
+        if (module != null) {
+            if (webApproved) key(module.id) { ModuleWebUi(module, model.repository) }
+            else {
+                Text(module.name, style = MiuixTheme.textStyles.headline2)
+                Hint("模块 ID：${module.id}")
+                Hint("此模块的本地页面将可执行 Root 命令。请仅打开你信任的模块。")
+                Hint("授权仅在本次打开期间有效，关闭后收回。远程页面、子框架和外部脚本不获得桥接。")
+            }
+            return@DetailSheet
+        }
+        if (pending != null) { Hint(pending.first); return@DetailSheet }
+        if (migration) {
+            Hint("仅适用于允许迁移的 debug 内核。成功时工具箱会被 ksud 关闭，重新打开后必须验证身份。原版管理器将失去当前管理身份。")
+            return@DetailSheet
+        }
+        selected?.let { app ->
+            PolicyContent(app, state.busy, state.templates, model::saveTemplate, model::deleteTemplate) { policy -> model.setPolicy(app, policy); selected = null }
+            return@DetailSheet
+        }
         if (state.loading) Hint("正在读取内核与管理器身份…")
         if (state.busy) Hint("正在执行，请等待实际结果…")
         state.error?.let { Text(it, color = MiuixTheme.colorScheme.error); Hint("请检查下方状态或日志，刷新后重试。") }
@@ -83,7 +142,7 @@ internal fun RootManagement(show: Boolean, model: RootViewModel, onDismiss: () -
                     Action("验证 KernelSU Root 通道", primary = true, enabled = !state.busy && snapshot.kernel.managementIssue == null && snapshot.daemonAvailable) { model.verify() }
                     Action("检查已有 Root（请求 su）", enabled = !state.busy) { model.verify(existing = true) }
                     ListCard {
-                        PreferenceRow("超级用户与应用策略", "${if (state.loaded) "${state.applications.count { it.profile.allowed }} 个 UID/应用已允许" else "需先验证管理通道"}", MiuixIcons.Lock, snapshot.canManage && !state.busy) { section = "apps" }
+                        PreferenceRow("超级用户与应用策略", state.policySummary, MiuixIcons.Lock, snapshot.canManage && !state.busy) { section = "apps" }
                         ListDivider()
                         PreferenceRow("模块管理", "安装、更新、启停、操作与 WebUI", MiuixIcons.GridView, snapshot.canModules && !state.busy) { section = "modules" }
                         ListDivider()
@@ -99,13 +158,14 @@ internal fun RootManagement(show: Boolean, model: RootViewModel, onDismiss: () -
                     Hint("KernelSU 使用持久化允许列表，没有 Shell 的「待询问」状态。撤销会将后续 Root 请求设为不允许；同 UID 应用共享授权。")
                     var search by rememberSaveable { mutableStateOf("") }
                     TextField(search, { search = it }, label = "按应用名或包名搜索", modifier = Modifier.fillMaxWidth())
-                    if (!state.loaded) Hint("应用列表尚未加载，请返回并验证管理通道。")
-                    if (state.loaded && state.applications.isEmpty()) Hint("当前用户没有可管理应用。")
-                    val apps = state.applications.filter { it.name.contains(search, true) || it.packageName.contains(search, true) }
-                    if (state.loaded && apps.isEmpty() && search.isNotEmpty()) Hint("没有匹配的应用。")
+                    val applications = state.applications
+                    if (applications == null) Hint(state.policySummary)
+                    if (applications != null && applications.isEmpty()) Hint("当前用户没有可管理应用。")
+                    val apps = applications?.filter { it.name.contains(search, true) || it.packageName.contains(search, true) }
+                    if (apps != null && apps.isEmpty() && search.isNotEmpty()) Hint("没有匹配的应用。")
                     ListCard {
                         LazyColumn(Modifier.fillMaxWidth().height(360.dp)) {
-                            items(apps, key = { it.packageName }) { app ->
+                            if (apps != null) items(apps, key = { it.packageName }) { app ->
                                 PreferenceRow(app.name, "${app.packageName}\nUID ${app.uid} · ${if (app.profile.allowed) "已允许 Root" else "不允许 Root"}", MiuixIcons.Lock, !state.busy) { selected = app }
                                 ListDivider()
                             }
@@ -116,7 +176,7 @@ internal fun RootManagement(show: Boolean, model: RootViewModel, onDismiss: () -
                 "modules" -> {
                     Hint("选择 ZIP 可安装新模块或更新已有模块；结果以 ksud 退出码和输出为准。")
                     Action("选择模块 ZIP（安装 / 更新）", primary = true, enabled = !state.busy) { install.launch(arrayOf("application/zip", "application/octet-stream")) }
-                    if (state.loaded && state.modules.isEmpty()) Hint("ksud 返回当前没有模块。")
+                    if (state.modulesLoaded && state.modules.isEmpty()) Hint("ksud 返回当前没有模块。")
                     state.modules.forEach { module ->
                         Group(module.name) {
                             Text(module.id, fontFamily = FontFamily.Monospace)
@@ -143,7 +203,7 @@ internal fun RootManagement(show: Boolean, model: RootViewModel, onDismiss: () -
                     val persistent = mode == RootMode.Lkm || mode == RootMode.Bundled
                     if (!persistent) Hint("${mode.title} 不提供直接刷写或恢复启动镜像入口；临时加载不会伪装为持久安装。")
                     Action("直接安装 / 更新启动镜像", enabled = false) {}
-                    Hint("当前固定资源包含原版签名绑定的 LKM，不是工具箱配套内核。为避免刷写后丢失管理身份，镜像安装 / 修补暂不可用；需先生成工具箱签名绑定资源。")
+                    Hint("配套测试资源仅包含 android15-6.6 内核模块，绑定本机测试签名，尚未通过管理器身份和启动验收。镜像安装 / 修补暂不可用。")
                     Action("恢复启动镜像", enabled = persistent && !state.busy) {
                         confirmation = "从 KernelSU 备份恢复并刷写启动分区；备份不存在时命令将失败。" to listOf("boot-restore", "--flash")
                     }
@@ -162,26 +222,11 @@ internal fun RootManagement(show: Boolean, model: RootViewModel, onDismiss: () -
             }
         }
     }
-    selected?.let { app -> PolicyDialog(app, state.busy, state.templates, model::saveTemplate, model::deleteTemplate, { selected = null }) { policy -> model.setPolicy(app, policy); selected = null } }
-    val pending = confirmation
-    WindowDialog(show = pending != null, title = "确认 Root 操作", summary = pending?.first, onDismissRequest = { confirmation = null }) {
-        Action("确认执行", enabled = !state.busy) { pending?.let { model.execute(it.second, reload = section == "modules") }; confirmation = null }
-        Action("取消") { confirmation = null }
-    }
-    WindowDialog(show = migration, title = "确认管理器迁移", summary = "仅适用于允许迁移的 debug 内核。成功时工具箱会被 ksud 关闭，重新打开后必须验证身份。原版管理器将失去当前管理身份。", onDismissRequest = { migration = false }) {
-        Action("确认迁移", enabled = !state.busy) { migration = false; model.migrate() }
-        Action("取消") { migration = false }
-    }
-    WindowDialog(show = webModule != null, title = "允许模块 WebUI 使用 Root？", summary = "${webModule?.name.orEmpty()} 的本地页面将可执行 Root 命令。仅对本次打开授权；远程页面、子框架和外部脚本不获得桥接。", onDismissRequest = { webModule = null }) {
-        Action("信任并打开", enabled = !state.busy) { approvedWeb = webModule; webModule = null }
-        Action("取消") { webModule = null }
-    }
-    approvedWeb?.let { module -> ModuleWebUi(module, model.repository) { approvedWeb = null } }
 }
 
 @Composable
-private fun PolicyDialog(app: RootApplication, busy: Boolean, templates: Map<String, PolicyTemplate>,
-    saveTemplate: (String, String) -> Unit, deleteTemplate: (String) -> Unit, close: () -> Unit, save: (AppPolicy) -> Unit) {
+private fun PolicyContent(app: RootApplication, busy: Boolean, templates: Map<String, PolicyTemplate>,
+    saveTemplate: (String, String) -> Unit, deleteTemplate: (String) -> Unit, save: (AppPolicy) -> Unit) {
     var uid by remember(app.uid) { mutableStateOf(if (app.profile.allowed && !app.profile.useDefault) app.profile.uid.toString() else "0") }
     var gid by remember(app.uid) { mutableStateOf(if (app.profile.allowed && !app.profile.useDefault) app.profile.gid.toString() else "0") }
     var namespace by remember(app.uid) { mutableIntStateOf(if (app.profile.allowed && !app.profile.useDefault) app.profile.namespace else 0) }
@@ -191,7 +236,7 @@ private fun PolicyDialog(app: RootApplication, busy: Boolean, templates: Map<Str
     var templateText by remember(app) { mutableStateOf(initial.template().serialize()) }
     var templateName by remember(app) { mutableStateOf("") }
     var policyError by remember { mutableStateOf<String?>(null) }
-    DetailSheet(true, app.name, close) {
+    Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
         Hint("${app.packageName}\nUID ${app.uid} · 同 UID 应用共享授权。Shell 策略不受影响。")
         Action("允许 Root（内核默认策略）", primary = true, enabled = !busy) { save(app.profile.grant(true)) }
         Action("拒绝 Root，卸载模块挂载", enabled = !busy) { save(app.profile.deny(true)) }

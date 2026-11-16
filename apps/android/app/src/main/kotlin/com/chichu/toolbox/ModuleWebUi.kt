@@ -2,6 +2,7 @@ package com.chichu.toolbox
 
 import android.annotation.SuppressLint
 import android.webkit.WebResourceRequest
+import android.webkit.WebResourceError
 import android.webkit.WebResourceResponse
 import android.webkit.WebView
 import android.webkit.WebViewClient
@@ -9,6 +10,8 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalWindowInfo
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.webkit.WebViewCompat
@@ -28,7 +31,7 @@ import kotlinx.coroutines.cancelChildren
 // supported is checked before AndroidView creation; onRelease only runs for that created view.
 @SuppressLint("SetJavaScriptEnabled", "RequiresFeature")
 @Composable
-internal fun ModuleWebUi(module: RootModule, repository: KsuRepository, close: () -> Unit) {
+internal fun ModuleWebUi(module: RootModule, repository: KsuRepository) {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
     var active by remember { mutableStateOf(true) }
@@ -44,11 +47,13 @@ internal fun ModuleWebUi(module: RootModule, repository: KsuRepository, close: (
         WebViewFeature.isFeatureSupported(WebViewFeature.WEB_MESSAGE_LISTENER) &&
             WebViewFeature.isFeatureSupported(WebViewFeature.DOCUMENT_START_SCRIPT)
     }
-    DetailSheet(true, "${module.name} · WebUI", close) {
+    Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+        Hint("${module.name} · 仅本次打开允许 Root")
         if (!supported) Hint("当前 Android System WebView 不支持按来源隔离的消息桥，请更新系统 WebView 后重试。")
         error?.let { Hint(it) }
+        val webHeight = (LocalWindowInfo.current.containerDpSize.height - 280.dp * LocalDensity.current.fontScale).coerceIn(120.dp, 520.dp)
         if (supported && !rendererGone) AndroidView(
-            modifier = Modifier.fillMaxWidth().height(400.dp),
+            modifier = Modifier.fillMaxWidth().height(webHeight),
             factory = {
                 WebView(context).apply {
                     settings.javaScriptEnabled = true
@@ -99,6 +104,12 @@ internal fun ModuleWebUi(module: RootModule, repository: KsuRepository, close: (
                         }
                     """.trimIndent(), setOf(origin))
                     webViewClient = object : WebViewClient() {
+                        override fun onReceivedError(view: WebView, request: WebResourceRequest, failure: WebResourceError) {
+                            if (request.isForMainFrame) error = "主文档加载失败：${request.url}\n${failure.description}（${failure.errorCode}）"
+                        }
+                        override fun onReceivedHttpError(view: WebView, request: WebResourceRequest, response: WebResourceResponse) {
+                            if (request.isForMainFrame) error = "主文档加载失败：${request.url}\nHTTP ${response.statusCode} ${response.reasonPhrase}"
+                        }
                         override fun onRenderProcessGone(view: WebView, detail: android.webkit.RenderProcessGoneDetail): Boolean {
                             error = if (detail.didCrash()) "模块 WebUI 渲染进程崩溃，请关闭后重新打开。" else "系统已终止模块 WebUI，请关闭后重新打开。"
                             active = false
@@ -128,7 +139,7 @@ internal fun ModuleWebUi(module: RootModule, repository: KsuRepository, close: (
                                 }
                                 response(200, "OK", mime, data)
                             } catch (failure: IOException) {
-                                view.post { error = failure.message }
+                                if (request.isForMainFrame) view.post { error = "主文档读取失败：${request.url}\n${failure.message}" }
                                 response(404, "Not Found", "text/plain", "WebUI 文件读取失败".toByteArray())
                             }
                         }

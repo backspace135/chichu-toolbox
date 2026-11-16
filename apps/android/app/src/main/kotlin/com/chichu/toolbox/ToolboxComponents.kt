@@ -7,6 +7,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.key
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -157,7 +158,7 @@ internal fun Hint(text: String, modifier: Modifier = Modifier) = Text(
 internal fun Footnote(text: String) = Hint(text, Modifier.padding(horizontal = 12.dp))
 
 @Composable
-internal fun DetailSheet(show: Boolean, title: String, onDismiss: () -> Unit, content: @Composable ColumnScope.() -> Unit) {
+internal fun DetailSheet(show: Boolean, title: String, onDismiss: () -> Unit, footer: (@Composable ColumnScope.() -> Unit)? = null, content: @Composable ColumnScope.() -> Unit) {
     val density = LocalDensity.current
     val fontScale = density.fontScale.coerceAtLeast(1f)
     val insets = WindowInsets.safeDrawing
@@ -166,18 +167,23 @@ internal fun DetailSheet(show: Boolean, title: String, onDismiss: () -> Unit, co
     // the scroll viewport. The library's wrap-content sheet can otherwise extend below them.
     val contentHeight = (LocalWindowInfo.current.containerDpSize.height - systemBarsHeight - 160.dp * fontScale).coerceIn(48.dp, 600.dp)
     WindowBottomSheet(
-        show = show, title = title, onDismissRequest = onDismiss,
-        endAction = {
+        show = show, onDismissRequest = onDismiss,
+    ) {
+        Row(Modifier.fillMaxWidth().padding(bottom = 12.dp), verticalAlignment = Alignment.CenterVertically) {
+            Text(title, style = MiuixTheme.textStyles.title4, modifier = Modifier.weight(1f).semantics { heading() })
             IconButton(onClick = onDismiss, modifier = Modifier.size(48.dp)) {
                 Icon(MiuixIcons.Close, contentDescription = "关闭弹层", modifier = Modifier.size(24.dp))
             }
-        },
-    ) {
-        Column(
-            Modifier.heightIn(max = contentHeight)
-                .verticalScroll(rememberScrollState()).navigationBarsPadding().padding(bottom = 24.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp), content = content,
-        )
+        }
+        Column(Modifier.heightIn(max = contentHeight).navigationBarsPadding().padding(bottom = 24.dp)) {
+            key(title) {
+                Column(
+                    Modifier.weight(1f, fill = false).verticalScroll(rememberScrollState()),
+                    verticalArrangement = Arrangement.spacedBy(16.dp), content = content,
+                )
+            }
+            if (footer != null) Column(Modifier.padding(top = 16.dp), verticalArrangement = Arrangement.spacedBy(8.dp), content = footer)
+        }
     }
 }
 
