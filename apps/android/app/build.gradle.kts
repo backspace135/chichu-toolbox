@@ -70,7 +70,7 @@ abstract class GenerateOpenSourceNotices : DefaultTask() {
         val directory = outputDirectory.get().asFile.apply { mkdirs() }
         directory.resolve("OPEN_SOURCE_NOTICES.txt").writeText(buildString {
             appendLine("彳亍工具箱 · 开源来源")
-            appendLine("KernelSU 730f644615969cfd4a84b45d7f62a667b7b95a50 — GPL-3.0-only；JNI/UAPI 派生实现与原版 ksud")
+            appendLine("KernelSU 730f644615969cfd4a84b45d7f62a667b7b95a50 — GPL-3.0-only；JNI/UAPI 派生实现与工具箱配套 ksud（脚本退出码、启动入口适配）")
             appendLine("Shizuku b844bc491f1790c72328e1a8e5b2349f8978f0ea — Apache-2.0")
             appendLine("Shizuku-API a27f6e4151ba7b39965ca47edb2bf0aeed7102e5；api/provider 13.1.5 — MIT")
             appendLine("miuix 0.9.4 — Apache-2.0；compose-miuix-ui contributors")
@@ -97,13 +97,22 @@ abstract class GenerateRootFixtureAssets : DefaultTask() {
     @TaskAction fun generate() {
         val root = fixture.get().asFile
         val directory = output.get().asFile.resolve("root-fixture").apply { mkdirs() }
-        for (version in 1..2) {
+        for (version in 1..3) {
             ZipOutputStream(directory.resolve("chichu-m3-v$version.zip").outputStream()).use { zip ->
                 root.walkTopDown().filter { it.isFile && it.name != "README.md" }.forEach { file ->
+                    // Versions 1 and 2 stay boot-inert; v3 adds observable boot-stage markers.
+                    if (version < 3 && (file.name == "service.sh" || file.name == "post-fs-data.sh")) return@forEach
                     zip.putNextEntry(ZipEntry(file.relativeTo(root).invariantSeparatorsPath))
-                    val bytes = if (file.name == "module.prop") file.readText().replace("version=1.0", "version=$version.0")
-                        .replace("versionCode=1", "versionCode=$version").toByteArray() else file.readBytes()
-                    zip.write(bytes)
+                    var text: String? = null
+                    if (file.name == "module.prop") {
+                        text = file.readText().replace("version=1.0", "version=$version.0")
+                            .replace("versionCode=1", "versionCode=$version")
+                        if (version >= 3) text = text.replace(
+                            "no boot scripts, mounts, properties or reboot.",
+                            "post-fs-data and service stage markers for cross-reboot lifecycle."
+                        )
+                    }
+                    zip.write(text?.toByteArray() ?: file.readBytes())
                     zip.closeEntry()
                 }
             }
