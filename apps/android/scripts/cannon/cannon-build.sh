@@ -7,9 +7,9 @@
 set -euo pipefail
 cd "$(dirname "$0")/work"
 
-# 1) Baseline patch to the kernel tree.
-if (cd src && git apply --check ../baseline.patch 2>/dev/null); then
-  (cd src && git apply ../baseline.patch)
+# 1) Baseline patch to the kernel tree (it lives next to this script, above work/).
+if (cd src && git apply --check ../../baseline.patch 2>/dev/null); then
+  (cd src && git apply ../../baseline.patch)
   echo "[cannon] baseline.patch applied"
 else
   echo "[cannon] baseline.patch already applied"
@@ -27,19 +27,16 @@ docker build -q -t cannon-ksu-build -f ../docker/Dockerfile.cannon ../docker
 echo "[cannon] toolchain image ready"
 
 # 4) Config: stock config from the device + KernelSU + identifiable localversion.
-# Written inside the container: previous docker builds own the out/ directory.
+# Piped from the host; written inside the container because docker owns out/.
 mkdir -p out
-docker run --rm -v "$PWD":/work cannon-ksu-build bash -c '
-zcat /work/stock-config.gz > /work/out/.config
-cat >> /work/out/.config <<EOF
-CONFIG_KSU=y
-# CONFIG_KSU_DEBUG is not set
-CONFIG_LOCALVERSION="-chichu-ksu"
-# CONFIG_LOCALVERSION_AUTO is not set
-EOF
-'
-
-# 5) Build with the standing resource limits: 4 CPU, 8 GiB, no extra swap, low shares.
+{
+  zcat ../stock-config.gz | grep -v -e '^CONFIG_MTK_GPU_VERSION=' -e '^CONFIG_MICROTRUST_TEE_VERSION='
+  printf 'CONFIG_KSU=y\n# CONFIG_KSU_DEBUG is not set\nCONFIG_LOCALVERSION="-chichu-ksu"\n# CONFIG_LOCALVERSION_AUTO is not set\n'
+  # The R-era tree ships GPU r25p0 and Microtrust 300; the S-era stock config
+  # references r32p1/400 which are absent here. Align to the tree like run14.
+  printf 'CONFIG_MTK_GPU_VERSION="mali valhall r25p0"\n'
+  printf 'CONFIG_MICROTRUST_TEE_VERSION="300"\n'
+} | docker run --rm -i -v "$PWD":/work cannon-ksu-build sh -c 'cat > /work/out/.config'
 docker run --rm --cpus=4 --memory=8g --memory-swap=8g --cpu-shares=128 \
   -v "$PWD":/work -w /work cannon-ksu-build bash -c '
 set -e

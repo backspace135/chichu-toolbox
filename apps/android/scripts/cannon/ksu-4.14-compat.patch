@@ -232,7 +232,7 @@ index 4598c6bc..4453bc3f 100644
              if (hook->offset) {
                  head += hook->offset;
                  if (head < (struct hlist_head *)heads_addr || head >= head_end) {
-@@ -349,6 +365,16 @@ int ksu_lsm_hook(struct ksu_lsm_hook *hook)
+@@ -349,6 +365,15 @@ int ksu_lsm_hook(struct ksu_lsm_hook *hook)
                      selected_origin = NULL;
                  }
              }
@@ -245,11 +245,10 @@ index 4598c6bc..4453bc3f 100644
 +                goto out_unlock;
 +            }
 +#endif
-+            }
              break;
          }
      }
-@@ -411,7 +437,12 @@ void ksu_lsm_unhook(struct ksu_lsm_hook *hook)
+@@ -411,7 +436,12 @@ void ksu_lsm_unhook(struct ksu_lsm_hook *hook)
      slot = (void **)((char *)hook->entry + hook->hook_offset);
  #else
      if (hook->entry == &hook->list) {
@@ -266,7 +265,15 @@ diff --git a/kernel/hook/syscall_event_bridge.c b/kernel/hook/syscall_event_brid
 index 50dd0bda..5870d41a 100644
 --- a/kernel/hook/syscall_event_bridge.c
 +++ b/kernel/hook/syscall_event_bridge.c
-@@ -51,7 +51,7 @@ static int ksu_handle_init_mark_tracker(const char __user **filename_user)
+@@ -7,6 +7,7 @@
+ #include <linux/fcntl.h>
+ #include <linux/ptrace.h>
+ #include <linux/static_key.h>
++#include <linux/uaccess.h>
+ 
+ #include "arch.h"
+ #include "klog.h" // IWYU pragma: keep
+@@ -51,7 +52,7 @@ static int ksu_handle_init_mark_tracker(const char __user **filename_user)
  long __nocfi ksu_hook_newfstatat(int orig_nr, const struct pt_regs *regs)
  {
      if (!ksu_su_compat_enabled)
@@ -275,7 +282,7 @@ index 50dd0bda..5870d41a 100644
  
      return ksu_handle_stat_sucompat(orig_nr, (struct pt_regs *)regs);
  }
-@@ -59,7 +59,7 @@ long __nocfi ksu_hook_newfstatat(int orig_nr, const struct pt_regs *regs)
+@@ -59,7 +60,7 @@ long __nocfi ksu_hook_faccessat(int orig_nr, const struct pt_regs *regs)
  long __nocfi ksu_hook_faccessat(int orig_nr, const struct pt_regs *regs)
  {
      if (!ksu_su_compat_enabled)
@@ -284,7 +291,7 @@ index 50dd0bda..5870d41a 100644
  
      return ksu_handle_faccessat_sucompat(orig_nr, (struct pt_regs *)regs);
  }
-@@ -115,7 +115,7 @@ static long __nocfi ksu_hook_execve_common(int orig_nr, const struct pt_regs *re
+@@ -115,7 +116,7 @@ static long __nocfi ksu_hook_execve_common(int orig_nr, const struct pt_regs *regs)
          return ret;
      }
  
@@ -293,7 +300,7 @@ index 50dd0bda..5870d41a 100644
      ksu_sulog_emit_pending(pending_root_execve, ret, GFP_KERNEL);
      return ret;
  }
-@@ -133,7 +133,7 @@ long __nocfi ksu_hook_execveat(int orig_nr, const struct pt_regs *regs)
+@@ -133,7 +134,7 @@ long __nocfi ksu_hook_execveat(int orig_nr, const struct pt_regs *regs)
  long __nocfi ksu_hook_setresuid(int orig_nr, const struct pt_regs *regs)
  {
      uid_t old_uid = current_uid().val;
