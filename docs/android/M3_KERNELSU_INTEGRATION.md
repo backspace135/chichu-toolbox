@@ -2,7 +2,16 @@
 
 日期：2026-11-09（JST）。任务：[M3 #3](https://github.com/backspace135/chichu-toolbox/issues/3)。
 
-## 版本与资源
+## 2026-11-10 配套测试构建（JST）
+
+- 用户已允许维护项目专用 KernelSU 补丁；原始 `third_party/upstream/kernelsu` 保持不变。`apps/android/scripts/prepare-ksu-source.py` 只接受固定提交的构建副本，修复脚本退出状态丢失及 late-load 后工具箱 Activity 启动入口。
+- Linux 构建目录：`taichang:/home/taichang/chichu-toolbox-build/kernelsu`。DDK 镜像 `ghcr.io/ylarod/ddk-min:android15-6.6-20260828`，摘要 `sha256:51159bc935c75a282fc65bc87e02f16bd098d1cdf55dc558c4fdd0fcf7a132e2`。以 `CONFIG_KSU=m`、`KSU_PACKAGE_NAME=com.chichu.toolbox`、证书长度 `0x02e8` 和下文测试证书摘要构建；未启用 debug 迁移或禁用身份认证。
+- arm64 内核模块编译及 `check_symbol` 通过；x86_64 编译通过但缺少完整 `Module.symvers` / `vmlinux`，未完成符号及运行验证。仅包含 `android15-6.6`，不能作为其他 KMI 的通用资源。
+- 用户空间使用 `scripts/ksu-build.Dockerfile`（Rust 1.91.1、NDK r29）和 `scripts/build-ksu-userspace.sh`。两 ABI 的 check / clippy / release 构建通过，ksuinit 与对应 LKM 内嵌；APK 资源哈希已更新。arm64 SHA-256 为 `8d4668b424fb513bda2de963c4c8e14499c78687b2c60f1eb6fdd49fb22a9122`，x86_64 为 `7f47621783a7900fd3d94aed93b9e2268a192b7a062cae0eead1f62e2bfa7ed9`。
+- **上述只证明测试构建可生成，不证明管理器身份已生效。** dada 的 Bootloader 锁定、Verified Boot 为 green，当前是原版 UAPI 5 临时 Root；未刷写、未重载内核、未执行 GhostLock 漏洞提权。管理器身份、授权策略与迁移闭环仍未验收，镜像安装入口继续禁用。
+- 下面的版本资源描述为初次 M3 交付记录；当前 UAPI 6 二进制已由上述配套测试构建替换，UAPI 5 二进制仍为原版固定资源。
+
+## 初次交付版本与资源
 
 - 源码固定为 `tiann/KernelSU@730f644615969cfd4a84b45d7f62a667b7b95a50`，UAPI 6、`app_profile` v4。
 - `:core:ksu` 的 JNI 是对该提交 `manager/app/src/main/cpp/ksu.cc`、`kernel/include/uapi/` 的小型派生实现；保留实际 errno，不沿用上游把失败返回为空列表或默认策略的路径。
@@ -82,3 +91,19 @@ M2 完成后必须独立验证：临时 Root 执行结果、内核加载、MANAG
 5. WebUI 完整协议、ksud 原版模板及 SELinux 规则编辑按后续实际需求补齐。
 
 构建和真机证据见 [M3 开发记录](M3_PROGRESS.md)。
+
+## GhostLock 整合契约与 4.14 适配（2026-11-16，JST）
+
+关联：#37。
+
+### GhostLock 合法整合通道
+
+- GhostLock（com.ghostlock.app 1.2）不自带 LKM：设置里可选择任意已安装应用作为根管理器，运行时执行该应用 `libksud.so` 的 `late-load --kmi`，装载其构建时内嵌的 LKM。MANAGER 身份由 LKM 编译期绑定包名与签名证书（`KSU_PACKAGE_NAME`/`KSU_EXPECTED_SIZE`/`KSU_EXPECTED_HASH`，本仓库 `scripts/prepare-ksu-source.py` 与配套构建即其来源）。
+- 这就是受支持的第三方管理器整合契约：不刷写、不关闭内核签名校验；工具箱以自己内嵌的、绑定工具箱的 LKM 取得 MANAGER。在 dada 上切 GhostLock 根管理器为工具箱并重跑后，内核上报 32718 / UAPI 6 / manager，允许、拒绝、撤销、重新请求、自定义 UID 与策略读回全矩阵通过（见 M3 开发记录）。
+- 验收客户端 `testing/sdk-client` 新增 `RootProbeActivity`：每次启动由独立进程发起一次真实 `su -c id`，以退出码与输出作为证据。工具箱声明 `QUERY_ALL_PACKAGES`（管理器需枚举全部应用做策略管理）。
+
+### cannon（Redmi Note 9 5G，4.14.186）内核适配
+
+- 将 730f6446 的 kernel/ 移植到 4.14：syscall 经典参数签名分发（`task_pt_regs` 自取 + `KSU_SYSCALL_CALL` 六参展开）、lsm_hook `list_head` 分支、`path_umount` 桩、SELinux 层改走内核原生 `security_load_policy` 重载（策略结构 `struct selinux_ss` 映射）、`__pte_to_phys`/`copy_*_kernel_nofault`/`strncpy_from_user_nofault`/`copy_*_user_nofault`/`__poll_t`/`TWA_RESUME`/`kvcalloc`/`minmax.h` 等 API 兼容、`selinux_cred`/`selinux_inode`、avtab flex_array、filename_trans 哈希表、`type_attr_map` flex_array、`seccomp_cache` 桩（4.14 无动作缓存，setresuid 路径直接装驱动 fd）、`su_mount_ns` 经 mount(2)、`pkg_observer` 4.14 fsnotify `handle_event`、`selinux_hide` 4.14 桩化、`file_wrapper` 4.14 用 `anon_inode_getfile`。
+- 配置以真机提取的 `stock-config.gz` 为基（LCM/TEE/GPU 与真机一致），树内源码版本对齐 GPU r25p0 / TEE 300；工具链镜像补齐 Debian clang-14 缺失的默认 CFI 忽略名单。
+- 构建材料固化于 `apps/android/scripts/cannon/`：`ksu-4.14-compat.patch`（全部移植差异）、`cannon-build.sh`（4 CPU / 8 GiB / 低 CPU shares 资源约束）、`docker/Dockerfile.cannon` 与 `docker/cfi_ignorelist.txt`、`baseline.patch`（UDI 修复 + fts8719 固件）、`stock-config.gz`。
