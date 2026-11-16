@@ -37,6 +37,25 @@ object KsuProtocol {
         return value
     }
 
+    fun moduleActionScript(id: String, kernel: KernelStatus, daemonVersion: String): String {
+        val directory = "/data/adb/modules/${moduleId(id)}"
+        // Pinned ksud waits for action.sh but discards its exit status. Run the
+        // same BusyBox shell here so missing scripts and failed actions surface.
+        return "cd ${quote(directory)} || exit\n" +
+            "export ASH_STANDALONE=1 KSU=true KSU_MODULE=${quote(id)} " +
+            "KSU_KERNEL_VER_CODE=${kernel.version} KSU_UAPI_VER=${kernel.uapi} " +
+            "KSU_VER_CODE=${if (kernel.uapi == 5) 32680 else 32718} KSU_VER=${quote(daemonVersion)} " +
+            "KSU_RUNTIME_MODE=${quote(when (kernel.mode) {
+                RootMode.BuiltIn -> "built-in"
+                RootMode.Lkm -> "lkm"
+                RootMode.Bundled -> "lkm"
+                RootMode.LateLoad -> "late-load"
+            })}\n" +
+            (if (kernel.mode == RootMode.LateLoad) "export KSU_LATE_LOAD=1\n" else "") +
+            "export PATH=\"\$PATH:/data/adb/ksu/bin\"\n" +
+            "/data/adb/ksu/bin/busybox sh ${quote("$directory/action.sh")}"
+    }
+
     fun modules(text: String): List<RootModule> {
         try {
             val root = JsonParser.parseString(text)

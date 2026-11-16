@@ -44,7 +44,15 @@ class M3Instrumentation : Instrumentation() {
                     "enable", "disable", "action", "uninstall", "undo-uninstall" -> {
                         val command = repository.command(listOf("module", operation, id))
                         result.putString("command", command.transcript)
+                        result.putInt("exit_code", command.code)
                         command.requireSuccess()
+                        if (operation == "action") {
+                            check("uid=0(root)" in command.output && "CHICHU_ACTION_OK" in command.output) {
+                                "Acceptance action did not return its Root and completion markers"
+                            }
+                            val marker = repository.webExec(id, "cat action-result.txt")
+                            check(marker.requireSuccess().trim() == "action-ok") { "Acceptance action marker was not written" }
+                        }
                     }
                     "asset" -> result.putString("asset", repository.webAsset(id, "index.html").toString(Charsets.UTF_8))
                     "escape" -> {
