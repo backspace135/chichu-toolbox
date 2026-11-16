@@ -43,8 +43,9 @@ class KsuRepository(private val context: Context) {
             context.packageManager.getPackageInfo("me.weishu.kernelsu", 0)
             true
         } catch (_: PackageManager.NameNotFoundException) { false }
-        val daemon = File(daemonPath).isFile
-        val version = if (daemon) plain(listOf(daemonPath, "--version")).requireSuccess().trim() else "此 ABI 未打包 ksud"
+        val activeDaemon = if (access == null) daemonPath else selectedDaemon()
+        val daemon = File(activeDaemon).isFile
+        val version = if (daemon) plain(listOf(activeDaemon, "--version")).requireSuccess().trim() else "此 ABI 未打包 ksud"
         val kernel = KernelStatus(values[0], values[1], values[2], values[3])
         val safeMode = if (kernel.managementIssue == null) KernelBridge.safeMode() else null
         RootSnapshot(kernel, original, certificate, version, daemon, access, observedKernel, safeMode)
@@ -112,7 +113,13 @@ class KsuRepository(private val context: Context) {
     }
 
     suspend fun command(arguments: List<String>): CommandResult = operationLock.withLock {
-        val result = root((listOf(selectedDaemon()) + arguments).joinToString(" ", transform = KsuProtocol::quote))
+        val result = if (arguments.take(2) == listOf("module", "action")) {
+            val status = snapshot()
+            root(KsuProtocol.moduleActionScript(arguments[2], status.runningKernel,
+                if (access == RootAccess.ExistingV5) "3.3.1" else "3.3.1-38-g730f6446"))
+        } else {
+            root((listOf(selectedDaemon()) + arguments).joinToString(" ", transform = KsuProtocol::quote))
+        }
         withContext(Dispatchers.IO) { appendJournal("ksud ${arguments.joinToString(" ")}\n退出码 ${result.code}\n${result.transcript}") }
         result
     }
