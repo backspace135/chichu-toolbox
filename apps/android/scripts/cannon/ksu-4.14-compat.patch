@@ -1,0 +1,408 @@
+diff --git a/kernel/Kconfig b/kernel/Kconfig
+index 88e22811..d8da5229 100644
+--- a/kernel/Kconfig
++++ b/kernel/Kconfig
+@@ -2,12 +2,12 @@ menu "KernelSU"
+ 
+ config KSU
+ 	tristate "KernelSU function support"
+-	depends on KPROBES && EXT4_FS
++	depends on EXT4_FS
+ 	default y
+ 	help
+ 	  Enable kernel-level root privileges on Android System.
+-	  Requires CONFIG_KPROBES for kernel hooking support.
+-	  Requires CONFIG_EXT4_FS for `ext4_unregister_sysfs`.
++	  Uses the syscall tracepoint for hooking; KPROBES is optional (4.14 uses
++	  the tracepoint path only). Requires CONFIG_EXT4_FS for `ext4_unregister_sysfs`.
+ 	  To compile as a module, choose M here: the
+ 	  module will be called kernelsu.
+ 
+diff --git a/kernel/core/init.c b/kernel/core/init.c
+index 81f3b658..cb0bdf34 100644
+--- a/kernel/core/init.c
++++ b/kernel/core/init.c
+@@ -258,8 +258,10 @@ module_exit(kernelsu_exit);
+ MODULE_LICENSE("GPL");
+ MODULE_AUTHOR("weishu");
+ MODULE_DESCRIPTION("Android KernelSU");
++#if LINUX_VERSION_CODE >= KERNEL_VERSION(5, 1, 0)
+ #if LINUX_VERSION_CODE >= KERNEL_VERSION(6, 13, 0)
+ MODULE_IMPORT_NS("VFS_internal_I_am_really_a_filesystem_and_am_NOT_a_driver");
+ #else
+ MODULE_IMPORT_NS(VFS_internal_I_am_really_a_filesystem_and_am_NOT_a_driver);
+ #endif
++#endif
+diff --git a/kernel/feature/kernel_umount.c b/kernel/feature/kernel_umount.c
+index 7e337abf..2c61b6ce 100644
+--- a/kernel/feature/kernel_umount.c
++++ b/kernel/feature/kernel_umount.c
+@@ -41,7 +41,14 @@ static const struct ksu_feature_handler kernel_umount_handler = {
+     .set_handler = kernel_umount_feature_set,
+ };
+ 
+-extern int path_umount(struct path *path, int flags);
++#if LINUX_VERSION_CODE < KERNEL_VERSION(5, 9, 0)
++// path_umount() exists only on 5.9+; per-app module unmount is unavailable on 4.14.
++int ksu_handle_umount(uid_t old_uid, uid_t new_uid)
++{
++    return 0;
++}
++#else
++ extern int path_umount(struct path *path, int flags);
+ 
+ static void ksu_umount_mnt(const char *mnt, struct path *path, int flags)
+ {
+@@ -124,6 +131,7 @@ int ksu_handle_umount(uid_t old_uid, uid_t new_uid)
+ 
+     return 0;
+ }
++#endif
+ 
+ void __init ksu_kernel_umount_init(void)
+ {
+diff --git a/kernel/feature/sucompat.c b/kernel/feature/sucompat.c
+index 003f86b6..d32c3f88 100644
+--- a/kernel/feature/sucompat.c
++++ b/kernel/feature/sucompat.c
+@@ -5,7 +5,12 @@
+ #include <linux/preempt.h>
+ #include <linux/printk.h>
+ #include <linux/mm.h>
++#include <linux/version.h>
++#if LINUX_VERSION_CODE >= KERNEL_VERSION(5, 8, 0)
+ #include <linux/pgtable.h>
++#else
++#include <asm/pgtable.h>
++#endif
+ #include <linux/uaccess.h>
+ #include <asm/current.h>
+ #include <linux/cred.h>
+@@ -28,6 +33,12 @@
+ #include "ksu.h"
+ #include "util.h"
+ 
++#if LINUX_VERSION_CODE < KERNEL_VERSION(5, 8, 0)
++// strncpy_from_user_nofault exists only on 5.8+; the plain 4.14 variant has
++// the same count/-EFAULT return semantics for these user-pointer reads.
++#define strncpy_from_user_nofault strncpy_from_user
++#endif
++
+ #define SU_PATH "/system/bin/su"
+ #define SH_PATH "/system/bin/sh"
+ 
+@@ -79,7 +90,7 @@ static bool is_ksud_exists()
+     return true;
+ }
+ 
+-long ksu_handle_faccessat_sucompat(int orig_nr, struct pt_regs *regs)
++long __nocfi ksu_handle_faccessat_sucompat(int orig_nr, struct pt_regs *regs)
+ {
+     const char __user **filename_user, *orig_filename;
+     long ret;
+@@ -101,7 +112,7 @@ long ksu_handle_faccessat_sucompat(int orig_nr, struct pt_regs *regs)
+             pr_info("faccessat su->ksud!\n");
+             orig_filename = *filename_user;
+             *filename_user = ksud_user_path();
+-            ret = ksu_syscall_table[orig_nr](regs);
++            ret = KSU_SYSCALL_CALL(orig_nr, regs);
+             revert_creds(old_cred);
+             *filename_user = orig_filename;
+             return ret;
+@@ -111,10 +122,10 @@ long ksu_handle_faccessat_sucompat(int orig_nr, struct pt_regs *regs)
+     }
+ 
+ do_orig_facessat:
+-    return ksu_syscall_table[orig_nr](regs);
++    return KSU_SYSCALL_CALL(orig_nr, regs);
+ }
+ 
+-long ksu_handle_stat_sucompat(int orig_nr, struct pt_regs *regs)
++long __nocfi ksu_handle_stat_sucompat(int orig_nr, struct pt_regs *regs)
+ {
+     const char __user **filename_user, *orig_filename;
+     long ret;
+@@ -136,7 +147,7 @@ long ksu_handle_stat_sucompat(int orig_nr, struct pt_regs *regs)
+             pr_info("newfstatat su->ksud!\n");
+             orig_filename = *filename_user;
+             *filename_user = ksud_user_path();
+-            ret = ksu_syscall_table[orig_nr](regs);
++            ret = KSU_SYSCALL_CALL(orig_nr, regs);
+             revert_creds(old_cred);
+             *filename_user = orig_filename;
+             return ret;
+@@ -146,10 +157,10 @@ long ksu_handle_stat_sucompat(int orig_nr, struct pt_regs *regs)
+     }
+ 
+ do_orig_stat:
+-    return ksu_syscall_table[orig_nr](regs);
++    return KSU_SYSCALL_CALL(orig_nr, regs);
+ }
+ 
+-static long ksu_handle_execve_sucompat_common(const char __user **filename_user,
++static long __nocfi ksu_handle_execve_sucompat_common(const char __user **filename_user,
+                                               const char __user *const __user *argv_user, unsigned long envp,
+                                               bool execveat, int orig_nr, struct pt_regs *regs)
+ {
+@@ -225,7 +236,7 @@ static long ksu_handle_execve_sucompat_common(const char __user **filename_user,
+     }
+     ksu_sulog_emit_pending(pending_sucompat, ret, GFP_KERNEL);
+ 
+-    ret = ksu_syscall_table[__NR_execveat](regs);
++    ret = KSU_SYSCALL_CALL(__NR_execveat, regs);
+     if (ret < 0) {
+         ksu_close_fd(tmp_fd);
+         PT_REGS_SYSCALL_PARM1(regs) = orig_regs[0];
+@@ -244,7 +255,7 @@ static long ksu_handle_execve_sucompat_common(const char __user **filename_user,
+     return ret;
+ 
+ do_orig_execve:
+-    return ksu_syscall_table[orig_nr](regs);
++    return KSU_SYSCALL_CALL(orig_nr, regs);
+ }
+ 
+ long ksu_handle_execve_sucompat(const char __user **filename_user, int orig_nr, struct pt_regs *regs)
+diff --git a/kernel/hook/arm64/syscall_hook.c b/kernel/hook/arm64/syscall_hook.c
+index f8d052c3..fe4ac980 100644
+--- a/kernel/hook/arm64/syscall_hook.c
++++ b/kernel/hook/arm64/syscall_hook.c
+@@ -142,8 +142,15 @@ static int __init ksu_find_ni_syscall_slots(int *out_slots, int max_slots)
+ // Unified dispatcher: reads original NR from x8, dispatches to handler.
+ // Validates that syscallno matches our dispatcher slot (i.e. we redirected it),
+ // otherwise it's a spurious call — return -ENOSYS.
+-static long __nocfi ksu_syscall_dispatcher(const struct pt_regs *regs)
++static long __nocfi ksu_syscall_dispatcher(const struct pt_regs *regs_arg)
+ {
++#if LINUX_VERSION_CODE < KERNEL_VERSION(4, 17, 0)
++    // 4.14 dispatches the table entry with the user's first argument in x0;
++    // recover the real entry regs from the current task's kernel stack.
++    const struct pt_regs *regs = task_pt_regs(current);
++#else
++    const struct pt_regs *regs = regs_arg;
++#endif
+     if (regs->syscallno != ksu_dispatcher_nr)
+         return -ENOSYS;
+ 
+diff --git a/kernel/hook/lsm_hook.c b/kernel/hook/lsm_hook.c
+index 4598c6bc..4453bc3f 100644
+--- a/kernel/hook/lsm_hook.c
++++ b/kernel/hook/lsm_hook.c
+@@ -102,7 +102,13 @@ int ksu_lsm_hook(struct ksu_lsm_hook *hook)
+     size_t i;
+ #else
+     unsigned long heads_addr;
++#if LINUX_VERSION_CODE >= KERNEL_VERSION(5, 1, 0)
+     struct hlist_head *head;
++#else
++    // 4.14 security_hook_heads is an array of struct list_head entries and
++    // security_hook_list embeds list_head + a plain head pointer.
++    struct list_head *head;
++#endif
+     struct security_hook_list *selected_entry = NULL;
+     void **selected_slot = NULL;
+     void *selected_origin = NULL;
+@@ -288,13 +294,22 @@ int ksu_lsm_hook(struct ksu_lsm_hook *hook)
+         pr_warn("lookup head size failed");
+     }
+ 
++#if LINUX_VERSION_CODE >= KERNEL_VERSION(5, 1, 0)
+     head = (struct hlist_head *)heads_addr;
+     struct hlist_head *head_end = (struct hlist_head *)(heads_addr + heads_size);
++#else
++    head = (struct list_head *)heads_addr;
++    struct list_head *head_end = (struct list_head *)(heads_addr + heads_size);
++#endif
+     pr_info("heads_addr 0x%lx head_offset 0x%lx heads_size %ld hook_offset 0x%lx\n", (unsigned long)heads_addr,
+             hook->head_offset, heads_size, hook->hook_offset);
+ 
+     for (; head < head_end; head++) {
++#if LINUX_VERSION_CODE >= KERNEL_VERSION(5, 1, 0)
+         hlist_for_each_entry (entry, head, list) {
++#else
++        list_for_each_entry (entry, head, list) {
++#endif
+             void **slot = (void **)((char *)entry + hook->hook_offset);
+             void *current_origin = READ_ONCE(*slot);
+             int j;
+@@ -318,6 +333,7 @@ int ksu_lsm_hook(struct ksu_lsm_hook *hook)
+             }
+         }
+         if (selected_entry) {
++#if LINUX_VERSION_CODE >= KERNEL_VERSION(5, 1, 0)
+             if (hook->offset) {
+                 head += hook->offset;
+                 if (head < (struct hlist_head *)heads_addr || head >= head_end) {
+@@ -349,6 +365,16 @@ int ksu_lsm_hook(struct ksu_lsm_hook *hook)
+                     selected_origin = NULL;
+                 }
+             }
++#else
++            if (hook->offset) {
++                // Attaching into an empty neighbor head is not implemented for
++                // 4.14 list_heads; no current hook registers with an offset.
++                pr_err("lsm_hook: offset hooks unsupported on 4.14\n");
++                ret = -EINVAL;
++                goto out_unlock;
++            }
++#endif
++            }
+             break;
+         }
+     }
+@@ -411,7 +437,12 @@ void ksu_lsm_unhook(struct ksu_lsm_hook *hook)
+     slot = (void **)((char *)hook->entry + hook->hook_offset);
+ #else
+     if (hook->entry == &hook->list) {
++#if LINUX_VERSION_CODE >= KERNEL_VERSION(5, 1, 0)
+         slot = (void **)&hook->list.head->first;
++#else
++        // 4.14 never attaches our own list entry; patch by slot offset.
++        slot = (void **)((char *)hook->entry + hook->hook_offset);
++#endif
+         pr_info("unhook patch head->first\n");
+     } else {
+         slot = (void **)((char *)hook->entry + hook->hook_offset);
+diff --git a/kernel/hook/syscall_event_bridge.c b/kernel/hook/syscall_event_bridge.c
+index 50dd0bda..5870d41a 100644
+--- a/kernel/hook/syscall_event_bridge.c
++++ b/kernel/hook/syscall_event_bridge.c
+@@ -51,7 +51,7 @@ static int ksu_handle_init_mark_tracker(const char __user **filename_user)
+ long __nocfi ksu_hook_newfstatat(int orig_nr, const struct pt_regs *regs)
+ {
+     if (!ksu_su_compat_enabled)
+-        return ksu_syscall_table[orig_nr](regs);
++        return KSU_SYSCALL_CALL(orig_nr, regs);
+ 
+     return ksu_handle_stat_sucompat(orig_nr, (struct pt_regs *)regs);
+ }
+@@ -59,7 +59,7 @@ long __nocfi ksu_hook_newfstatat(int orig_nr, const struct pt_regs *regs)
+ long __nocfi ksu_hook_faccessat(int orig_nr, const struct pt_regs *regs)
+ {
+     if (!ksu_su_compat_enabled)
+-        return ksu_syscall_table[orig_nr](regs);
++        return KSU_SYSCALL_CALL(orig_nr, regs);
+ 
+     return ksu_handle_faccessat_sucompat(orig_nr, (struct pt_regs *)regs);
+ }
+@@ -115,7 +115,7 @@ static long __nocfi ksu_hook_execve_common(int orig_nr, const struct pt_regs *re
+         return ret;
+     }
+ 
+-    ret = ksu_syscall_table[orig_nr](regs);
++    ret = KSU_SYSCALL_CALL(orig_nr, regs);
+     ksu_sulog_emit_pending(pending_root_execve, ret, GFP_KERNEL);
+     return ret;
+ }
+@@ -133,7 +133,7 @@ long __nocfi ksu_hook_execveat(int orig_nr, const struct pt_regs *regs)
+ long __nocfi ksu_hook_setresuid(int orig_nr, const struct pt_regs *regs)
+ {
+     uid_t old_uid = current_uid().val;
+-    long ret = ksu_syscall_table[orig_nr](regs);
++    long ret = KSU_SYSCALL_CALL(orig_nr, regs);
+ 
+     if (ret < 0)
+         return ret;
+diff --git a/kernel/hook/syscall_hook.h b/kernel/hook/syscall_hook.h
+index d4921bf9..f63a4d31 100644
+--- a/kernel/hook/syscall_hook.h
++++ b/kernel/hook/syscall_hook.h
+@@ -1,11 +1,34 @@
+ #ifndef __KSU_H_KSU_SYSCALL_HOOK
+ #define __KSU_H_KSU_SYSCALL_HOOK
+ #include <asm/syscall.h>
++#include <linux/version.h>
+ 
+-#if defined(__x86_64__)
+-typedef sys_call_ptr_t syscall_fn_t;
+-#elif defined(__riscv)
++// 4.14 arm64 kernels define no __nocfi; provide the clang attribute under CFI.
++#ifndef __nocfi
++#ifdef CONFIG_CFI_CLANG
++#define __nocfi __attribute__((no_sanitize("cfi")))
++#else
++#define __nocfi
++#endif
++#endif
++ 
++ #if defined(__x86_64__)
++ typedef sys_call_ptr_t syscall_fn_t;
++ #elif defined(__riscv)
++ typedef long (*syscall_fn_t)(const struct pt_regs *);
++ #endif
++
++#if defined(__aarch64__) && LINUX_VERSION_CODE < KERNEL_VERSION(4, 17, 0)
++// 4.14 arm64 syscall table entries take unpacked user arguments; they cannot be
++// called with pt_regs like on 4.17+. Expand the six argument slots instead,
++// and keep these indirect calls out of CFI checking (per-syscall prototypes differ).
+ typedef long (*syscall_fn_t)(const struct pt_regs *);
++#define KSU_SYSCALL_CALL(nr, regs)                                                                     \
++    ((long (*)(unsigned long, unsigned long, unsigned long, unsigned long, unsigned long, unsigned long)) \
++         ksu_syscall_table[nr])                                                                        \
++        ((regs)->regs[0], (regs)->regs[1], (regs)->regs[2], (regs)->regs[3], (regs)->regs[4], (regs)->regs[5])
++#else
++#define KSU_SYSCALL_CALL(nr, regs) ksu_syscall_table[nr](regs)
+ #endif
+ 
+ extern syscall_fn_t *ksu_syscall_table;
+diff --git a/kernel/preinit/preinit.c b/kernel/preinit/preinit.c
+index 5bf94f14..776f38ad 100644
+--- a/kernel/preinit/preinit.c
++++ b/kernel/preinit/preinit.c
+@@ -96,7 +96,7 @@ static bool is_selinux_setup(const char __user *const __user *argv_user)
+     return !strcmp(buf, expected);
+ }
+ 
+-bool ksu_preinit_handle_execve(const char __user **filename_user, const char __user *const __user *argv_user,
++bool __nocfi ksu_preinit_handle_execve(const char __user **filename_user, const char __user *const __user *argv_user,
+                                int orig_nr, struct pt_regs *regs, long *ret)
+ {
+     const char __user *orig_filename;
+@@ -152,12 +152,12 @@ bool ksu_preinit_handle_execve(const char __user **filename_user, const char __u
+     }
+ 
+     pr_info("preinit: exec runner via %s\n", fd_path);
+-    *ret = ksu_syscall_table[orig_nr](regs);
++    *ret = KSU_SYSCALL_CALL(orig_nr, regs);
+     if (*ret < 0) {
+         pr_err("preinit: exec runner failed: %ld, booting without preinit\n", *ret);
+         *filename_user = orig_filename;
+         ksu_close_fd(fd);
+-        *ret = ksu_syscall_table[orig_nr](regs);
++        *ret = KSU_SYSCALL_CALL(orig_nr, regs);
+     }
+     return true;
+ }
+diff --git a/kernel/runtime/ksud_integration.c b/kernel/runtime/ksud_integration.c
+index a4fb4138..af60b794 100644
+--- a/kernel/runtime/ksud_integration.c
++++ b/kernel/runtime/ksud_integration.c
+@@ -31,6 +31,12 @@
+ #include "hook/syscall_event_bridge.h"
+ #include "preinit/preinit.h"
+ 
++#if LINUX_VERSION_CODE < KERNEL_VERSION(5, 8, 0)
++// strncpy_from_user_nofault exists only on 5.8+; the plain 4.14 variant has
++// the same count/-EFAULT return semantics for these user-pointer reads.
++#define strncpy_from_user_nofault strncpy_from_user
++#endif
++
+ // clang-format off
+ static const char KERNEL_SU_RC[] =
+     "\n"
+diff --git a/kernel/sulog/event.c b/kernel/sulog/event.c
+index 51d6fa84..0a0c306c 100644
+--- a/kernel/sulog/event.c
++++ b/kernel/sulog/event.c
+@@ -19,6 +19,12 @@
+ #include "klog.h" // IWYU pragma: keep
+ #include "sulog/event.h"
+ 
++#if LINUX_VERSION_CODE < KERNEL_VERSION(5, 8, 0)
++// strncpy_from_user_nofault exists only on 5.8+; the plain 4.14 variant has
++// the same count/-EFAULT return semantics for these user-pointer reads.
++#define strncpy_from_user_nofault strncpy_from_user
++#endif
++
+ #define KSU_SULOG_MAX_QUEUED 256U
+ #define KSU_SULOG_MAX_PAYLOAD_LEN 2048U
+ #define KSU_SULOG_MAX_ARG_STRINGS 0x7FFFFFFF

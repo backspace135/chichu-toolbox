@@ -1,0 +1,10 @@
+FROM debian:bookworm
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    gcc g++ clang lld llvm make bc bison flex libelf-dev libssl-dev python3 \
+    binutils-aarch64-linux-gnu binutils-arm-linux-gnueabi \
+    rsync ca-certificates \
+    && rm -rf /var/lib/apt/lists/*
+# Debian clang-14's driver expects the default CFI ignorelist at the resource
+# dir but does not ship it; kernel builds with -fsanitize=cfi fail otherwise.
+COPY cfi_ignorelist.txt /usr/lib/llvm-14/lib/clang/14.0.6/share/cfi_ignorelist.txt
+WORKDIR /work
