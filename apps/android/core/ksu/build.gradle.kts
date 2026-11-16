@@ -34,8 +34,8 @@ abstract class VerifyKsuResources : DefaultTask() {
     @TaskAction
     fun verify() {
         val expected = mapOf(
-            "arm64-v8a" to "ffc7e995d85f0f7d6fb85ad2f3d41709eba458553307680550c23ae581588199",
-            "x86_64" to "2171f23748b4e54a48a0046a7fec40b06cd4f2ce5b788dd376bd44078ab77bc4",
+            "arm64-v8a" to "8d4668b424fb513bda2de963c4c8e14499c78687b2c60f1eb6fdd49fb22a9122",
+            "x86_64" to "7f47621783a7900fd3d94aed93b9e2268a192b7a062cae0eead1f62e2bfa7ed9",
         )
         expected.forEach { (abi, hash) ->
             val file = binaries.file("$abi/libksud.so").get().asFile
