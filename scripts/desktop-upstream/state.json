@@ -2,12 +2,12 @@
   "sources": {
     "gjgjxweb": {
       "attempt": {
-        "at": "2026-11-19T04:59:27.569954+00:00",
+        "at": "2026-11-20T04:50:57.289231+00:00",
         "status": "unchanged"
       },
       "candidate": null,
       "last_success": {
-        "at": "2026-11-19T04:59:27.569954+00:00",
+        "at": "2026-11-20T04:50:57.289231+00:00",
         "incremental": {
           "changes": {
             "releases": [],
@@ -25,12 +25,12 @@
     },
     "hyperos-unlock": {
       "attempt": {
-        "at": "2026-11-19T04:59:27.569954+00:00",
+        "at": "2026-11-20T04:50:57.289231+00:00",
         "status": "unchanged"
       },
       "candidate": null,
       "last_success": {
-        "at": "2026-11-19T04:59:27.569954+00:00",
+        "at": "2026-11-20T04:50:57.289231+00:00",
         "incremental": {
           "changes": {
             "releases": [],
@@ -212,17 +212,15 @@
     },
     "miunlocktool": {
       "attempt": {
-        "at": "2026-11-19T04:59:27.569954+00:00",
-        "status": "changed"
+        "at": "2026-11-20T04:50:57.289231+00:00",
+        "status": "unchanged"
       },
       "candidate": null,
       "last_success": {
-        "at": "2026-11-19T04:59:27.569954+00:00",
+        "at": "2026-11-20T04:50:57.289231+00:00",
         "incremental": {
           "changes": {
-            "releases": [
-              "438893119"
-            ],
+            "releases": [],
             "tags": []
           },
           "from": "43a80a8799030d785c848f397deea00c19ccd062",
@@ -1727,12 +1725,12 @@
     },
     "mtkclient": {
       "attempt": {
-        "at": "2026-11-19T04:59:27.569954+00:00",
+        "at": "2026-11-20T04:50:57.289231+00:00",
         "status": "unchanged"
       },
       "candidate": null,
       "last_success": {
-        "at": "2026-11-19T04:59:27.569954+00:00",
+        "at": "2026-11-20T04:50:57.289231+00:00",
         "incremental": {
           "changes": {
             "releases": [],
@@ -1963,12 +1961,12 @@
     },
     "xiaomi-ubl": {
       "attempt": {
-        "at": "2026-11-19T04:59:27.569954+00:00",
+        "at": "2026-11-20T04:50:57.289231+00:00",
         "status": "unchanged"
       },
       "candidate": null,
       "last_success": {
-        "at": "2026-11-19T04:59:27.569954+00:00",
+        "at": "2026-11-20T04:50:57.289231+00:00",
         "incremental": {
           "changes": {
             "releases": [],
