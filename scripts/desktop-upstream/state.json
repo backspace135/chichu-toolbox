@@ -2,12 +2,12 @@
   "sources": {
     "gjgjxweb": {
       "attempt": {
-        "at": "2026-11-20T04:50:57.289231+00:00",
+        "at": "2026-11-21T04:46:03.398020+00:00",
         "status": "unchanged"
       },
       "candidate": null,
       "last_success": {
-        "at": "2026-11-20T04:50:57.289231+00:00",
+        "at": "2026-11-21T04:46:03.398020+00:00",
         "incremental": {
           "changes": {
             "releases": [],
@@ -25,12 +25,12 @@
     },
     "hyperos-unlock": {
       "attempt": {
-        "at": "2026-11-20T04:50:57.289231+00:00",
+        "at": "2026-11-21T04:46:03.398020+00:00",
         "status": "unchanged"
       },
       "candidate": null,
       "last_success": {
-        "at": "2026-11-20T04:50:57.289231+00:00",
+        "at": "2026-11-21T04:46:03.398020+00:00",
         "incremental": {
           "changes": {
             "releases": [],
@@ -212,12 +212,12 @@
     },
     "miunlocktool": {
       "attempt": {
-        "at": "2026-11-20T04:50:57.289231+00:00",
+        "at": "2026-11-21T04:46:03.398020+00:00",
         "status": "unchanged"
       },
       "candidate": null,
       "last_success": {
-        "at": "2026-11-20T04:50:57.289231+00:00",
+        "at": "2026-11-21T04:46:03.398020+00:00",
         "incremental": {
           "changes": {
             "releases": [],
@@ -1725,19 +1725,1332 @@
     },
     "mtkclient": {
       "attempt": {
-        "at": "2026-11-20T04:50:57.289231+00:00",
-        "status": "unchanged"
+        "at": "2026-11-21T04:46:03.398020+00:00",
+        "status": "changed"
       },
       "candidate": null,
       "last_success": {
-        "at": "2026-11-20T04:50:57.289231+00:00",
+        "at": "2026-11-21T04:46:03.398020+00:00",
         "incremental": {
           "changes": {
             "releases": [],
             "tags": []
           },
+          "comparison": {
+            "ahead_by": 12,
+            "base_commit": {
+              "author": {
+                "avatar_url": "https://avatars.githubusercontent.com/u/6317772?v=4",
+                "events_url": "https://api.github.com/users/bkerler/events{/privacy}",
+                "followers_url": "https://api.github.com/users/bkerler/followers",
+                "following_url": "https://api.github.com/users/bkerler/following{/other_user}",
+                "gists_url": "https://api.github.com/users/bkerler/gists{/gist_id}",
+                "gravatar_id": "",
+                "html_url": "https://github.com/bkerler",
+                "id": 6317772,
+                "login": "bkerler",
+                "node_id": "MDQ6VXNlcjYzMTc3NzI=",
+                "organizations_url": "https://api.github.com/users/bkerler/orgs",
+                "received_events_url": "https://api.github.com/users/bkerler/received_events",
+                "repos_url": "https://api.github.com/users/bkerler/repos",
+                "site_admin": false,
+                "starred_url": "https://api.github.com/users/bkerler/starred{/owner}{/repo}",
+                "subscriptions_url": "https://api.github.com/users/bkerler/subscriptions",
+                "type": "User",
+                "url": "https://api.github.com/users/bkerler",
+                "user_view_type": "public"
+              },
+              "comments_url": "https://api.github.com/repos/bkerler/mtkclient/commits/118a000a83ea31c4f427fe5225abfe964546e05e/comments",
+              "commit": {
+                "author": {
+                  "date": "2026-10-26T08:53:35Z",
+                  "email": "6317772+bkerler@users.noreply.github.com",
+                  "name": "Bjoern Kerler"
+                },
+                "comment_count": 1,
+                "committer": {
+                  "date": "2026-10-26T08:53:35Z",
+                  "email": "noreply@github.com",
+                  "name": "GitHub"
+                },
+                "message": "Merge pull request #416 from GrahamKowalski/fix/crasher-dispatch-run-dump-preloader\n\nFix crasher mode range and run_dump_preloader dispatch for --ptype exploits",
+                "tree": {
+                  "sha": "69e33cb47266f6e6204702f824e2491a1374e43f",
+                  "url": "https://api.github.com/repos/bkerler/mtkclient/git/trees/69e33cb47266f6e6204702f824e2491a1374e43f"
+                },
+                "url": "https://api.github.com/repos/bkerler/mtkclient/git/commits/118a000a83ea31c4f427fe5225abfe964546e05e",
+                "verification": {
+                  "payload": "tree 69e33cb47266f6e6204702f824e2491a1374e43f\nparent 9e97c62570bbd4f317846d91e0f92260b08d32a9\nparent e9c28243887f6fb4e1cd48ac917a679712e6525d\nauthor Bjoern Kerler <6317772+bkerler@users.noreply.github.com> 1793004815 +0100\ncommitter GitHub <noreply@github.com> 1793004815 +0100\n\nMerge pull request #416 from GrahamKowalski/fix/crasher-dispatch-run-dump-preloader\n\nFix crasher mode range and run_dump_preloader dispatch for --ptype exploits",
+                  "reason": "valid",
+                  "signature": "-----BEGIN PGP SIGNATURE-----\n\nwsFcBAABCAAQBQJq3xUPCRC1aQ7uu5UhlAAA2moQADt1Bef2KEXzINVjTgRJLXnn\nMwzYRnulGKZtK1Qtd4EjlBVAWCt50AAv0xhUt3xOjCHbxy5ztwQAPGQgbFaxfIv7\na6ekFi/d7z8AkJk/lNyvTRv5cDmv72NeHtSGT/PitU4U46eONw2jfZHiBFIZN/Du\ng7zMKtiuFGgne4+Wpbdp3UpEJbI6vmu865txKR/zNLad4hCAQh7wCRgtELT0PPRT\nKRrXqxTF43X7ECgnzL4mWQQTS7n0nfe6hNzAvgKG88LMt+pX/FaE9rFjgbahJb8Q\nvBNuNGsQXGxP8It0F9s7LPmHYvJuoxOxal2jE8BEdS5Fbgg+dBRUsEu7q3HPcHNg\nsk82UaIlhqJ6vA1ueLU2P/TZzwitTt8ACUXuqR4ozFjwGSY8JT5MvgURSCRRIKLh\nE0rYXGTeZ3H2ECuX7zXxPkRuxMboZfvzi3xGeJcWq1lMiZFxWpPBwdONXyCusgBj\npuIZWEzKgXre8dcN0ZZqvfYHqD545TEt6M4roe4Tsif1n35CGOz6hB6fLoDrqC3T\n68rAVkrDU+58EflJcP8WJY55uwwlQrcM+Bol6jEqnSW0wDNMVBmbSlIa1lVZDVw8\nlujeqfJzy1jqbwFKfCP1NRUa3ppvw0p6PBPcMUCjXWaPebZ7OLZXQ4uLDbAFuPxU\nR1dnxhCZZ7ewar6aXNmQ\n=JRFP\n-----END PGP SIGNATURE-----\n",
+                  "verified": true,
+                  "verified_at": "2026-10-26T08:53:35Z"
+                }
+              },
+              "committer": {
+                "avatar_url": "https://avatars.githubusercontent.com/u/19864447?v=4",
+                "events_url": "https://api.github.com/users/web-flow/events{/privacy}",
+                "followers_url": "https://api.github.com/users/web-flow/followers",
+                "following_url": "https://api.github.com/users/web-flow/following{/other_user}",
+                "gists_url": "https://api.github.com/users/web-flow/gists{/gist_id}",
+                "gravatar_id": "",
+                "html_url": "https://github.com/web-flow",
+                "id": 19864447,
+                "login": "web-flow",
+                "node_id": "MDQ6VXNlcjE5ODY0NDQ3",
+                "organizations_url": "https://api.github.com/users/web-flow/orgs",
+                "received_events_url": "https://api.github.com/users/web-flow/received_events",
+                "repos_url": "https://api.github.com/users/web-flow/repos",
+                "site_admin": false,
+                "starred_url": "https://api.github.com/users/web-flow/starred{/owner}{/repo}",
+                "subscriptions_url": "https://api.github.com/users/web-flow/subscriptions",
+                "type": "User",
+                "url": "https://api.github.com/users/web-flow",
+                "user_view_type": "public"
+              },
+              "html_url": "https://github.com/bkerler/mtkclient/commit/118a000a83ea31c4f427fe5225abfe964546e05e",
+              "node_id": "C_kwDOQ8IpJNoAKDExOGEwMDBhODNlYTMxYzRmNDI3ZmU1MjI1YWJmZTk2NDU0NmUwNWU",
+              "parents": [
+                {
+                  "html_url": "https://github.com/bkerler/mtkclient/commit/9e97c62570bbd4f317846d91e0f92260b08d32a9",
+                  "sha": "9e97c62570bbd4f317846d91e0f92260b08d32a9",
+                  "url": "https://api.github.com/repos/bkerler/mtkclient/commits/9e97c62570bbd4f317846d91e0f92260b08d32a9"
+                },
+                {
+                  "html_url": "https://github.com/bkerler/mtkclient/commit/e9c28243887f6fb4e1cd48ac917a679712e6525d",
+                  "sha": "e9c28243887f6fb4e1cd48ac917a679712e6525d",
+                  "url": "https://api.github.com/repos/bkerler/mtkclient/commits/e9c28243887f6fb4e1cd48ac917a679712e6525d"
+                }
+              ],
+              "sha": "118a000a83ea31c4f427fe5225abfe964546e05e",
+              "url": "https://api.github.com/repos/bkerler/mtkclient/commits/118a000a83ea31c4f427fe5225abfe964546e05e"
+            },
+            "behind_by": 0,
+            "commits": [
+              {
+                "author": {
+                  "avatar_url": "https://avatars.githubusercontent.com/u/270574304?v=4",
+                  "events_url": "https://api.github.com/users/Jz8Root/events{/privacy}",
+                  "followers_url": "https://api.github.com/users/Jz8Root/followers",
+                  "following_url": "https://api.github.com/users/Jz8Root/following{/other_user}",
+                  "gists_url": "https://api.github.com/users/Jz8Root/gists{/gist_id}",
+                  "gravatar_id": "",
+                  "html_url": "https://github.com/Jz8Root",
+                  "id": 270574304,
+                  "login": "Jz8Root",
+                  "node_id": "U_kgDOECCi4A",
+                  "organizations_url": "https://api.github.com/users/Jz8Root/orgs",
+                  "received_events_url": "https://api.github.com/users/Jz8Root/received_events",
+                  "repos_url": "https://api.github.com/users/Jz8Root/repos",
+                  "site_admin": false,
+                  "starred_url": "https://api.github.com/users/Jz8Root/starred{/owner}{/repo}",
+                  "subscriptions_url": "https://api.github.com/users/Jz8Root/subscriptions",
+                  "type": "User",
+                  "url": "https://api.github.com/users/Jz8Root",
+                  "user_view_type": "public"
+                },
+                "comments_url": "https://api.github.com/repos/bkerler/mtkclient/commits/e891caca64ab67e033ed82bb8ba4a52db3730f14/comments",
+                "commit": {
+                  "author": {
+                    "date": "2026-10-28T12:16:37Z",
+                    "email": "jz8root@proton.me",
+                    "name": "Jz8Root"
+                  },
+                  "comment_count": 0,
+                  "committer": {
+                    "date": "2026-10-28T12:16:37Z",
+                    "email": "jz8root@proton.me",
+                    "name": "Jz8Root"
+                  },
+                  "message": "xflash: handle aligned UFS HBA literal pools\n\nSome MT6833 download agents insert a 16-bit Thumb NOP between the\nufshcd_probe_hba return and the following 32-bit HBA literal. Reading the\nliteral at a fixed +8 offset then combines the NOP with half of the address.\n\nResolve the word-aligned literal after the return, consume the alignment NOP\nwhen required, and fail closed on truncated or unaligned data. Add focused\nfixtures for aligned, unpadded and invalid layouts.\n\nReported-by: ogmkp",
+                  "tree": {
+                    "sha": "ef34956d2d773bb35c745f6dd734fe4a8d7a3487",
+                    "url": "https://api.github.com/repos/bkerler/mtkclient/git/trees/ef34956d2d773bb35c745f6dd734fe4a8d7a3487"
+                  },
+                  "url": "https://api.github.com/repos/bkerler/mtkclient/git/commits/e891caca64ab67e033ed82bb8ba4a52db3730f14",
+                  "verification": {
+                    "payload": null,
+                    "reason": "unsigned",
+                    "signature": null,
+                    "verified": false,
+                    "verified_at": null
+                  }
+                },
+                "committer": {
+                  "avatar_url": "https://avatars.githubusercontent.com/u/270574304?v=4",
+                  "events_url": "https://api.github.com/users/Jz8Root/events{/privacy}",
+                  "followers_url": "https://api.github.com/users/Jz8Root/followers",
+                  "following_url": "https://api.github.com/users/Jz8Root/following{/other_user}",
+                  "gists_url": "https://api.github.com/users/Jz8Root/gists{/gist_id}",
+                  "gravatar_id": "",
+                  "html_url": "https://github.com/Jz8Root",
+                  "id": 270574304,
+                  "login": "Jz8Root",
+                  "node_id": "U_kgDOECCi4A",
+                  "organizations_url": "https://api.github.com/users/Jz8Root/orgs",
+                  "received_events_url": "https://api.github.com/users/Jz8Root/received_events",
+                  "repos_url": "https://api.github.com/users/Jz8Root/repos",
+                  "site_admin": false,
+                  "starred_url": "https://api.github.com/users/Jz8Root/starred{/owner}{/repo}",
+                  "subscriptions_url": "https://api.github.com/users/Jz8Root/subscriptions",
+                  "type": "User",
+                  "url": "https://api.github.com/users/Jz8Root",
+                  "user_view_type": "public"
+                },
+                "html_url": "https://github.com/bkerler/mtkclient/commit/e891caca64ab67e033ed82bb8ba4a52db3730f14",
+                "node_id": "C_kwDOQ8IpJNoAKGU4OTFjYWNhNjRhYjY3ZTAzM2VkODJiYjhiYTRhNTJkYjM3MzBmMTQ",
+                "parents": [
+                  {
+                    "html_url": "https://github.com/bkerler/mtkclient/commit/118a000a83ea31c4f427fe5225abfe964546e05e",
+                    "sha": "118a000a83ea31c4f427fe5225abfe964546e05e",
+                    "url": "https://api.github.com/repos/bkerler/mtkclient/commits/118a000a83ea31c4f427fe5225abfe964546e05e"
+                  }
+                ],
+                "sha": "e891caca64ab67e033ed82bb8ba4a52db3730f14",
+                "url": "https://api.github.com/repos/bkerler/mtkclient/commits/e891caca64ab67e033ed82bb8ba4a52db3730f14"
+              },
+              {
+                "author": {
+                  "avatar_url": "https://avatars.githubusercontent.com/u/270574304?v=4",
+                  "events_url": "https://api.github.com/users/Jz8Root/events{/privacy}",
+                  "followers_url": "https://api.github.com/users/Jz8Root/followers",
+                  "following_url": "https://api.github.com/users/Jz8Root/following{/other_user}",
+                  "gists_url": "https://api.github.com/users/Jz8Root/gists{/gist_id}",
+                  "gravatar_id": "",
+                  "html_url": "https://github.com/Jz8Root",
+                  "id": 270574304,
+                  "login": "Jz8Root",
+                  "node_id": "U_kgDOECCi4A",
+                  "organizations_url": "https://api.github.com/users/Jz8Root/orgs",
+                  "received_events_url": "https://api.github.com/users/Jz8Root/received_events",
+                  "repos_url": "https://api.github.com/users/Jz8Root/repos",
+                  "site_admin": false,
+                  "starred_url": "https://api.github.com/users/Jz8Root/starred{/owner}{/repo}",
+                  "subscriptions_url": "https://api.github.com/users/Jz8Root/subscriptions",
+                  "type": "User",
+                  "url": "https://api.github.com/users/Jz8Root",
+                  "user_view_type": "public"
+                },
+                "comments_url": "https://api.github.com/repos/bkerler/mtkclient/commits/ad56005a091ba58964ff7b6cdc8f6823b7fdd4de/comments",
+                "commit": {
+                  "author": {
+                    "date": "2026-10-28T12:16:55Z",
+                    "email": "jz8root@proton.me",
+                    "name": "Jz8Root"
+                  },
+                  "comment_count": 0,
+                  "committer": {
+                    "date": "2026-10-28T12:16:55Z",
+                    "email": "jz8root@proton.me",
+                    "name": "Jz8Root"
+                  },
+                  "message": "daloader: restore MEID from saved JSON state\n\nDAloader.reinit() loads .state as a dictionary but checks the MEID field with\nattribute access. That condition is always false, so reattached DA sessions do\nnot restore the saved MEID.\n\nDecode the optional dictionary value before initializing HwParam and preserve\nthe existing behavior for missing or null MEID state. Add focused valid,\nmissing and null fixtures.\n\nReported-by: ogmkp",
+                  "tree": {
+                    "sha": "109633066c61a31d03565092043848d79f6cf1e2",
+                    "url": "https://api.github.com/repos/bkerler/mtkclient/git/trees/109633066c61a31d03565092043848d79f6cf1e2"
+                  },
+                  "url": "https://api.github.com/repos/bkerler/mtkclient/git/commits/ad56005a091ba58964ff7b6cdc8f6823b7fdd4de",
+                  "verification": {
+                    "payload": null,
+                    "reason": "unsigned",
+                    "signature": null,
+                    "verified": false,
+                    "verified_at": null
+                  }
+                },
+                "committer": {
+                  "avatar_url": "https://avatars.githubusercontent.com/u/270574304?v=4",
+                  "events_url": "https://api.github.com/users/Jz8Root/events{/privacy}",
+                  "followers_url": "https://api.github.com/users/Jz8Root/followers",
+                  "following_url": "https://api.github.com/users/Jz8Root/following{/other_user}",
+                  "gists_url": "https://api.github.com/users/Jz8Root/gists{/gist_id}",
+                  "gravatar_id": "",
+                  "html_url": "https://github.com/Jz8Root",
+                  "id": 270574304,
+                  "login": "Jz8Root",
+                  "node_id": "U_kgDOECCi4A",
+                  "organizations_url": "https://api.github.com/users/Jz8Root/orgs",
+                  "received_events_url": "https://api.github.com/users/Jz8Root/received_events",
+                  "repos_url": "https://api.github.com/users/Jz8Root/repos",
+                  "site_admin": false,
+                  "starred_url": "https://api.github.com/users/Jz8Root/starred{/owner}{/repo}",
+                  "subscriptions_url": "https://api.github.com/users/Jz8Root/subscriptions",
+                  "type": "User",
+                  "url": "https://api.github.com/users/Jz8Root",
+                  "user_view_type": "public"
+                },
+                "html_url": "https://github.com/bkerler/mtkclient/commit/ad56005a091ba58964ff7b6cdc8f6823b7fdd4de",
+                "node_id": "C_kwDOQ8IpJNoAKGFkNTYwMDVhMDkxYmE1ODk2NGZmN2I2Y2RjOGY2ODIzYjdmZGQ0ZGU",
+                "parents": [
+                  {
+                    "html_url": "https://github.com/bkerler/mtkclient/commit/118a000a83ea31c4f427fe5225abfe964546e05e",
+                    "sha": "118a000a83ea31c4f427fe5225abfe964546e05e",
+                    "url": "https://api.github.com/repos/bkerler/mtkclient/commits/118a000a83ea31c4f427fe5225abfe964546e05e"
+                  }
+                ],
+                "sha": "ad56005a091ba58964ff7b6cdc8f6823b7fdd4de",
+                "url": "https://api.github.com/repos/bkerler/mtkclient/commits/ad56005a091ba58964ff7b6cdc8f6823b7fdd4de"
+              },
+              {
+                "author": {
+                  "avatar_url": "https://avatars.githubusercontent.com/u/121960?v=4",
+                  "events_url": "https://api.github.com/users/marksteward/events{/privacy}",
+                  "followers_url": "https://api.github.com/users/marksteward/followers",
+                  "following_url": "https://api.github.com/users/marksteward/following{/other_user}",
+                  "gists_url": "https://api.github.com/users/marksteward/gists{/gist_id}",
+                  "gravatar_id": "",
+                  "html_url": "https://github.com/marksteward",
+                  "id": 121960,
+                  "login": "marksteward",
+                  "node_id": "MDQ6VXNlcjEyMTk2MA==",
+                  "organizations_url": "https://api.github.com/users/marksteward/orgs",
+                  "received_events_url": "https://api.github.com/users/marksteward/received_events",
+                  "repos_url": "https://api.github.com/users/marksteward/repos",
+                  "site_admin": false,
+                  "starred_url": "https://api.github.com/users/marksteward/starred{/owner}{/repo}",
+                  "subscriptions_url": "https://api.github.com/users/marksteward/subscriptions",
+                  "type": "User",
+                  "url": "https://api.github.com/users/marksteward",
+                  "user_view_type": "public"
+                },
+                "comments_url": "https://api.github.com/repos/bkerler/mtkclient/commits/e3df1fb5c16a00e0e62f87ccf3b067a8ec8ac4e1/comments",
+                "commit": {
+                  "author": {
+                    "date": "2026-11-08T20:10:52Z",
+                    "email": "marksteward@gmail.com",
+                    "name": "Mark Steward"
+                  },
+                  "comment_count": 0,
+                  "committer": {
+                    "date": "2026-11-08T20:10:52Z",
+                    "email": "noreply@github.com",
+                    "name": "GitHub"
+                  },
+                  "message": "Remove wrong keystone dependency",
+                  "tree": {
+                    "sha": "420417227c3f5a75544109c423953dacbd26889f",
+                    "url": "https://api.github.com/repos/bkerler/mtkclient/git/trees/420417227c3f5a75544109c423953dacbd26889f"
+                  },
+                  "url": "https://api.github.com/repos/bkerler/mtkclient/git/commits/e3df1fb5c16a00e0e62f87ccf3b067a8ec8ac4e1",
+                  "verification": {
+                    "payload": "tree 420417227c3f5a75544109c423953dacbd26889f\nparent 118a000a83ea31c4f427fe5225abfe964546e05e\nauthor Mark Steward <marksteward@gmail.com> 1794168652 +0000\ncommitter GitHub <noreply@github.com> 1794168652 +0000\n\nRemove wrong keystone dependency",
+                    "reason": "valid",
+                    "signature": "-----BEGIN PGP SIGNATURE-----\n\nwsFcBAABCAAQBQJq8NdMCRC1aQ7uu5UhlAAACAcQAE+PK1j9bauGKTWkZfEbH5oi\nDcH1RLhuBo8yGbQ4OKigDeTLwzO2vM0y6ZzpqA3XrU+uRX0OMwpPzWJRTFxoTrzQ\nSlFBnICpWm6x/GDiDAmODC0xtz22wKumbZUQeifBZ0mCDp2cUE5QhrpIZvG1ivJj\njoOt6E6RwjHjZ95hFB18hfIiFL8VITlLjU/udJubakphuf+prkpqWmy8y+yuY/L+\nu1Fh1CBng7CMzoLVUlZt9HC9rTLyFeZWKtsoavzPnic5YMALfn3iCBGDp2vvu4o0\nX/tGeWHU41w945HBLf/sq8YB9hgF2vFOjVvYN7e5CJcSgt1it3pEIgY5LdpyZVJU\nAcOxyzMppKbxTZ2x3YF/NEYB5Dy2qjNspp4LiGu4DiODFP8qbJIZawDfgHIWq7s7\n3FQOzvviEt3ENWFyuRDV/S0N8mwP8uKZKEJWTJ04aw+NXJKOSGgPxDuy05fjjak6\ne0dU+/2XQd8W8wL2P1TiHfvErmybq0iah+KPQuCaZEIUPHfJf+wmE6bKmBw3NPIX\nnVBhndIHY4JLotss7mCEeAR+ciDMv+pZbWSfAtJeCPK5gMnz84wTZ77yke86JA3Y\nhDmlxBYqAMoH3lwGFS04x8n4/Y2ggWQQWDsOoB7ceuwAGpn+bTHMl6tpfpvAgYEC\ncTDw4MLKyETLVd4dT4+E\n=M/Ay\n-----END PGP SIGNATURE-----\n",
+                    "verified": true,
+                    "verified_at": "2026-11-08T20:10:53Z"
+                  }
+                },
+                "committer": {
+                  "avatar_url": "https://avatars.githubusercontent.com/u/19864447?v=4",
+                  "events_url": "https://api.github.com/users/web-flow/events{/privacy}",
+                  "followers_url": "https://api.github.com/users/web-flow/followers",
+                  "following_url": "https://api.github.com/users/web-flow/following{/other_user}",
+                  "gists_url": "https://api.github.com/users/web-flow/gists{/gist_id}",
+                  "gravatar_id": "",
+                  "html_url": "https://github.com/web-flow",
+                  "id": 19864447,
+                  "login": "web-flow",
+                  "node_id": "MDQ6VXNlcjE5ODY0NDQ3",
+                  "organizations_url": "https://api.github.com/users/web-flow/orgs",
+                  "received_events_url": "https://api.github.com/users/web-flow/received_events",
+                  "repos_url": "https://api.github.com/users/web-flow/repos",
+                  "site_admin": false,
+                  "starred_url": "https://api.github.com/users/web-flow/starred{/owner}{/repo}",
+                  "subscriptions_url": "https://api.github.com/users/web-flow/subscriptions",
+                  "type": "User",
+                  "url": "https://api.github.com/users/web-flow",
+                  "user_view_type": "public"
+                },
+                "html_url": "https://github.com/bkerler/mtkclient/commit/e3df1fb5c16a00e0e62f87ccf3b067a8ec8ac4e1",
+                "node_id": "C_kwDOQ8IpJNoAKGUzZGYxZmI1YzE2YTAwZTBlNjJmODdjY2YzYjA2N2E4ZWM4YWM0ZTE",
+                "parents": [
+                  {
+                    "html_url": "https://github.com/bkerler/mtkclient/commit/118a000a83ea31c4f427fe5225abfe964546e05e",
+                    "sha": "118a000a83ea31c4f427fe5225abfe964546e05e",
+                    "url": "https://api.github.com/repos/bkerler/mtkclient/commits/118a000a83ea31c4f427fe5225abfe964546e05e"
+                  }
+                ],
+                "sha": "e3df1fb5c16a00e0e62f87ccf3b067a8ec8ac4e1",
+                "url": "https://api.github.com/repos/bkerler/mtkclient/commits/e3df1fb5c16a00e0e62f87ccf3b067a8ec8ac4e1"
+              },
+              {
+                "author": {
+                  "avatar_url": "https://avatars.githubusercontent.com/u/121960?v=4",
+                  "events_url": "https://api.github.com/users/marksteward/events{/privacy}",
+                  "followers_url": "https://api.github.com/users/marksteward/followers",
+                  "following_url": "https://api.github.com/users/marksteward/following{/other_user}",
+                  "gists_url": "https://api.github.com/users/marksteward/gists{/gist_id}",
+                  "gravatar_id": "",
+                  "html_url": "https://github.com/marksteward",
+                  "id": 121960,
+                  "login": "marksteward",
+                  "node_id": "MDQ6VXNlcjEyMTk2MA==",
+                  "organizations_url": "https://api.github.com/users/marksteward/orgs",
+                  "received_events_url": "https://api.github.com/users/marksteward/received_events",
+                  "repos_url": "https://api.github.com/users/marksteward/repos",
+                  "site_admin": false,
+                  "starred_url": "https://api.github.com/users/marksteward/starred{/owner}{/repo}",
+                  "subscriptions_url": "https://api.github.com/users/marksteward/subscriptions",
+                  "type": "User",
+                  "url": "https://api.github.com/users/marksteward",
+                  "user_view_type": "public"
+                },
+                "comments_url": "https://api.github.com/repos/bkerler/mtkclient/commits/0b8b5d4f26f23ba904c94ce629a7f344666784df/comments",
+                "commit": {
+                  "author": {
+                    "date": "2026-11-09T21:07:49Z",
+                    "email": "marksteward@gmail.com",
+                    "name": "Mark Steward"
+                  },
+                  "comment_count": 0,
+                  "committer": {
+                    "date": "2026-11-09T21:07:49Z",
+                    "email": "marksteward@gmail.com",
+                    "name": "Mark Steward"
+                  },
+                  "message": "Catch NotImplementedError from USB too",
+                  "tree": {
+                    "sha": "b6c25beb0716d6209e452d139dbf7cad284415f2",
+                    "url": "https://api.github.com/repos/bkerler/mtkclient/git/trees/b6c25beb0716d6209e452d139dbf7cad284415f2"
+                  },
+                  "url": "https://api.github.com/repos/bkerler/mtkclient/git/commits/0b8b5d4f26f23ba904c94ce629a7f344666784df",
+                  "verification": {
+                    "payload": null,
+                    "reason": "unsigned",
+                    "signature": null,
+                    "verified": false,
+                    "verified_at": null
+                  }
+                },
+                "committer": {
+                  "avatar_url": "https://avatars.githubusercontent.com/u/121960?v=4",
+                  "events_url": "https://api.github.com/users/marksteward/events{/privacy}",
+                  "followers_url": "https://api.github.com/users/marksteward/followers",
+                  "following_url": "https://api.github.com/users/marksteward/following{/other_user}",
+                  "gists_url": "https://api.github.com/users/marksteward/gists{/gist_id}",
+                  "gravatar_id": "",
+                  "html_url": "https://github.com/marksteward",
+                  "id": 121960,
+                  "login": "marksteward",
+                  "node_id": "MDQ6VXNlcjEyMTk2MA==",
+                  "organizations_url": "https://api.github.com/users/marksteward/orgs",
+                  "received_events_url": "https://api.github.com/users/marksteward/received_events",
+                  "repos_url": "https://api.github.com/users/marksteward/repos",
+                  "site_admin": false,
+                  "starred_url": "https://api.github.com/users/marksteward/starred{/owner}{/repo}",
+                  "subscriptions_url": "https://api.github.com/users/marksteward/subscriptions",
+                  "type": "User",
+                  "url": "https://api.github.com/users/marksteward",
+                  "user_view_type": "public"
+                },
+                "html_url": "https://github.com/bkerler/mtkclient/commit/0b8b5d4f26f23ba904c94ce629a7f344666784df",
+                "node_id": "C_kwDOQ8IpJNoAKDBiOGI1ZDRmMjZmMjNiYTkwNGM5NGNlNjI5YTdmMzQ0NjY2Nzg0ZGY",
+                "parents": [
+                  {
+                    "html_url": "https://github.com/bkerler/mtkclient/commit/118a000a83ea31c4f427fe5225abfe964546e05e",
+                    "sha": "118a000a83ea31c4f427fe5225abfe964546e05e",
+                    "url": "https://api.github.com/repos/bkerler/mtkclient/commits/118a000a83ea31c4f427fe5225abfe964546e05e"
+                  }
+                ],
+                "sha": "0b8b5d4f26f23ba904c94ce629a7f344666784df",
+                "url": "https://api.github.com/repos/bkerler/mtkclient/commits/0b8b5d4f26f23ba904c94ce629a7f344666784df"
+              },
+              {
+                "author": {
+                  "avatar_url": "https://avatars.githubusercontent.com/u/15523955?v=4",
+                  "events_url": "https://api.github.com/users/lukejenkins/events{/privacy}",
+                  "followers_url": "https://api.github.com/users/lukejenkins/followers",
+                  "following_url": "https://api.github.com/users/lukejenkins/following{/other_user}",
+                  "gists_url": "https://api.github.com/users/lukejenkins/gists{/gist_id}",
+                  "gravatar_id": "",
+                  "html_url": "https://github.com/lukejenkins",
+                  "id": 15523955,
+                  "login": "lukejenkins",
+                  "node_id": "MDQ6VXNlcjE1NTIzOTU1",
+                  "organizations_url": "https://api.github.com/users/lukejenkins/orgs",
+                  "received_events_url": "https://api.github.com/users/lukejenkins/received_events",
+                  "repos_url": "https://api.github.com/users/lukejenkins/repos",
+                  "site_admin": false,
+                  "starred_url": "https://api.github.com/users/lukejenkins/starred{/owner}{/repo}",
+                  "subscriptions_url": "https://api.github.com/users/lukejenkins/subscriptions",
+                  "type": "User",
+                  "url": "https://api.github.com/users/lukejenkins",
+                  "user_view_type": "public"
+                },
+                "comments_url": "https://api.github.com/repos/bkerler/mtkclient/commits/5c0cc4cadcd434043216ca2a4531b49126249fca/comments",
+                "commit": {
+                  "author": {
+                    "date": "2026-11-12T06:09:39Z",
+                    "email": "lukejenkins@users.noreply.github.com",
+                    "name": "Luke Jenkins"
+                  },
+                  "comment_count": 0,
+                  "committer": {
+                    "date": "2026-11-12T06:09:39Z",
+                    "email": "lukejenkins@users.noreply.github.com",
+                    "name": "Luke Jenkins"
+                  },
+                  "message": "xmlflash: tolerate stock DAs without DA.SLA property or ext patch points\n\nStock vendor V6 DAs for MT6880/MT6890 (hwcode 0x992, e.g. Quectel T750 and\nFibocom FM360 DA_BR.bin) boot stage 2 fine but:\n\n- reply ERR!UNSUPPORTED to CMD:GET-SYS-PROPERTY DA.SLA. send_command()\n  already drains the CMD:END/CMD:START pair and returns False, but\n  get_sys_property() ignored that and waited for another command result,\n  timing out and then crashing in check_sla() with\n  \"'bool' object has no attribute 'decode'\". Return None on a failed\n  send and treat it as SLA disabled.\n\n- have a DA2 the xml extension patcher cannot pattern-match\n  (get_next_bl_from_off(None) -> TypeError). Make a failed patch()\n  non-fatal and continue with the stock DA2 commands instead of aborting.\n\nWith both, printgpt / rl / ro work on an unfused 0x992 eMMC board.",
+                  "tree": {
+                    "sha": "1fb9ccad1cab2b6d1aadcfb7334e22f671363b22",
+                    "url": "https://api.github.com/repos/bkerler/mtkclient/git/trees/1fb9ccad1cab2b6d1aadcfb7334e22f671363b22"
+                  },
+                  "url": "https://api.github.com/repos/bkerler/mtkclient/git/commits/5c0cc4cadcd434043216ca2a4531b49126249fca",
+                  "verification": {
+                    "payload": null,
+                    "reason": "unsigned",
+                    "signature": null,
+                    "verified": false,
+                    "verified_at": null
+                  }
+                },
+                "committer": {
+                  "avatar_url": "https://avatars.githubusercontent.com/u/15523955?v=4",
+                  "events_url": "https://api.github.com/users/lukejenkins/events{/privacy}",
+                  "followers_url": "https://api.github.com/users/lukejenkins/followers",
+                  "following_url": "https://api.github.com/users/lukejenkins/following{/other_user}",
+                  "gists_url": "https://api.github.com/users/lukejenkins/gists{/gist_id}",
+                  "gravatar_id": "",
+                  "html_url": "https://github.com/lukejenkins",
+                  "id": 15523955,
+                  "login": "lukejenkins",
+                  "node_id": "MDQ6VXNlcjE1NTIzOTU1",
+                  "organizations_url": "https://api.github.com/users/lukejenkins/orgs",
+                  "received_events_url": "https://api.github.com/users/lukejenkins/received_events",
+                  "repos_url": "https://api.github.com/users/lukejenkins/repos",
+                  "site_admin": false,
+                  "starred_url": "https://api.github.com/users/lukejenkins/starred{/owner}{/repo}",
+                  "subscriptions_url": "https://api.github.com/users/lukejenkins/subscriptions",
+                  "type": "User",
+                  "url": "https://api.github.com/users/lukejenkins",
+                  "user_view_type": "public"
+                },
+                "html_url": "https://github.com/bkerler/mtkclient/commit/5c0cc4cadcd434043216ca2a4531b49126249fca",
+                "node_id": "C_kwDOQ8IpJNoAKDVjMGNjNGNhZGNkNDM0MDQzMjE2Y2EyYTQ1MzFiNDkxMjYyNDlmY2E",
+                "parents": [
+                  {
+                    "html_url": "https://github.com/bkerler/mtkclient/commit/118a000a83ea31c4f427fe5225abfe964546e05e",
+                    "sha": "118a000a83ea31c4f427fe5225abfe964546e05e",
+                    "url": "https://api.github.com/repos/bkerler/mtkclient/commits/118a000a83ea31c4f427fe5225abfe964546e05e"
+                  }
+                ],
+                "sha": "5c0cc4cadcd434043216ca2a4531b49126249fca",
+                "url": "https://api.github.com/repos/bkerler/mtkclient/commits/5c0cc4cadcd434043216ca2a4531b49126249fca"
+              },
+              {
+                "author": {
+                  "avatar_url": "https://avatars.githubusercontent.com/u/8680847?v=4",
+                  "events_url": "https://api.github.com/users/rbrok/events{/privacy}",
+                  "followers_url": "https://api.github.com/users/rbrok/followers",
+                  "following_url": "https://api.github.com/users/rbrok/following{/other_user}",
+                  "gists_url": "https://api.github.com/users/rbrok/gists{/gist_id}",
+                  "gravatar_id": "",
+                  "html_url": "https://github.com/rbrok",
+                  "id": 8680847,
+                  "login": "rbrok",
+                  "node_id": "MDQ6VXNlcjg2ODA4NDc=",
+                  "organizations_url": "https://api.github.com/users/rbrok/orgs",
+                  "received_events_url": "https://api.github.com/users/rbrok/received_events",
+                  "repos_url": "https://api.github.com/users/rbrok/repos",
+                  "site_admin": false,
+                  "starred_url": "https://api.github.com/users/rbrok/starred{/owner}{/repo}",
+                  "subscriptions_url": "https://api.github.com/users/rbrok/subscriptions",
+                  "type": "User",
+                  "url": "https://api.github.com/users/rbrok",
+                  "user_view_type": "public"
+                },
+                "comments_url": "https://api.github.com/repos/bkerler/mtkclient/commits/a3ca24609d2e2741200a335088cba42840c6345b/comments",
+                "commit": {
+                  "author": {
+                    "date": "2026-11-19T13:44:36Z",
+                    "email": "rbrok@rolfbrokmann.de",
+                    "name": "Rolf Brokmann"
+                  },
+                  "comment_count": 0,
+                  "committer": {
+                    "date": "2026-11-19T13:44:36Z",
+                    "email": "rbrok@rolfbrokmann.de",
+                    "name": "Rolf Brokmann"
+                  },
+                  "message": "xmlflash / storage: fix UFS seccfg write address/alignment and restore missing else in UFS parttype mapping\n\nAssisted-by: Antigravity antigravity@google.com",
+                  "tree": {
+                    "sha": "c35184fff92bd9d5e22955f203f7fd26f1299ce5",
+                    "url": "https://api.github.com/repos/bkerler/mtkclient/git/trees/c35184fff92bd9d5e22955f203f7fd26f1299ce5"
+                  },
+                  "url": "https://api.github.com/repos/bkerler/mtkclient/git/commits/a3ca24609d2e2741200a335088cba42840c6345b",
+                  "verification": {
+                    "payload": null,
+                    "reason": "unsigned",
+                    "signature": null,
+                    "verified": false,
+                    "verified_at": null
+                  }
+                },
+                "committer": {
+                  "avatar_url": "https://avatars.githubusercontent.com/u/8680847?v=4",
+                  "events_url": "https://api.github.com/users/rbrok/events{/privacy}",
+                  "followers_url": "https://api.github.com/users/rbrok/followers",
+                  "following_url": "https://api.github.com/users/rbrok/following{/other_user}",
+                  "gists_url": "https://api.github.com/users/rbrok/gists{/gist_id}",
+                  "gravatar_id": "",
+                  "html_url": "https://github.com/rbrok",
+                  "id": 8680847,
+                  "login": "rbrok",
+                  "node_id": "MDQ6VXNlcjg2ODA4NDc=",
+                  "organizations_url": "https://api.github.com/users/rbrok/orgs",
+                  "received_events_url": "https://api.github.com/users/rbrok/received_events",
+                  "repos_url": "https://api.github.com/users/rbrok/repos",
+                  "site_admin": false,
+                  "starred_url": "https://api.github.com/users/rbrok/starred{/owner}{/repo}",
+                  "subscriptions_url": "https://api.github.com/users/rbrok/subscriptions",
+                  "type": "User",
+                  "url": "https://api.github.com/users/rbrok",
+                  "user_view_type": "public"
+                },
+                "html_url": "https://github.com/bkerler/mtkclient/commit/a3ca24609d2e2741200a335088cba42840c6345b",
+                "node_id": "C_kwDOQ8IpJNoAKGEzY2EyNDYwOWQyZTI3NDEyMDBhMzM1MDg4Y2JhNDI4NDBjNjM0NWI",
+                "parents": [
+                  {
+                    "html_url": "https://github.com/bkerler/mtkclient/commit/118a000a83ea31c4f427fe5225abfe964546e05e",
+                    "sha": "118a000a83ea31c4f427fe5225abfe964546e05e",
+                    "url": "https://api.github.com/repos/bkerler/mtkclient/commits/118a000a83ea31c4f427fe5225abfe964546e05e"
+                  }
+                ],
+                "sha": "a3ca24609d2e2741200a335088cba42840c6345b",
+                "url": "https://api.github.com/repos/bkerler/mtkclient/commits/a3ca24609d2e2741200a335088cba42840c6345b"
+              },
+              {
+                "author": {
+                  "avatar_url": "https://avatars.githubusercontent.com/u/6317772?v=4",
+                  "events_url": "https://api.github.com/users/bkerler/events{/privacy}",
+                  "followers_url": "https://api.github.com/users/bkerler/followers",
+                  "following_url": "https://api.github.com/users/bkerler/following{/other_user}",
+                  "gists_url": "https://api.github.com/users/bkerler/gists{/gist_id}",
+                  "gravatar_id": "",
+                  "html_url": "https://github.com/bkerler",
+                  "id": 6317772,
+                  "login": "bkerler",
+                  "node_id": "MDQ6VXNlcjYzMTc3NzI=",
+                  "organizations_url": "https://api.github.com/users/bkerler/orgs",
+                  "received_events_url": "https://api.github.com/users/bkerler/received_events",
+                  "repos_url": "https://api.github.com/users/bkerler/repos",
+                  "site_admin": false,
+                  "starred_url": "https://api.github.com/users/bkerler/starred{/owner}{/repo}",
+                  "subscriptions_url": "https://api.github.com/users/bkerler/subscriptions",
+                  "type": "User",
+                  "url": "https://api.github.com/users/bkerler",
+                  "user_view_type": "public"
+                },
+                "comments_url": "https://api.github.com/repos/bkerler/mtkclient/commits/9bcfb836a95acc4ee709c58e32f76d6ca833447c/comments",
+                "commit": {
+                  "author": {
+                    "date": "2026-11-20T10:58:04Z",
+                    "email": "6317772+bkerler@users.noreply.github.com",
+                    "name": "Bjoern Kerler"
+                  },
+                  "comment_count": 0,
+                  "committer": {
+                    "date": "2026-11-20T10:58:04Z",
+                    "email": "noreply@github.com",
+                    "name": "GitHub"
+                  },
+                  "message": "Merge pull request #450 from marksteward/patch-2\n\nCatch NotImplementedError from USB too",
+                  "tree": {
+                    "sha": "b6c25beb0716d6209e452d139dbf7cad284415f2",
+                    "url": "https://api.github.com/repos/bkerler/mtkclient/git/trees/b6c25beb0716d6209e452d139dbf7cad284415f2"
+                  },
+                  "url": "https://api.github.com/repos/bkerler/mtkclient/git/commits/9bcfb836a95acc4ee709c58e32f76d6ca833447c",
+                  "verification": {
+                    "payload": "tree b6c25beb0716d6209e452d139dbf7cad284415f2\nparent 118a000a83ea31c4f427fe5225abfe964546e05e\nparent 0b8b5d4f26f23ba904c94ce629a7f344666784df\nauthor Bjoern Kerler <6317772+bkerler@users.noreply.github.com> 1795172284 +0100\ncommitter GitHub <noreply@github.com> 1795172284 +0100\n\nMerge pull request #450 from marksteward/patch-2\n\nCatch NotImplementedError from USB too",
+                    "reason": "valid",
+                    "signature": "-----BEGIN PGP SIGNATURE-----\n\nwsFcBAABCAAQBQJrACe8CRC1aQ7uu5UhlAAAIJMQAEO8m/IWIh/MXBgnw2Nvew+j\nAyBmFr6Lh82J7tUOjft0MB4mnIbWT8UxbABii6WSSa7yrvr8wM7V7gr3aXPwfHg8\nPAf+QHwFfsMDmBvAZrcNWbi0PIOEIEik9M6wNjMWsv7l9Nyrf72VfeeBdraHNQ5C\nQzTZISbGlhjnh268G6ZgiYSoDY+kMELj9W3llYmKf+Fr3J3I/q85Tp1ob611QU1/\nAr0Ft30z3P3KcJcIU/rjUVhAGdbOYY0eCe3bb7IGNNEnRM2WZV43Qqy++xIzTC0G\nTRAyU+R5PRJebqbxuPy51rtsvjuOY8S0lGITqZu1EjX4tpbIrLucA+mUUzRh1gH6\nFLerdtEEyHLMdyGsG0HZa9G2+x5irviR+4iJToBlytSYftyt0K6mpTylFnGKodkb\nmF/+sBXHxqDfsuyxiNMwDNe5M3ffyC//ZHYI4afLWfiUOQBWTj4FEZjqJWWBb2LN\nQ5O1LieiQeRlnvvWoLBz5sQ9pA+WERFX/bnuU1qss4ZhCXha4eXdllIGhPEf4xdi\n2VTmZzHVeG7i+Q7pTGXgoUqNVsVJJlZsPuKJ7RB5egg/KaVrh/RRv+msKnrGy+Fg\njSoIIh/OBq+JIPEsn8V7V1UoRd4cp6SA3KZiGvpX/COgIkbWrBDrKkPyYzuRtmlq\nBCUdObTCGAlSboa5sFtx\n=vryG\n-----END PGP SIGNATURE-----\n",
+                    "verified": true,
+                    "verified_at": "2026-11-20T10:58:04Z"
+                  }
+                },
+                "committer": {
+                  "avatar_url": "https://avatars.githubusercontent.com/u/19864447?v=4",
+                  "events_url": "https://api.github.com/users/web-flow/events{/privacy}",
+                  "followers_url": "https://api.github.com/users/web-flow/followers",
+                  "following_url": "https://api.github.com/users/web-flow/following{/other_user}",
+                  "gists_url": "https://api.github.com/users/web-flow/gists{/gist_id}",
+                  "gravatar_id": "",
+                  "html_url": "https://github.com/web-flow",
+                  "id": 19864447,
+                  "login": "web-flow",
+                  "node_id": "MDQ6VXNlcjE5ODY0NDQ3",
+                  "organizations_url": "https://api.github.com/users/web-flow/orgs",
+                  "received_events_url": "https://api.github.com/users/web-flow/received_events",
+                  "repos_url": "https://api.github.com/users/web-flow/repos",
+                  "site_admin": false,
+                  "starred_url": "https://api.github.com/users/web-flow/starred{/owner}{/repo}",
+                  "subscriptions_url": "https://api.github.com/users/web-flow/subscriptions",
+                  "type": "User",
+                  "url": "https://api.github.com/users/web-flow",
+                  "user_view_type": "public"
+                },
+                "html_url": "https://github.com/bkerler/mtkclient/commit/9bcfb836a95acc4ee709c58e32f76d6ca833447c",
+                "node_id": "C_kwDOQ8IpJNoAKDliY2ZiODM2YTk1YWNjNGVlNzA5YzU4ZTMyZjc2ZDZjYTgzMzQ0N2M",
+                "parents": [
+                  {
+                    "html_url": "https://github.com/bkerler/mtkclient/commit/118a000a83ea31c4f427fe5225abfe964546e05e",
+                    "sha": "118a000a83ea31c4f427fe5225abfe964546e05e",
+                    "url": "https://api.github.com/repos/bkerler/mtkclient/commits/118a000a83ea31c4f427fe5225abfe964546e05e"
+                  },
+                  {
+                    "html_url": "https://github.com/bkerler/mtkclient/commit/0b8b5d4f26f23ba904c94ce629a7f344666784df",
+                    "sha": "0b8b5d4f26f23ba904c94ce629a7f344666784df",
+                    "url": "https://api.github.com/repos/bkerler/mtkclient/commits/0b8b5d4f26f23ba904c94ce629a7f344666784df"
+                  }
+                ],
+                "sha": "9bcfb836a95acc4ee709c58e32f76d6ca833447c",
+                "url": "https://api.github.com/repos/bkerler/mtkclient/commits/9bcfb836a95acc4ee709c58e32f76d6ca833447c"
+              },
+              {
+                "author": {
+                  "avatar_url": "https://avatars.githubusercontent.com/u/6317772?v=4",
+                  "events_url": "https://api.github.com/users/bkerler/events{/privacy}",
+                  "followers_url": "https://api.github.com/users/bkerler/followers",
+                  "following_url": "https://api.github.com/users/bkerler/following{/other_user}",
+                  "gists_url": "https://api.github.com/users/bkerler/gists{/gist_id}",
+                  "gravatar_id": "",
+                  "html_url": "https://github.com/bkerler",
+                  "id": 6317772,
+                  "login": "bkerler",
+                  "node_id": "MDQ6VXNlcjYzMTc3NzI=",
+                  "organizations_url": "https://api.github.com/users/bkerler/orgs",
+                  "received_events_url": "https://api.github.com/users/bkerler/received_events",
+                  "repos_url": "https://api.github.com/users/bkerler/repos",
+                  "site_admin": false,
+                  "starred_url": "https://api.github.com/users/bkerler/starred{/owner}{/repo}",
+                  "subscriptions_url": "https://api.github.com/users/bkerler/subscriptions",
+                  "type": "User",
+                  "url": "https://api.github.com/users/bkerler",
+                  "user_view_type": "public"
+                },
+                "comments_url": "https://api.github.com/repos/bkerler/mtkclient/commits/177748714d8d875299ed3bc5cd0a7d2f407e3f5a/comments",
+                "commit": {
+                  "author": {
+                    "date": "2026-11-20T10:58:34Z",
+                    "email": "6317772+bkerler@users.noreply.github.com",
+                    "name": "Bjoern Kerler"
+                  },
+                  "comment_count": 0,
+                  "committer": {
+                    "date": "2026-11-20T10:58:34Z",
+                    "email": "noreply@github.com",
+                    "name": "GitHub"
+                  },
+                  "message": "Merge pull request #447 from marksteward/patch-1\n\nRemove wrong keystone dependency",
+                  "tree": {
+                    "sha": "0df340fb63793112aaf884a4e22320ff3ed26eb3",
+                    "url": "https://api.github.com/repos/bkerler/mtkclient/git/trees/0df340fb63793112aaf884a4e22320ff3ed26eb3"
+                  },
+                  "url": "https://api.github.com/repos/bkerler/mtkclient/git/commits/177748714d8d875299ed3bc5cd0a7d2f407e3f5a",
+                  "verification": {
+                    "payload": "tree 0df340fb63793112aaf884a4e22320ff3ed26eb3\nparent 9bcfb836a95acc4ee709c58e32f76d6ca833447c\nparent e3df1fb5c16a00e0e62f87ccf3b067a8ec8ac4e1\nauthor Bjoern Kerler <6317772+bkerler@users.noreply.github.com> 1795172314 +0100\ncommitter GitHub <noreply@github.com> 1795172314 +0100\n\nMerge pull request #447 from marksteward/patch-1\n\nRemove wrong keystone dependency",
+                    "reason": "valid",
+                    "signature": "-----BEGIN PGP SIGNATURE-----\n\nwsFcBAABCAAQBQJrACfaCRC1aQ7uu5UhlAAApxkQAJrHhLDLwjEWXHdJwyKnZ+Dm\nw68ADEQ8n3rBuboHmyU59Zdk+2Y0aiK/YTt+JNRlBNdTvKmWISRUPXWV58yyk+ic\nFikMP4/PQWYqA0xasy8j+ErvtRs7y6nIOxU7QdcLM01MN8QXeNUyf0sq9cNuPZpO\nJnFSHiKZN4t/SAXKExhIEI3CujmVUd/DiBCQxWWVsvqQKl2tZN3c32QbAbAHuo0+\nD2eO3hlmw/+wvAzVrDbuHNcmMjbU6Z8vRt0Q562T+T+x8XwlBT5E8t0dja5FSsVf\nZGVNn1kQ92uO/gDVoJbMZzY7/G8tRIZe4Ohxz2vHIPFYZDvi0N/mf9l6bN4sXixh\naHp2NikpcoDE+vERPi55L3wOlFBZuK8KkKAaYVVaXn3aUvJlRyqfUBuNuLMqRopK\ng4E8e0TY3bFMrRgfaG4mEuaTjx3ZXM8BEEaf07wCoyDxAc6dWcabd+9QC+tAGlQ/\nJITBQWGQwm5SB0CQREEOIc8lqu2TXqxohzt1nuGmmo6hjV9o3o7rTxIkOxnrB88h\nfqYf7KHhIpzz28tNPIHcDSByCMLiz86IIaksXYYVEvzfI0rGJ0uAyYnwTRw3Tm6y\nQKTRtYAS2y5I9/ZkNytpS14GgzgOmLqb2S3LMvbLJCj6gzfKgaaklPNvjrps1o0T\nDVSiOi4A90ri6iC9IsU6\n=8OCq\n-----END PGP SIGNATURE-----\n",
+                    "verified": true,
+                    "verified_at": "2026-11-20T10:58:34Z"
+                  }
+                },
+                "committer": {
+                  "avatar_url": "https://avatars.githubusercontent.com/u/19864447?v=4",
+                  "events_url": "https://api.github.com/users/web-flow/events{/privacy}",
+                  "followers_url": "https://api.github.com/users/web-flow/followers",
+                  "following_url": "https://api.github.com/users/web-flow/following{/other_user}",
+                  "gists_url": "https://api.github.com/users/web-flow/gists{/gist_id}",
+                  "gravatar_id": "",
+                  "html_url": "https://github.com/web-flow",
+                  "id": 19864447,
+                  "login": "web-flow",
+                  "node_id": "MDQ6VXNlcjE5ODY0NDQ3",
+                  "organizations_url": "https://api.github.com/users/web-flow/orgs",
+                  "received_events_url": "https://api.github.com/users/web-flow/received_events",
+                  "repos_url": "https://api.github.com/users/web-flow/repos",
+                  "site_admin": false,
+                  "starred_url": "https://api.github.com/users/web-flow/starred{/owner}{/repo}",
+                  "subscriptions_url": "https://api.github.com/users/web-flow/subscriptions",
+                  "type": "User",
+                  "url": "https://api.github.com/users/web-flow",
+                  "user_view_type": "public"
+                },
+                "html_url": "https://github.com/bkerler/mtkclient/commit/177748714d8d875299ed3bc5cd0a7d2f407e3f5a",
+                "node_id": "C_kwDOQ8IpJNoAKDE3Nzc0ODcxNGQ4ZDg3NTI5OWVkM2JjNWNkMGE3ZDJmNDA3ZTNmNWE",
+                "parents": [
+                  {
+                    "html_url": "https://github.com/bkerler/mtkclient/commit/9bcfb836a95acc4ee709c58e32f76d6ca833447c",
+                    "sha": "9bcfb836a95acc4ee709c58e32f76d6ca833447c",
+                    "url": "https://api.github.com/repos/bkerler/mtkclient/commits/9bcfb836a95acc4ee709c58e32f76d6ca833447c"
+                  },
+                  {
+                    "html_url": "https://github.com/bkerler/mtkclient/commit/e3df1fb5c16a00e0e62f87ccf3b067a8ec8ac4e1",
+                    "sha": "e3df1fb5c16a00e0e62f87ccf3b067a8ec8ac4e1",
+                    "url": "https://api.github.com/repos/bkerler/mtkclient/commits/e3df1fb5c16a00e0e62f87ccf3b067a8ec8ac4e1"
+                  }
+                ],
+                "sha": "177748714d8d875299ed3bc5cd0a7d2f407e3f5a",
+                "url": "https://api.github.com/repos/bkerler/mtkclient/commits/177748714d8d875299ed3bc5cd0a7d2f407e3f5a"
+              },
+              {
+                "author": {
+                  "avatar_url": "https://avatars.githubusercontent.com/u/6317772?v=4",
+                  "events_url": "https://api.github.com/users/bkerler/events{/privacy}",
+                  "followers_url": "https://api.github.com/users/bkerler/followers",
+                  "following_url": "https://api.github.com/users/bkerler/following{/other_user}",
+                  "gists_url": "https://api.github.com/users/bkerler/gists{/gist_id}",
+                  "gravatar_id": "",
+                  "html_url": "https://github.com/bkerler",
+                  "id": 6317772,
+                  "login": "bkerler",
+                  "node_id": "MDQ6VXNlcjYzMTc3NzI=",
+                  "organizations_url": "https://api.github.com/users/bkerler/orgs",
+                  "received_events_url": "https://api.github.com/users/bkerler/received_events",
+                  "repos_url": "https://api.github.com/users/bkerler/repos",
+                  "site_admin": false,
+                  "starred_url": "https://api.github.com/users/bkerler/starred{/owner}{/repo}",
+                  "subscriptions_url": "https://api.github.com/users/bkerler/subscriptions",
+                  "type": "User",
+                  "url": "https://api.github.com/users/bkerler",
+                  "user_view_type": "public"
+                },
+                "comments_url": "https://api.github.com/repos/bkerler/mtkclient/commits/06c1273eba5173da9d6e57619f2869a20bee08ed/comments",
+                "commit": {
+                  "author": {
+                    "date": "2026-11-20T11:06:52Z",
+                    "email": "6317772+bkerler@users.noreply.github.com",
+                    "name": "Bjoern Kerler"
+                  },
+                  "comment_count": 0,
+                  "committer": {
+                    "date": "2026-11-20T11:06:52Z",
+                    "email": "noreply@github.com",
+                    "name": "GitHub"
+                  },
+                  "message": "Merge pull request #427 from Jz8Root/jz8/meid-reinit\n\ndaloader: restore MEID from saved JSON state",
+                  "tree": {
+                    "sha": "b44f181a9ce7dded82f07e77f910378e2c2d4e34",
+                    "url": "https://api.github.com/repos/bkerler/mtkclient/git/trees/b44f181a9ce7dded82f07e77f910378e2c2d4e34"
+                  },
+                  "url": "https://api.github.com/repos/bkerler/mtkclient/git/commits/06c1273eba5173da9d6e57619f2869a20bee08ed",
+                  "verification": {
+                    "payload": "tree b44f181a9ce7dded82f07e77f910378e2c2d4e34\nparent 177748714d8d875299ed3bc5cd0a7d2f407e3f5a\nparent ad56005a091ba58964ff7b6cdc8f6823b7fdd4de\nauthor Bjoern Kerler <6317772+bkerler@users.noreply.github.com> 1795172812 +0100\ncommitter GitHub <noreply@github.com> 1795172812 +0100\n\nMerge pull request #427 from Jz8Root/jz8/meid-reinit\n\ndaloader: restore MEID from saved JSON state",
+                    "reason": "valid",
+                    "signature": "-----BEGIN PGP SIGNATURE-----\n\nwsFcBAABCAAQBQJrACnMCRC1aQ7uu5UhlAAA5FgQAB4vEd2JOmGrDdDNSI9f7Qun\nbcGuYqlNmhx+1YQpaCgYo6puVnH/cEVQua6gHAkJkAGZKS2vnzF24C6Qy4N8STm3\nrgciicc5x4bI9SWNTS9zWbmXK+o20ozTGWbjOdA6hCILe7f4nMiQcIDhJD68o/88\nD9rxkJRuBGjXIbQkbwoph6qkq/PEjudXqdI1Kq0rgtQhICx97CpGJ/CeB2B378VS\nU1ONqg4sdanqO3oviX9DS0V5DW8ixe8rB4M+PD1p29JqrDI42T3mqd5f7hLSY7pc\nP5ANQ83eN4XfRsCOgsZP9pdYLDLtGG4MbK5HRfX5I0tImRhu+maU44pLY11dj3Mg\nx0SqhL/HTqBft1LG4kGL7LyYaAdecuqKiimJEl/ayQ4zmEJgUBx3Y5DfewGq8l+2\n6tEcgEM1gg2oqv6piqAEjN0HVKHNU1lXHGA3fiW4/cwzQWHy497TbTWd6+uV+AW5\nNcoe2+NrjHuPGHsvQw025Nn2yqgdEl/kv6qvgqmeEPgP4e6Rhe/sTpjYDk742Olk\naO7i13zVHFtzcdmNccHV58wc9Wqs9pAvdF5YPE5AyCQC1SXRlmwTAlpLID7jXbFs\nfLjy0cmCi5ZZOcLtLhxy8nbt41k5pnc10f2zXj9YP6tU1QFRYqRLTSlNiipSw6El\ngry4sI7Q1w/laVOHwFBc\n=zRJt\n-----END PGP SIGNATURE-----\n",
+                    "verified": true,
+                    "verified_at": "2026-11-20T11:06:52Z"
+                  }
+                },
+                "committer": {
+                  "avatar_url": "https://avatars.githubusercontent.com/u/19864447?v=4",
+                  "events_url": "https://api.github.com/users/web-flow/events{/privacy}",
+                  "followers_url": "https://api.github.com/users/web-flow/followers",
+                  "following_url": "https://api.github.com/users/web-flow/following{/other_user}",
+                  "gists_url": "https://api.github.com/users/web-flow/gists{/gist_id}",
+                  "gravatar_id": "",
+                  "html_url": "https://github.com/web-flow",
+                  "id": 19864447,
+                  "login": "web-flow",
+                  "node_id": "MDQ6VXNlcjE5ODY0NDQ3",
+                  "organizations_url": "https://api.github.com/users/web-flow/orgs",
+                  "received_events_url": "https://api.github.com/users/web-flow/received_events",
+                  "repos_url": "https://api.github.com/users/web-flow/repos",
+                  "site_admin": false,
+                  "starred_url": "https://api.github.com/users/web-flow/starred{/owner}{/repo}",
+                  "subscriptions_url": "https://api.github.com/users/web-flow/subscriptions",
+                  "type": "User",
+                  "url": "https://api.github.com/users/web-flow",
+                  "user_view_type": "public"
+                },
+                "html_url": "https://github.com/bkerler/mtkclient/commit/06c1273eba5173da9d6e57619f2869a20bee08ed",
+                "node_id": "C_kwDOQ8IpJNoAKDA2YzEyNzNlYmE1MTczZGE5ZDZlNTc2MTlmMjg2OWEyMGJlZTA4ZWQ",
+                "parents": [
+                  {
+                    "html_url": "https://github.com/bkerler/mtkclient/commit/177748714d8d875299ed3bc5cd0a7d2f407e3f5a",
+                    "sha": "177748714d8d875299ed3bc5cd0a7d2f407e3f5a",
+                    "url": "https://api.github.com/repos/bkerler/mtkclient/commits/177748714d8d875299ed3bc5cd0a7d2f407e3f5a"
+                  },
+                  {
+                    "html_url": "https://github.com/bkerler/mtkclient/commit/ad56005a091ba58964ff7b6cdc8f6823b7fdd4de",
+                    "sha": "ad56005a091ba58964ff7b6cdc8f6823b7fdd4de",
+                    "url": "https://api.github.com/repos/bkerler/mtkclient/commits/ad56005a091ba58964ff7b6cdc8f6823b7fdd4de"
+                  }
+                ],
+                "sha": "06c1273eba5173da9d6e57619f2869a20bee08ed",
+                "url": "https://api.github.com/repos/bkerler/mtkclient/commits/06c1273eba5173da9d6e57619f2869a20bee08ed"
+              },
+              {
+                "author": {
+                  "avatar_url": "https://avatars.githubusercontent.com/u/6317772?v=4",
+                  "events_url": "https://api.github.com/users/bkerler/events{/privacy}",
+                  "followers_url": "https://api.github.com/users/bkerler/followers",
+                  "following_url": "https://api.github.com/users/bkerler/following{/other_user}",
+                  "gists_url": "https://api.github.com/users/bkerler/gists{/gist_id}",
+                  "gravatar_id": "",
+                  "html_url": "https://github.com/bkerler",
+                  "id": 6317772,
+                  "login": "bkerler",
+                  "node_id": "MDQ6VXNlcjYzMTc3NzI=",
+                  "organizations_url": "https://api.github.com/users/bkerler/orgs",
+                  "received_events_url": "https://api.github.com/users/bkerler/received_events",
+                  "repos_url": "https://api.github.com/users/bkerler/repos",
+                  "site_admin": false,
+                  "starred_url": "https://api.github.com/users/bkerler/starred{/owner}{/repo}",
+                  "subscriptions_url": "https://api.github.com/users/bkerler/subscriptions",
+                  "type": "User",
+                  "url": "https://api.github.com/users/bkerler",
+                  "user_view_type": "public"
+                },
+                "comments_url": "https://api.github.com/repos/bkerler/mtkclient/commits/2f57b5191fd41d6c07098ae8a3244b8f366866bd/comments",
+                "commit": {
+                  "author": {
+                    "date": "2026-11-20T11:10:48Z",
+                    "email": "6317772+bkerler@users.noreply.github.com",
+                    "name": "Bjoern Kerler"
+                  },
+                  "comment_count": 0,
+                  "committer": {
+                    "date": "2026-11-20T11:10:48Z",
+                    "email": "noreply@github.com",
+                    "name": "GitHub"
+                  },
+                  "message": "Merge pull request #426 from Jz8Root/jz8/ufs-literal-alignment\n\nxflash: handle aligned UFS HBA literal pools",
+                  "tree": {
+                    "sha": "3b091a6b04584b5d1373452cd9ad7046ace1bcbe",
+                    "url": "https://api.github.com/repos/bkerler/mtkclient/git/trees/3b091a6b04584b5d1373452cd9ad7046ace1bcbe"
+                  },
+                  "url": "https://api.github.com/repos/bkerler/mtkclient/git/commits/2f57b5191fd41d6c07098ae8a3244b8f366866bd",
+                  "verification": {
+                    "payload": "tree 3b091a6b04584b5d1373452cd9ad7046ace1bcbe\nparent 06c1273eba5173da9d6e57619f2869a20bee08ed\nparent e891caca64ab67e033ed82bb8ba4a52db3730f14\nauthor Bjoern Kerler <6317772+bkerler@users.noreply.github.com> 1795173048 +0100\ncommitter GitHub <noreply@github.com> 1795173048 +0100\n\nMerge pull request #426 from Jz8Root/jz8/ufs-literal-alignment\n\nxflash: handle aligned UFS HBA literal pools",
+                    "reason": "valid",
+                    "signature": "-----BEGIN PGP SIGNATURE-----\n\nwsFcBAABCAAQBQJrACq4CRC1aQ7uu5UhlAAAWy0QAHFf97+uwWR7EGHIgyZZ/k/6\nj4g8oxVUpfZoC8znB6xIW9rKxuevsUp7Z2sTWB/A8C+f52aeZzS29fVBG9w5SA/E\nOtHtLovMN/1WiYShmoAgN67mkXP94KQniboFF1+/rq6dT9NkcYsFPIyWczyCPP6h\nJ0ny5T4sXguENUe9jxRJ9un7knYJZuz/HwHHKpU1PmncoI64R4gUDzUQTKBCjoPW\n3+uKW4S3lfOaxDjUV6mGXOI4aNr69cGEuVdY1NcZLztXyMDcLXvkBYtUZLxYRLwa\nzKWCXa6eUPf1uqHsjICJwTNOVBzV4fxNC+NabKyIFiB1kDXD1qi0YzkyWnVnBXk8\n41SEdtc7chfrUdQTLlbX3ugzRF8RLN2XUFK3us2YrQLnv5dPK9QzJ9NlrddnfVXQ\nOA6laTgsV65Pjx0XE4HBWEFo1dxRMlhHO5kw83fMi7xcP5Ml8tgNgCcBq5eGzz2m\nfhaQujWr5FoJF69ClIBrEe8RQsGgHeMRF0AgbEAfaQSQg5ghTWVpobftLg5p9Wzk\n7thocT1B+trETPm6gUz7gsfKROSyfSRJjosKPsVCe1PbmveNk0I+vm6WLCkOIfMI\nWIxjEthWcTaQOQVG5jGYozKYqI9RWI1zd7k0KQfea5HcRVNy6/ALZ5iVPXmjGpbX\nbt5vYWKzXY2mUaXh11yX\n=foMn\n-----END PGP SIGNATURE-----\n",
+                    "verified": true,
+                    "verified_at": "2026-11-20T11:10:48Z"
+                  }
+                },
+                "committer": {
+                  "avatar_url": "https://avatars.githubusercontent.com/u/19864447?v=4",
+                  "events_url": "https://api.github.com/users/web-flow/events{/privacy}",
+                  "followers_url": "https://api.github.com/users/web-flow/followers",
+                  "following_url": "https://api.github.com/users/web-flow/following{/other_user}",
+                  "gists_url": "https://api.github.com/users/web-flow/gists{/gist_id}",
+                  "gravatar_id": "",
+                  "html_url": "https://github.com/web-flow",
+                  "id": 19864447,
+                  "login": "web-flow",
+                  "node_id": "MDQ6VXNlcjE5ODY0NDQ3",
+                  "organizations_url": "https://api.github.com/users/web-flow/orgs",
+                  "received_events_url": "https://api.github.com/users/web-flow/received_events",
+                  "repos_url": "https://api.github.com/users/web-flow/repos",
+                  "site_admin": false,
+                  "starred_url": "https://api.github.com/users/web-flow/starred{/owner}{/repo}",
+                  "subscriptions_url": "https://api.github.com/users/web-flow/subscriptions",
+                  "type": "User",
+                  "url": "https://api.github.com/users/web-flow",
+                  "user_view_type": "public"
+                },
+                "html_url": "https://github.com/bkerler/mtkclient/commit/2f57b5191fd41d6c07098ae8a3244b8f366866bd",
+                "node_id": "C_kwDOQ8IpJNoAKDJmNTdiNTE5MWZkNDFkNmMwNzA5OGFlOGEzMjQ0YjhmMzY2ODY2YmQ",
+                "parents": [
+                  {
+                    "html_url": "https://github.com/bkerler/mtkclient/commit/06c1273eba5173da9d6e57619f2869a20bee08ed",
+                    "sha": "06c1273eba5173da9d6e57619f2869a20bee08ed",
+                    "url": "https://api.github.com/repos/bkerler/mtkclient/commits/06c1273eba5173da9d6e57619f2869a20bee08ed"
+                  },
+                  {
+                    "html_url": "https://github.com/bkerler/mtkclient/commit/e891caca64ab67e033ed82bb8ba4a52db3730f14",
+                    "sha": "e891caca64ab67e033ed82bb8ba4a52db3730f14",
+                    "url": "https://api.github.com/repos/bkerler/mtkclient/commits/e891caca64ab67e033ed82bb8ba4a52db3730f14"
+                  }
+                ],
+                "sha": "2f57b5191fd41d6c07098ae8a3244b8f366866bd",
+                "url": "https://api.github.com/repos/bkerler/mtkclient/commits/2f57b5191fd41d6c07098ae8a3244b8f366866bd"
+              },
+              {
+                "author": {
+                  "avatar_url": "https://avatars.githubusercontent.com/u/6317772?v=4",
+                  "events_url": "https://api.github.com/users/bkerler/events{/privacy}",
+                  "followers_url": "https://api.github.com/users/bkerler/followers",
+                  "following_url": "https://api.github.com/users/bkerler/following{/other_user}",
+                  "gists_url": "https://api.github.com/users/bkerler/gists{/gist_id}",
+                  "gravatar_id": "",
+                  "html_url": "https://github.com/bkerler",
+                  "id": 6317772,
+                  "login": "bkerler",
+                  "node_id": "MDQ6VXNlcjYzMTc3NzI=",
+                  "organizations_url": "https://api.github.com/users/bkerler/orgs",
+                  "received_events_url": "https://api.github.com/users/bkerler/received_events",
+                  "repos_url": "https://api.github.com/users/bkerler/repos",
+                  "site_admin": false,
+                  "starred_url": "https://api.github.com/users/bkerler/starred{/owner}{/repo}",
+                  "subscriptions_url": "https://api.github.com/users/bkerler/subscriptions",
+                  "type": "User",
+                  "url": "https://api.github.com/users/bkerler",
+                  "user_view_type": "public"
+                },
+                "comments_url": "https://api.github.com/repos/bkerler/mtkclient/commits/f12f461c853821fd578c419f26d695e470b2af7c/comments",
+                "commit": {
+                  "author": {
+                    "date": "2026-11-20T11:19:44Z",
+                    "email": "6317772+bkerler@users.noreply.github.com",
+                    "name": "Bjoern Kerler"
+                  },
+                  "comment_count": 0,
+                  "committer": {
+                    "date": "2026-11-20T11:19:44Z",
+                    "email": "noreply@github.com",
+                    "name": "GitHub"
+                  },
+                  "message": "Merge pull request #454 from lukejenkins/fix/xml-stock-da-unsupported-sla\n\nxmlflash: tolerate stock DAs without DA.SLA property or ext patch points",
+                  "tree": {
+                    "sha": "0336c411c50ea5871426ab27a119a55eeabfbdf7",
+                    "url": "https://api.github.com/repos/bkerler/mtkclient/git/trees/0336c411c50ea5871426ab27a119a55eeabfbdf7"
+                  },
+                  "url": "https://api.github.com/repos/bkerler/mtkclient/git/commits/f12f461c853821fd578c419f26d695e470b2af7c",
+                  "verification": {
+                    "payload": "tree 0336c411c50ea5871426ab27a119a55eeabfbdf7\nparent 2f57b5191fd41d6c07098ae8a3244b8f366866bd\nparent 5c0cc4cadcd434043216ca2a4531b49126249fca\nauthor Bjoern Kerler <6317772+bkerler@users.noreply.github.com> 1795173584 +0100\ncommitter GitHub <noreply@github.com> 1795173584 +0100\n\nMerge pull request #454 from lukejenkins/fix/xml-stock-da-unsupported-sla\n\nxmlflash: tolerate stock DAs without DA.SLA property or ext patch points",
+                    "reason": "valid",
+                    "signature": "-----BEGIN PGP SIGNATURE-----\n\nwsFcBAABCAAQBQJrACzQCRC1aQ7uu5UhlAAAkBMQAKBjlGUN1+HNVRocRfD76tGo\njNvpFtQOjFn8yiGyeLQXpIyW3Vf6ikLXF2Dq6MAWklHxgzAKtx3RDVmgHxy1mgSR\nZXaZzIYjHzZq8uCgyB9o0cbyBAJLe4cEz+1PxCZbhDO2gZrHAWfG7PgdrpDLDmLF\nzQvtF2L2YrizAzYnCUg6FG1Qdt/Bfw860WN/OVEIyQtptj0LcIJ45gGjD+QQWhu0\nzTRoJ91QDZsowN+iWUP2UHRdfT6ppu8lbr3np7mMMOPRp9yX5JQSyuHEGOQlv338\n5b45pwjmqPWqz0dQMTaVgmhkbriieDG9OH0XPSOh3JDXnNhGwlxH2sWMwUI9TztM\niG0yq1uSsgQJYCsBfC50g3hM5Xtpw+TzJTS1BiNDAlB1fEtx5OPbfQo+0WUSXC9i\nrux13BdLchllK/QH4bBRi9ln6GaU4Y93Q3hIDKE6jVKnR79OfbXW26f+psShcbph\nvmpOWBfPm8NGt1J+/YjJCufE9wXeVXlLK3/vSObXTsb817Z68OqjczTufUEsFvqs\nRahhvydynH7e3HjCYGJSKfRKRtfGvpvsrknkNat4M+5S5ONBnlXaLSgDu0Bii4Gf\nj5USuWP1W/d6XkeyyFpGXTX3Ru+bdVCmIpUE/o62cv/4m9VCy80bb6gF4wiYCpAu\nWBJrUOvO548zAtvZ6ooS\n=l9l6\n-----END PGP SIGNATURE-----\n",
+                    "verified": true,
+                    "verified_at": "2026-11-20T11:19:45Z"
+                  }
+                },
+                "committer": {
+                  "avatar_url": "https://avatars.githubusercontent.com/u/19864447?v=4",
+                  "events_url": "https://api.github.com/users/web-flow/events{/privacy}",
+                  "followers_url": "https://api.github.com/users/web-flow/followers",
+                  "following_url": "https://api.github.com/users/web-flow/following{/other_user}",
+                  "gists_url": "https://api.github.com/users/web-flow/gists{/gist_id}",
+                  "gravatar_id": "",
+                  "html_url": "https://github.com/web-flow",
+                  "id": 19864447,
+                  "login": "web-flow",
+                  "node_id": "MDQ6VXNlcjE5ODY0NDQ3",
+                  "organizations_url": "https://api.github.com/users/web-flow/orgs",
+                  "received_events_url": "https://api.github.com/users/web-flow/received_events",
+                  "repos_url": "https://api.github.com/users/web-flow/repos",
+                  "site_admin": false,
+                  "starred_url": "https://api.github.com/users/web-flow/starred{/owner}{/repo}",
+                  "subscriptions_url": "https://api.github.com/users/web-flow/subscriptions",
+                  "type": "User",
+                  "url": "https://api.github.com/users/web-flow",
+                  "user_view_type": "public"
+                },
+                "html_url": "https://github.com/bkerler/mtkclient/commit/f12f461c853821fd578c419f26d695e470b2af7c",
+                "node_id": "C_kwDOQ8IpJNoAKGYxMmY0NjFjODUzODIxZmQ1NzhjNDE5ZjI2ZDY5NWU0NzBiMmFmN2M",
+                "parents": [
+                  {
+                    "html_url": "https://github.com/bkerler/mtkclient/commit/2f57b5191fd41d6c07098ae8a3244b8f366866bd",
+                    "sha": "2f57b5191fd41d6c07098ae8a3244b8f366866bd",
+                    "url": "https://api.github.com/repos/bkerler/mtkclient/commits/2f57b5191fd41d6c07098ae8a3244b8f366866bd"
+                  },
+                  {
+                    "html_url": "https://github.com/bkerler/mtkclient/commit/5c0cc4cadcd434043216ca2a4531b49126249fca",
+                    "sha": "5c0cc4cadcd434043216ca2a4531b49126249fca",
+                    "url": "https://api.github.com/repos/bkerler/mtkclient/commits/5c0cc4cadcd434043216ca2a4531b49126249fca"
+                  }
+                ],
+                "sha": "f12f461c853821fd578c419f26d695e470b2af7c",
+                "url": "https://api.github.com/repos/bkerler/mtkclient/commits/f12f461c853821fd578c419f26d695e470b2af7c"
+              },
+              {
+                "author": {
+                  "avatar_url": "https://avatars.githubusercontent.com/u/6317772?v=4",
+                  "events_url": "https://api.github.com/users/bkerler/events{/privacy}",
+                  "followers_url": "https://api.github.com/users/bkerler/followers",
+                  "following_url": "https://api.github.com/users/bkerler/following{/other_user}",
+                  "gists_url": "https://api.github.com/users/bkerler/gists{/gist_id}",
+                  "gravatar_id": "",
+                  "html_url": "https://github.com/bkerler",
+                  "id": 6317772,
+                  "login": "bkerler",
+                  "node_id": "MDQ6VXNlcjYzMTc3NzI=",
+                  "organizations_url": "https://api.github.com/users/bkerler/orgs",
+                  "received_events_url": "https://api.github.com/users/bkerler/received_events",
+                  "repos_url": "https://api.github.com/users/bkerler/repos",
+                  "site_admin": false,
+                  "starred_url": "https://api.github.com/users/bkerler/starred{/owner}{/repo}",
+                  "subscriptions_url": "https://api.github.com/users/bkerler/subscriptions",
+                  "type": "User",
+                  "url": "https://api.github.com/users/bkerler",
+                  "user_view_type": "public"
+                },
+                "comments_url": "https://api.github.com/repos/bkerler/mtkclient/commits/a1e1b4d8c68ea6d711e789678f98a256ce848eab/comments",
+                "commit": {
+                  "author": {
+                    "date": "2026-11-20T11:24:26Z",
+                    "email": "6317772+bkerler@users.noreply.github.com",
+                    "name": "Bjoern Kerler"
+                  },
+                  "comment_count": 0,
+                  "committer": {
+                    "date": "2026-11-20T11:24:26Z",
+                    "email": "noreply@github.com",
+                    "name": "GitHub"
+                  },
+                  "message": "Merge pull request #463 from rbrok/ufs-storage-seccfg-fix\n\nxmlflash / storage: fix UFS seccfg write address/alignment and restore missing else in UFS parttype mapping",
+                  "tree": {
+                    "sha": "3ad688d7cd650a27f0dbffe72821fadfd03f777b",
+                    "url": "https://api.github.com/repos/bkerler/mtkclient/git/trees/3ad688d7cd650a27f0dbffe72821fadfd03f777b"
+                  },
+                  "url": "https://api.github.com/repos/bkerler/mtkclient/git/commits/a1e1b4d8c68ea6d711e789678f98a256ce848eab",
+                  "verification": {
+                    "payload": "tree 3ad688d7cd650a27f0dbffe72821fadfd03f777b\nparent f12f461c853821fd578c419f26d695e470b2af7c\nparent a3ca24609d2e2741200a335088cba42840c6345b\nauthor Bjoern Kerler <6317772+bkerler@users.noreply.github.com> 1795173866 +0100\ncommitter GitHub <noreply@github.com> 1795173866 +0100\n\nMerge pull request #463 from rbrok/ufs-storage-seccfg-fix\n\nxmlflash / storage: fix UFS seccfg write address/alignment and restore missing else in UFS parttype mapping",
+                    "reason": "valid",
+                    "signature": "-----BEGIN PGP SIGNATURE-----\n\nwsFcBAABCAAQBQJrAC3qCRC1aQ7uu5UhlAAA/x8QAGH+1dY+ZTQyKF3lT5N6kTIt\n6IeIsRqRgsuIDSvj2rSV3YcIRahjz2ywsCgVZ1IS0RbxpemPUOP67CM5gsjghkZt\nrFvMRVdCKi3OlEutAb6QCL7mJt8N5YW9SirD9bAHYjkbPf0gGVgLolZ+sDHc18Rm\nbcNys5FmuXGWr1CIY39lGsz5VI6TwaQ42DtQLm7p8ig4lZ0bDPsI1KdVT6S3Nfuu\nqYWtEWw13N/woDwiPpWZAvf42J1q0i/XNiLjZ/wxcgcP96UY96/lZzWmE6Qv5mah\nG/lZvR7xVcKfWgpIdfHllQLdihPKT/Yt/wTFYp7y3ZjjtJM3LW5NgOPGPzZZGuCJ\nMMWJQWpSjpDga5qrDPb8jd4dn6PTR1T21QFZIU2tRYXlBYyOt+Mb3hLIj0mOjtTh\nGJqv/jPHeHEUCWDvE4sVEOXn/N1erJMOX+1Huss5f4eKeSg8glSFdDnTeTJ+foYW\nbuZGsXB0v9qhxMCIDv/Aws0Y4owP2WfSX0MUioLZQxAeOu/rUAL+fo1MGDw7eJQR\nNPzUxVGDppAz2GBfR7inKI+1mkPi3sobxdiS04PdeahjQMXJkxVhWo+A7DalI4Qd\nQfxpTLhkJT7QkfLu9+wcgp8UNkLY5M6CLpsd2xh2BzLMYL3LExGv6A1iRxqKkw8f\nN+Z5JJMKF1ThN6hZdDY6\n=IAKm\n-----END PGP SIGNATURE-----\n",
+                    "verified": true,
+                    "verified_at": "2026-11-20T11:24:26Z"
+                  }
+                },
+                "committer": {
+                  "avatar_url": "https://avatars.githubusercontent.com/u/19864447?v=4",
+                  "events_url": "https://api.github.com/users/web-flow/events{/privacy}",
+                  "followers_url": "https://api.github.com/users/web-flow/followers",
+                  "following_url": "https://api.github.com/users/web-flow/following{/other_user}",
+                  "gists_url": "https://api.github.com/users/web-flow/gists{/gist_id}",
+                  "gravatar_id": "",
+                  "html_url": "https://github.com/web-flow",
+                  "id": 19864447,
+                  "login": "web-flow",
+                  "node_id": "MDQ6VXNlcjE5ODY0NDQ3",
+                  "organizations_url": "https://api.github.com/users/web-flow/orgs",
+                  "received_events_url": "https://api.github.com/users/web-flow/received_events",
+                  "repos_url": "https://api.github.com/users/web-flow/repos",
+                  "site_admin": false,
+                  "starred_url": "https://api.github.com/users/web-flow/starred{/owner}{/repo}",
+                  "subscriptions_url": "https://api.github.com/users/web-flow/subscriptions",
+                  "type": "User",
+                  "url": "https://api.github.com/users/web-flow",
+                  "user_view_type": "public"
+                },
+                "html_url": "https://github.com/bkerler/mtkclient/commit/a1e1b4d8c68ea6d711e789678f98a256ce848eab",
+                "node_id": "C_kwDOQ8IpJNoAKGExZTFiNGQ4YzY4ZWE2ZDcxMWU3ODk2NzhmOThhMjU2Y2U4NDhlYWI",
+                "parents": [
+                  {
+                    "html_url": "https://github.com/bkerler/mtkclient/commit/f12f461c853821fd578c419f26d695e470b2af7c",
+                    "sha": "f12f461c853821fd578c419f26d695e470b2af7c",
+                    "url": "https://api.github.com/repos/bkerler/mtkclient/commits/f12f461c853821fd578c419f26d695e470b2af7c"
+                  },
+                  {
+                    "html_url": "https://github.com/bkerler/mtkclient/commit/a3ca24609d2e2741200a335088cba42840c6345b",
+                    "sha": "a3ca24609d2e2741200a335088cba42840c6345b",
+                    "url": "https://api.github.com/repos/bkerler/mtkclient/commits/a3ca24609d2e2741200a335088cba42840c6345b"
+                  }
+                ],
+                "sha": "a1e1b4d8c68ea6d711e789678f98a256ce848eab",
+                "url": "https://api.github.com/repos/bkerler/mtkclient/commits/a1e1b4d8c68ea6d711e789678f98a256ce848eab"
+              }
+            ],
+            "diff_url": "https://github.com/bkerler/mtkclient/compare/118a000a83ea31c4f427fe5225abfe964546e05e...a1e1b4d8c68ea6d711e789678f98a256ce848eab.diff",
+            "files": [
+              {
+                "additions": 4,
+                "blob_url": "https://github.com/bkerler/mtkclient/blob/a1e1b4d8c68ea6d711e789678f98a256ce848eab/mtkclient%2FLibrary%2FConnection%2Fusblib.py",
+                "changes": 7,
+                "contents_url": "https://api.github.com/repos/bkerler/mtkclient/contents/mtkclient%2FLibrary%2FConnection%2Fusblib.py?ref=a1e1b4d8c68ea6d711e789678f98a256ce848eab",
+                "deletions": 3,
+                "filename": "mtkclient/Library/Connection/usblib.py",
+                "patch": "@@ -358,14 +358,15 @@ def find_matching_device(devices):\n             return False\n         try:\n             self.configuration = self.device.get_active_configuration()\n-        except usb.core.USBError as e:\n-            if e.strerror == \"Configuration not set\":\n+        except (usb.core.USBError, NotImplementedError) as e:\n+            if isinstance(e, usb.core.USBError) and e.strerror == \"Configuration not set\":\n                 try:\n                     self.device.set_configuration()\n                     self.configuration = self.device.get_active_configuration()\n                 except usb.core.USBError:\n                     pass\n-            if self.configuration is None and e.errno == 13:\n+            if self.configuration is None and (isinstance(e, NotImplementedError) or e.errno == 13):\n+                self.info(\"Trying fallback backend\")\n                 backend = self._get_fallback_backend()\n                 if backend is not None:\n                     try:",
+                "raw_url": "https://github.com/bkerler/mtkclient/raw/a1e1b4d8c68ea6d711e789678f98a256ce848eab/mtkclient%2FLibrary%2FConnection%2Fusblib.py",
+                "sha": "16c4f8ea7077f089e62eb6db7ba8b568420e56bd",
+                "status": "modified"
+              },
+              {
+                "additions": 10,
+                "blob_url": "https://github.com/bkerler/mtkclient/blob/a1e1b4d8c68ea6d711e789678f98a256ce848eab/mtkclient%2FLibrary%2FDA%2Fmtk_daloader.py",
+                "changes": 12,
+                "contents_url": "https://api.github.com/repos/bkerler/mtkclient/contents/mtkclient%2FLibrary%2FDA%2Fmtk_daloader.py?ref=a1e1b4d8c68ea6d711e789678f98a256ce848eab",
+                "deletions": 2,
+                "filename": "mtkclient/Library/DA/mtk_daloader.py",
+                "patch": "@@ -46,6 +46,13 @@ def __init__(self, mtk, loglevel=logging.INFO):\n         self.da = None\n         self.flashmode = None\n \n+    @staticmethod\n+    def _get_state_bytes(config, key):\n+        value = config.get(key)\n+        if value is None:\n+            return None\n+        return bytes.fromhex(value)\n+\n     def writestate(self):\n         config = {}\n         if self.mtk.config.chipconfig.damode == DAmodes.LEGACY:\n@@ -159,8 +166,9 @@ def reinit(self):\n             config = json.loads(open(os.path.join(self.mtk.config.hwparam_path, \".state\"), \"r\").read())\n             self.config.hwcode = config[\"hwcode\"]\n             meid_val = None\n-            if hasattr(config, 'meid') and config.meid is not None:\n-                self.config.meid = bytes.fromhex(config[\"meid\"])\n+            meid = self._get_state_bytes(config, \"meid\")\n+            if meid is not None:\n+                self.config.meid = meid\n                 meid_val = self.config.meid.hex()\n             if \"socid\" in config:\n                 self.config.socid = bytes.fromhex(config[\"socid\"])",
+                "raw_url": "https://github.com/bkerler/mtkclient/raw/a1e1b4d8c68ea6d711e789678f98a256ce848eab/mtkclient%2FLibrary%2FDA%2Fmtk_daloader.py",
+                "sha": "709f0fbc7a03e4711642f44e7a28c8ff064566a5",
+                "status": "modified"
+              },
+              {
+                "additions": 1,
+                "blob_url": "https://github.com/bkerler/mtkclient/blob/a1e1b4d8c68ea6d711e789678f98a256ce848eab/mtkclient%2FLibrary%2FDA%2Fstorage.py",
+                "changes": 1,
+                "contents_url": "https://api.github.com/repos/bkerler/mtkclient/contents/mtkclient%2FLibrary%2FDA%2Fstorage.py?ref=a1e1b4d8c68ea6d711e789678f98a256ce848eab",
+                "deletions": 0,
+                "filename": "mtkclient/Library/DA/storage.py",
+                "patch": "@@ -316,6 +316,7 @@ def partitiontype_and_size(self, storage=None, parttype=None, length=0):\n                 else:\n                     parttype = \"UFS-LUA3\"\n                     self.flashsize = self.ufs.lu3_size\n+            else:\n                 # NOTE: match the string first, THEN assign the enum.\n                 # The previous code assigned UFSPartitionType.USER here, which\n                 # shadowed the still-unmatched string, so every \"lu0\"..\"lu3\"",
+                "raw_url": "https://github.com/bkerler/mtkclient/raw/a1e1b4d8c68ea6d711e789678f98a256ce848eab/mtkclient%2FLibrary%2FDA%2Fstorage.py",
+                "sha": "e4f3d0ce785834bab3436234c4676eeeb3e3f4a2",
+                "status": "modified"
+              },
+              {
+                "additions": 20,
+                "blob_url": "https://github.com/bkerler/mtkclient/blob/a1e1b4d8c68ea6d711e789678f98a256ce848eab/mtkclient%2FLibrary%2FDA%2Fxflash%2Fextension%2Fxflash.py",
+                "changes": 22,
+                "contents_url": "https://api.github.com/repos/bkerler/mtkclient/contents/mtkclient%2FLibrary%2FDA%2Fxflash%2Fextension%2Fxflash.py?ref=a1e1b4d8c68ea6d711e789678f98a256ce848eab",
+                "deletions": 2,
+                "filename": "mtkclient/Library/DA/xflash/extension/xflash.py",
+                "patch": "@@ -78,6 +78,21 @@ def __init__(self, mtk, xflash, loglevel):\n         self.da2 = None\n         self.da2address = None\n \n+    @staticmethod\n+    def _read_ufs_hba_literal(data, return_offset):\n+        \"\"\"Read the UFS HBA literal following a Thumb function return.\n+\n+        Some DAs insert a 16-bit NOP to align the following 32-bit literal.\n+        \"\"\"\n+        literal_offset = return_offset + 8\n+        if literal_offset % 4 == 2 and data[literal_offset:literal_offset + 2] == b\"\\x00\\xBF\":\n+            literal_offset += 2\n+        if literal_offset % 4 != 0:\n+            return None\n+        if literal_offset + 4 > len(data):\n+            return None\n+        return int.from_bytes(data[literal_offset:literal_offset + 4], \"little\")\n+\n     def patch(self):\n         self.da2 = self.xflash.daconfig.da2\n         self.da2address = self.xflash.daconfig.da_loader.region[2].m_start_addr  # at_address\n@@ -115,18 +130,21 @@ def patch(self):\n             g_ufs_hba = None\n             ptr_g_ufs_hba = find_binary(self.da2, b\"\\x20\\x46\\x0B\\xB0\\xBD\\xE8\\xF0\\x83\\x00\\xBF\")\n             if ptr_g_ufs_hba is not None:\n-                g_ufs_hba = int.from_bytes(self.da2[ptr_g_ufs_hba + 10:ptr_g_ufs_hba + 10 + 4], 'little')\n+                g_ufs_hba = self._read_ufs_hba_literal(self.da2, ptr_g_ufs_hba)\n             else:\n                 # 6833 -> ufshcd_probe_hba\n                 ptr_g_ufs_hba = find_binary(self.da2, b\"\\x20\\x46\\x0D\\xB0\\xBD\\xE8\\xF0\\x83\")\n                 if ptr_g_ufs_hba is not None:\n-                    g_ufs_hba = int.from_bytes(self.da2[ptr_g_ufs_hba + 8:ptr_g_ufs_hba + 8 + 4], 'little')\n+                    g_ufs_hba = self._read_ufs_hba_literal(self.da2, ptr_g_ufs_hba)\n                 else:\n                     ptr_g_ufs_hba = find_binary(self.da2, b\"\\x21\\x46\\x02\\xF0\\x02\\xFB\\x1B\\xE6\\x00\\xBF\")\n                     if ptr_g_ufs_hba is not None:\n                         g_ufs_hba = int.from_bytes(self.da2[ptr_g_ufs_hba + 10 + 0x8:ptr_g_ufs_hba + 10 + 0x8 + 4],\n                                                    'little')\n \n+            if ptr_g_ufs_hba is not None and g_ufs_hba is None:\n+                ptr_g_ufs_hba = None\n+\n             if ptr_g_ufs_hba is not None:\n                 ufshcd_get_free_tag = find_binary(self.da2, b\"\\xB5.\\xB1\\x90\\xF8\")\n                 ufshcd_queuecommand = find_binary(self.da2, b\"\\x2D\\xE9\\xF8\\x43\\x01\\x27\")",
+                "raw_url": "https://github.com/bkerler/mtkclient/raw/a1e1b4d8c68ea6d711e789678f98a256ce848eab/mtkclient%2FLibrary%2FDA%2Fxflash%2Fextension%2Fxflash.py",
+                "sha": "c7a524fd1457df09f3e6d90e8e66b10abc11ebf8",
+                "status": "modified"
+              },
+              {
+                "additions": 21,
+                "blob_url": "https://github.com/bkerler/mtkclient/blob/a1e1b4d8c68ea6d711e789678f98a256ce848eab/mtkclient%2FLibrary%2FDA%2Fxmlflash%2Fextension%2Fv6.py",
+                "changes": 32,
+                "contents_url": "https://api.github.com/repos/bkerler/mtkclient/contents/mtkclient%2FLibrary%2FDA%2Fxmlflash%2Fextension%2Fv6.py?ref=a1e1b4d8c68ea6d711e789678f98a256ce848eab",
+                "deletions": 11,
+                "filename": "mtkclient/Library/DA/xmlflash/extension/v6.py",
+                "patch": "@@ -1055,19 +1055,27 @@ def custom_sej_hw(self, encrypt: bool, data: bytes, cryptmode: int = sej_cryptmo\n     def seccfg(self, lockflag, critical=False):\n         if lockflag not in [\"unlock\", \"lock\"]:\n             return False, \"Valid flags are: unlock, lock\"\n-        data, guid_gpt = self.xflash.partition.get_gpt(self.mtk.config.gpt_settings, \"user\")\n         seccfg_data = None\n         partition = None\n+        parttype = \"user\"\n+        guid_gpt = None\n+        for candidate_parttype in (\"user\", \"lu2\"):\n+            data, guid_gpt = self.xflash.partition.get_gpt(self.mtk.config.gpt_settings, candidate_parttype)\n+            if guid_gpt is None:\n+                continue\n+            for rpartition in guid_gpt.partentries:\n+                if rpartition.name == \"seccfg\":\n+                    partition = rpartition\n+                    parttype = candidate_parttype\n+                    seccfg_data = self.xflash.readflash(\n+                        addr=partition.sector * guid_gpt.sectorsize,\n+                        length=partition.sectors * guid_gpt.sectorsize,\n+                        filename=\"\", parttype=parttype, display=False)\n+                    break\n+            if seccfg_data is not None:\n+                break\n         if guid_gpt is None:\n             return False, \"Error getting the partition table.\"\n-        for rpartition in guid_gpt.partentries:\n-            if rpartition.name == \"seccfg\":\n-                partition = rpartition\n-                seccfg_data = self.xflash.readflash(\n-                    addr=partition.sector * guid_gpt.sectorsize,\n-                    length=partition.sectors * guid_gpt.sectorsize,\n-                    filename=\"\", parttype=\"user\", display=False)\n-                break\n         if seccfg_data is None:\n             return False, \"Couldn't detect existing seccfg partition. Aborting unlock.\"\n         if seccfg_data.find(b\"\\x4D\\x4D\\x4D\\x4D\") == -1:\n@@ -1101,9 +1109,11 @@ def seccfg(self, lockflag, critical=False):\n             ret, writedata = sc_org.create(lockflag=lockflag)\n         if ret is False:\n             return False, writedata\n-        if self.xflash.writeflash(addr=partition.sector * self.mtk.daloader.daconfig.pagesize,\n+        if len(writedata) % guid_gpt.sectorsize != 0:\n+            writedata += b\"\\x00\" * (guid_gpt.sectorsize - (len(writedata) % guid_gpt.sectorsize))\n+        if self.xflash.writeflash(addr=partition.sector * guid_gpt.sectorsize,\n                                   length=len(writedata),\n-                                  filename=\"\", wdata=writedata, parttype=\"user\", display=True):\n+                                  filename=\"\", wdata=writedata, parttype=parttype, display=True):\n             return True, \"Successfully wrote seccfg.\"\n         return False, \"Error on writing seccfg config to flash.\"\n ",
+                "raw_url": "https://github.com/bkerler/mtkclient/raw/a1e1b4d8c68ea6d711e789678f98a256ce848eab/mtkclient%2FLibrary%2FDA%2Fxmlflash%2Fextension%2Fv6.py",
+                "sha": "15471358f76df6c892873c3ca665d7e37643eef0",
+                "status": "modified"
+              },
+              {
+                "additions": 13,
+                "blob_url": "https://github.com/bkerler/mtkclient/blob/a1e1b4d8c68ea6d711e789678f98a256ce848eab/mtkclient%2FLibrary%2FDA%2Fxmlflash%2Fxml_lib.py",
+                "changes": 18,
+                "contents_url": "https://api.github.com/repos/bkerler/mtkclient/contents/mtkclient%2FLibrary%2FDA%2Fxmlflash%2Fxml_lib.py?ref=a1e1b4d8c68ea6d711e789678f98a256ce848eab",
+                "deletions": 5,
+                "filename": "mtkclient/Library/DA/xmlflash/xml_lib.py",
+                "patch": "@@ -703,7 +703,12 @@ def upload_da(self):\n             self.reinit(True)\n             self.check_lifecycle()\n             if self.mtk.daloader.patch:\n-                xdata = self.xmlft.patch()\n+                try:\n+                    xdata = self.xmlft.patch()\n+                except Exception as e:\n+                    # vendor DA2 the extension patcher can't pattern-match; fall back to stock DA2 commands\n+                    self.info(f\"DA XML extension patch failed ({type(e).__name__}: {e}); continuing with stock DA2\")\n+                    xdata = None\n                 \"\"\"\n                 i=0\n                 val=self.read_register(0x4006E4C0)\n@@ -712,7 +717,7 @@ def upload_da(self):\n                     i+=4\n                 \"\"\"\n                 xmlcmd = self.cmd.create_cmd(\"CUSTOM\")\n-                if self.xsend(xmlcmd):\n+                if xdata is not None and self.xsend(xmlcmd):\n                     # result =\n                     data = self.get_response()\n                     if data == 'OK':\n@@ -802,9 +807,10 @@ def get_hw_info(self):\n                 storagetype = get_field(data, \"storage\")\n                 self.daconfig.storage.storagetype = storagetype\n                 if storagetype == \"UFS\":\n-                    self.config.pagesize = 4096\n                     self.daconfig.storage.flashtype = \"ufs\"\n                     self.daconfig.storage.ufs.block_size = int(get_field(data, \"block_size\"), 16)\n+                    self.config.pagesize = self.daconfig.storage.ufs.block_size\n+                    self.daconfig.pagesize = self.daconfig.storage.ufs.block_size\n                     self.daconfig.storage.ufs.lu0_size = int(get_field(data, \"lua0_size\"), 16)\n                     self.daconfig.storage.ufs.lu1_size = int(get_field(data, \"lua1_size\"), 16)\n                     self.daconfig.storage.ufs.lu2_size = int(get_field(data, \"lua2_size\"), 16)\n@@ -849,7 +855,7 @@ def check_sla(self):\n                                     0x10,                                                 , 1\n         \"\"\"\n         data = self.get_sys_property(key=\"DA.SLA\", length=0x200000)\n-        if data is None:\n+        if data is None or data is False:\n             return False\n         data = data.decode('utf-8')\n         if \"item key=\" in data:\n@@ -861,7 +867,9 @@ def check_sla(self):\n         return data\n \n     def get_sys_property(self, key: str = \"DA.SLA\", length: int = 0x200000):\n-        self.send_command(self.cmd.cmd_get_sys_property(key=key, length=length), noack=True)\n+        if self.send_command(self.cmd.cmd_get_sys_property(key=key, length=length), noack=True) is not True:\n+            # DA answered ERR!UNSUPPORTED (send_command already drained END/START)\n+            return None\n         cmd, result = self.get_command_result()\n         if type(result) is not UpFile:\n             return False",
+                "raw_url": "https://github.com/bkerler/mtkclient/raw/a1e1b4d8c68ea6d711e789678f98a256ce848eab/mtkclient%2FLibrary%2FDA%2Fxmlflash%2Fxml_lib.py",
+                "sha": "2ec4376382924a14cea1f185c257378b565cd97b",
+                "status": "modified"
+              },
+              {
+                "additions": 0,
+                "blob_url": "https://github.com/bkerler/mtkclient/blob/a1e1b4d8c68ea6d711e789678f98a256ce848eab/requirements.txt",
+                "changes": 1,
+                "contents_url": "https://api.github.com/repos/bkerler/mtkclient/contents/requirements.txt?ref=a1e1b4d8c68ea6d711e789678f98a256ce848eab",
+                "deletions": 1,
+                "filename": "requirements.txt",
+                "patch": "@@ -11,6 +11,5 @@ flake8\n keystone-engine\n capstone\n unicorn\n-keystone\n mfusepy\n ",
+                "raw_url": "https://github.com/bkerler/mtkclient/raw/a1e1b4d8c68ea6d711e789678f98a256ce848eab/requirements.txt",
+                "sha": "0b7b6551bf88374b3e00e0258d6b9d1714f87a37",
+                "status": "modified"
+              },
+              {
+                "additions": 22,
+                "blob_url": "https://github.com/bkerler/mtkclient/blob/a1e1b4d8c68ea6d711e789678f98a256ce848eab/tests%2Ftest_mtk_daloader_state.py",
+                "changes": 22,
+                "contents_url": "https://api.github.com/repos/bkerler/mtkclient/contents/tests%2Ftest_mtk_daloader_state.py?ref=a1e1b4d8c68ea6d711e789678f98a256ce848eab",
+                "deletions": 0,
+                "filename": "tests/test_mtk_daloader_state.py",
+                "patch": "@@ -0,0 +1,22 @@\n+import unittest\n+\n+from mtkclient.Library.DA.mtk_daloader import DAloader\n+\n+\n+class DAloaderStateTest(unittest.TestCase):\n+    def test_decodes_saved_meid(self):\n+        state = {\"meid\": \"00112233445566778899aabbccddeeff\"}\n+\n+        meid = DAloader._get_state_bytes(state, \"meid\")\n+\n+        self.assertEqual(meid, bytes.fromhex(state[\"meid\"]))\n+\n+    def test_missing_meid_remains_unset(self):\n+        self.assertIsNone(DAloader._get_state_bytes({}, \"meid\"))\n+\n+    def test_null_meid_remains_unset(self):\n+        self.assertIsNone(DAloader._get_state_bytes({\"meid\": None}, \"meid\"))\n+\n+\n+if __name__ == \"__main__\":\n+    unittest.main()",
+                "raw_url": "https://github.com/bkerler/mtkclient/raw/a1e1b4d8c68ea6d711e789678f98a256ce848eab/tests%2Ftest_mtk_daloader_state.py",
+                "sha": "2570ee8d62e589b5a3b970643fcae1e200df72e4",
+                "status": "added"
+              },
+              {
+                "additions": 42,
+                "blob_url": "https://github.com/bkerler/mtkclient/blob/a1e1b4d8c68ea6d711e789678f98a256ce848eab/tests%2Ftest_xflash_ufs_literal.py",
+                "changes": 42,
+                "contents_url": "https://api.github.com/repos/bkerler/mtkclient/contents/tests%2Ftest_xflash_ufs_literal.py?ref=a1e1b4d8c68ea6d711e789678f98a256ce848eab",
+                "deletions": 0,
+                "filename": "tests/test_xflash_ufs_literal.py",
+                "patch": "@@ -0,0 +1,42 @@\n+import unittest\n+from struct import pack\n+\n+from mtkclient.Library.DA.xflash.extension.xflash import XFlashExt\n+\n+\n+class UfsHbaLiteralTest(unittest.TestCase):\n+    def test_reads_literal_after_alignment_nop(self):\n+        function_return = bytes.fromhex(\"20 46 0d b0 bd e8 f0 83\")\n+        data = b\"\\xAA\\xAA\" + function_return + b\"\\x00\\xBF\" + pack(\"<I\", 0x40066CD0)\n+\n+        value = XFlashExt._read_ufs_hba_literal(data, 2)\n+\n+        self.assertEqual(value, 0x40066CD0)\n+\n+    def test_reads_literal_without_alignment_nop(self):\n+        function_return = bytes.fromhex(\"20 46 0d b0 bd e8 f0 83\")\n+        data = function_return + pack(\"<I\", 0x40123454)\n+\n+        value = XFlashExt._read_ufs_hba_literal(data, 0)\n+\n+        self.assertEqual(value, 0x40123454)\n+\n+    def test_rejects_truncated_aligned_literal(self):\n+        function_return = bytes.fromhex(\"20 46 0d b0 bd e8 f0 83\")\n+        data = b\"\\xAA\\xAA\" + function_return + b\"\\x00\\xBF\\xD0\\x6C\"\n+\n+        value = XFlashExt._read_ufs_hba_literal(data, 2)\n+\n+        self.assertIsNone(value)\n+\n+    def test_rejects_unaligned_literal_without_nop(self):\n+        function_return = bytes.fromhex(\"20 46 0d b0 bd e8 f0 83\")\n+        data = b\"\\xAA\\xAA\" + function_return + pack(\"<I\", 0x40066CD0)\n+\n+        value = XFlashExt._read_ufs_hba_literal(data, 2)\n+\n+        self.assertIsNone(value)\n+\n+\n+if __name__ == \"__main__\":\n+    unittest.main()",
+                "raw_url": "https://github.com/bkerler/mtkclient/raw/a1e1b4d8c68ea6d711e789678f98a256ce848eab/tests%2Ftest_xflash_ufs_literal.py",
+                "sha": "7f86d185d8f8abd8ae25309f76fc14963f267562",
+                "status": "added"
+              }
+            ],
+            "html_url": "https://github.com/bkerler/mtkclient/compare/118a000a83ea31c4f427fe5225abfe964546e05e...a1e1b4d8c68ea6d711e789678f98a256ce848eab",
+            "merge_base_commit": {
+              "author": {
+                "avatar_url": "https://avatars.githubusercontent.com/u/6317772?v=4",
+                "events_url": "https://api.github.com/users/bkerler/events{/privacy}",
+                "followers_url": "https://api.github.com/users/bkerler/followers",
+                "following_url": "https://api.github.com/users/bkerler/following{/other_user}",
+                "gists_url": "https://api.github.com/users/bkerler/gists{/gist_id}",
+                "gravatar_id": "",
+                "html_url": "https://github.com/bkerler",
+                "id": 6317772,
+                "login": "bkerler",
+                "node_id": "MDQ6VXNlcjYzMTc3NzI=",
+                "organizations_url": "https://api.github.com/users/bkerler/orgs",
+                "received_events_url": "https://api.github.com/users/bkerler/received_events",
+                "repos_url": "https://api.github.com/users/bkerler/repos",
+                "site_admin": false,
+                "starred_url": "https://api.github.com/users/bkerler/starred{/owner}{/repo}",
+                "subscriptions_url": "https://api.github.com/users/bkerler/subscriptions",
+                "type": "User",
+                "url": "https://api.github.com/users/bkerler",
+                "user_view_type": "public"
+              },
+              "comments_url": "https://api.github.com/repos/bkerler/mtkclient/commits/118a000a83ea31c4f427fe5225abfe964546e05e/comments",
+              "commit": {
+                "author": {
+                  "date": "2026-10-26T08:53:35Z",
+                  "email": "6317772+bkerler@users.noreply.github.com",
+                  "name": "Bjoern Kerler"
+                },
+                "comment_count": 1,
+                "committer": {
+                  "date": "2026-10-26T08:53:35Z",
+                  "email": "noreply@github.com",
+                  "name": "GitHub"
+                },
+                "message": "Merge pull request #416 from GrahamKowalski/fix/crasher-dispatch-run-dump-preloader\n\nFix crasher mode range and run_dump_preloader dispatch for --ptype exploits",
+                "tree": {
+                  "sha": "69e33cb47266f6e6204702f824e2491a1374e43f",
+                  "url": "https://api.github.com/repos/bkerler/mtkclient/git/trees/69e33cb47266f6e6204702f824e2491a1374e43f"
+                },
+                "url": "https://api.github.com/repos/bkerler/mtkclient/git/commits/118a000a83ea31c4f427fe5225abfe964546e05e",
+                "verification": {
+                  "payload": "tree 69e33cb47266f6e6204702f824e2491a1374e43f\nparent 9e97c62570bbd4f317846d91e0f92260b08d32a9\nparent e9c28243887f6fb4e1cd48ac917a679712e6525d\nauthor Bjoern Kerler <6317772+bkerler@users.noreply.github.com> 1793004815 +0100\ncommitter GitHub <noreply@github.com> 1793004815 +0100\n\nMerge pull request #416 from GrahamKowalski/fix/crasher-dispatch-run-dump-preloader\n\nFix crasher mode range and run_dump_preloader dispatch for --ptype exploits",
+                  "reason": "valid",
+                  "signature": "-----BEGIN PGP SIGNATURE-----\n\nwsFcBAABCAAQBQJq3xUPCRC1aQ7uu5UhlAAA2moQADt1Bef2KEXzINVjTgRJLXnn\nMwzYRnulGKZtK1Qtd4EjlBVAWCt50AAv0xhUt3xOjCHbxy5ztwQAPGQgbFaxfIv7\na6ekFi/d7z8AkJk/lNyvTRv5cDmv72NeHtSGT/PitU4U46eONw2jfZHiBFIZN/Du\ng7zMKtiuFGgne4+Wpbdp3UpEJbI6vmu865txKR/zNLad4hCAQh7wCRgtELT0PPRT\nKRrXqxTF43X7ECgnzL4mWQQTS7n0nfe6hNzAvgKG88LMt+pX/FaE9rFjgbahJb8Q\nvBNuNGsQXGxP8It0F9s7LPmHYvJuoxOxal2jE8BEdS5Fbgg+dBRUsEu7q3HPcHNg\nsk82UaIlhqJ6vA1ueLU2P/TZzwitTt8ACUXuqR4ozFjwGSY8JT5MvgURSCRRIKLh\nE0rYXGTeZ3H2ECuX7zXxPkRuxMboZfvzi3xGeJcWq1lMiZFxWpPBwdONXyCusgBj\npuIZWEzKgXre8dcN0ZZqvfYHqD545TEt6M4roe4Tsif1n35CGOz6hB6fLoDrqC3T\n68rAVkrDU+58EflJcP8WJY55uwwlQrcM+Bol6jEqnSW0wDNMVBmbSlIa1lVZDVw8\nlujeqfJzy1jqbwFKfCP1NRUa3ppvw0p6PBPcMUCjXWaPebZ7OLZXQ4uLDbAFuPxU\nR1dnxhCZZ7ewar6aXNmQ\n=JRFP\n-----END PGP SIGNATURE-----\n",
+                  "verified": true,
+                  "verified_at": "2026-10-26T08:53:35Z"
+                }
+              },
+              "committer": {
+                "avatar_url": "https://avatars.githubusercontent.com/u/19864447?v=4",
+                "events_url": "https://api.github.com/users/web-flow/events{/privacy}",
+                "followers_url": "https://api.github.com/users/web-flow/followers",
+                "following_url": "https://api.github.com/users/web-flow/following{/other_user}",
+                "gists_url": "https://api.github.com/users/web-flow/gists{/gist_id}",
+                "gravatar_id": "",
+                "html_url": "https://github.com/web-flow",
+                "id": 19864447,
+                "login": "web-flow",
+                "node_id": "MDQ6VXNlcjE5ODY0NDQ3",
+                "organizations_url": "https://api.github.com/users/web-flow/orgs",
+                "received_events_url": "https://api.github.com/users/web-flow/received_events",
+                "repos_url": "https://api.github.com/users/web-flow/repos",
+                "site_admin": false,
+                "starred_url": "https://api.github.com/users/web-flow/starred{/owner}{/repo}",
+                "subscriptions_url": "https://api.github.com/users/web-flow/subscriptions",
+                "type": "User",
+                "url": "https://api.github.com/users/web-flow",
+                "user_view_type": "public"
+              },
+              "html_url": "https://github.com/bkerler/mtkclient/commit/118a000a83ea31c4f427fe5225abfe964546e05e",
+              "node_id": "C_kwDOQ8IpJNoAKDExOGEwMDBhODNlYTMxYzRmNDI3ZmU1MjI1YWJmZTk2NDU0NmUwNWU",
+              "parents": [
+                {
+                  "html_url": "https://github.com/bkerler/mtkclient/commit/9e97c62570bbd4f317846d91e0f92260b08d32a9",
+                  "sha": "9e97c62570bbd4f317846d91e0f92260b08d32a9",
+                  "url": "https://api.github.com/repos/bkerler/mtkclient/commits/9e97c62570bbd4f317846d91e0f92260b08d32a9"
+                },
+                {
+                  "html_url": "https://github.com/bkerler/mtkclient/commit/e9c28243887f6fb4e1cd48ac917a679712e6525d",
+                  "sha": "e9c28243887f6fb4e1cd48ac917a679712e6525d",
+                  "url": "https://api.github.com/repos/bkerler/mtkclient/commits/e9c28243887f6fb4e1cd48ac917a679712e6525d"
+                }
+              ],
+              "sha": "118a000a83ea31c4f427fe5225abfe964546e05e",
+              "url": "https://api.github.com/repos/bkerler/mtkclient/commits/118a000a83ea31c4f427fe5225abfe964546e05e"
+            },
+            "patch_url": "https://github.com/bkerler/mtkclient/compare/118a000a83ea31c4f427fe5225abfe964546e05e...a1e1b4d8c68ea6d711e789678f98a256ce848eab.patch",
+            "permalink_url": "https://github.com/bkerler/mtkclient/compare/bkerler:118a000...bkerler:a1e1b4d",
+            "status": "ahead",
+            "total_commits": 12,
+            "url": "https://api.github.com/repos/bkerler/mtkclient/compare/118a000a83ea31c4f427fe5225abfe964546e05e...a1e1b4d8c68ea6d711e789678f98a256ce848eab"
+          },
+          "file_list_may_be_truncated": false,
           "from": "118a000a83ea31c4f427fe5225abfe964546e05e",
-          "to": "118a000a83ea31c4f427fe5225abfe964546e05e"
+          "history_rewritten": false,
+          "to": "a1e1b4d8c68ea6d711e789678f98a256ce848eab"
         },
         "snapshot": {
           "releases": {
@@ -1905,7 +3218,7 @@
               "zipball_url": "https://api.github.com/repos/bkerler/mtkclient/zipball/v2.1.4.1"
             }
           },
-          "sha": "118a000a83ea31c4f427fe5225abfe964546e05e",
+          "sha": "a1e1b4d8c68ea6d711e789678f98a256ce848eab",
           "tags": {
             "refs/tags/v2.1.2": {
               "ref": {
@@ -1961,12 +3274,12 @@
     },
     "xiaomi-ubl": {
       "attempt": {
-        "at": "2026-11-20T04:50:57.289231+00:00",
+        "at": "2026-11-21T04:46:03.398020+00:00",
         "status": "unchanged"
       },
       "candidate": null,
       "last_success": {
-        "at": "2026-11-20T04:50:57.289231+00:00",
+        "at": "2026-11-21T04:46:03.398020+00:00",
         "incremental": {
           "changes": {
             "releases": [],
