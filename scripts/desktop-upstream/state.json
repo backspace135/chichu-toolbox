@@ -2,12 +2,12 @@
   "sources": {
     "gjgjxweb": {
       "attempt": {
-        "at": "2026-11-24T07:34:08.406682+00:00",
+        "at": "2026-11-25T06:02:28.488949+00:00",
         "status": "unchanged"
       },
       "candidate": null,
       "last_success": {
-        "at": "2026-11-24T07:34:08.406682+00:00",
+        "at": "2026-11-25T06:02:28.488949+00:00",
         "incremental": {
           "changes": {
             "releases": [],
@@ -25,12 +25,12 @@
     },
     "hyperos-unlock": {
       "attempt": {
-        "at": "2026-11-24T07:34:08.406682+00:00",
+        "at": "2026-11-25T06:02:28.488949+00:00",
         "status": "unchanged"
       },
       "candidate": null,
       "last_success": {
-        "at": "2026-11-24T07:34:08.406682+00:00",
+        "at": "2026-11-25T06:02:28.488949+00:00",
         "incremental": {
           "changes": {
             "releases": [],
@@ -212,12 +212,12 @@
     },
     "miunlocktool": {
       "attempt": {
-        "at": "2026-11-24T07:34:08.406682+00:00",
+        "at": "2026-11-25T06:02:28.488949+00:00",
         "status": "unchanged"
       },
       "candidate": null,
       "last_success": {
-        "at": "2026-11-24T07:34:08.406682+00:00",
+        "at": "2026-11-25T06:02:28.488949+00:00",
         "incremental": {
           "changes": {
             "releases": [],
@@ -1725,15 +1725,17 @@
     },
     "mtkclient": {
       "attempt": {
-        "at": "2026-11-24T07:34:08.406682+00:00",
-        "status": "unchanged"
+        "at": "2026-11-25T06:02:28.488949+00:00",
+        "status": "changed"
       },
       "candidate": null,
       "last_success": {
-        "at": "2026-11-24T07:34:08.406682+00:00",
+        "at": "2026-11-25T06:02:28.488949+00:00",
         "incremental": {
           "changes": {
-            "releases": [],
+            "releases": [
+              "298644157"
+            ],
             "tags": []
           },
           "from": "a1e1b4d8c68ea6d711e789678f98a256ce848eab",
@@ -1885,7 +1887,7 @@
               "prerelease": false,
               "published_at": "2026-03-18T19:26:19Z",
               "reactions": {
-                "+1": 45,
+                "+1": 46,
                 "-1": 0,
                 "confused": 0,
                 "eyes": 0,
@@ -1893,7 +1895,7 @@
                 "hooray": 0,
                 "laugh": 0,
                 "rocket": 6,
-                "total_count": 51,
+                "total_count": 52,
                 "url": "https://api.github.com/repos/bkerler/mtkclient/releases/298644157/reactions"
               },
               "tag_name": "v2.1.4.1",
@@ -1961,12 +1963,12 @@
     },
     "xiaomi-ubl": {
       "attempt": {
-        "at": "2026-11-24T07:34:08.406682+00:00",
+        "at": "2026-11-25T06:02:28.488949+00:00",
         "status": "unchanged"
       },
       "candidate": null,
       "last_success": {
-        "at": "2026-11-24T07:34:08.406682+00:00",
+        "at": "2026-11-25T06:02:28.488949+00:00",
         "incremental": {
           "changes": {
             "releases": [],
